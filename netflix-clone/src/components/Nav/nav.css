@@ -1,0 +1,70 @@
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    position: fixed;
+    top: 0;
+    background-color: red;
+    width: 100vw;
+
+    animation: nav-animation linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 10px;
+}
+
+@keyframes nav-animation {
+    to {
+        background: black;
+        color: white;
+    }
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-list {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-menu {
+    display: none;
+    position: relative;
+}
+
+.nav-menu-dropdown {
+    display: none;
+    position: absolute;
+    top: 30px;
+    background-color: black;
+    min-width: 300px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.nav-menu:hover .nav-menu-dropdown,
+.nav-menu-dropdown:hover {
+    display: block;
+    opacity: 1;
+}
+
+
+
+@media (max-width:1000px) {
+    .nav-menu {
+        display: block;
+    }
+    .nav-list {
+        display: none;
+    }
+}

@@ -1,0 +1,11 @@
+.banner {
+    background-color: aqua;
+    /* height: 45vh; */
+    padding: 16px 32px;
+    columns:2;
+}
+
+.banner img {
+    height: auto;
+    width: 100%;
+}
