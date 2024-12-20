@@ -43,8 +43,9 @@ export const Nav = () => {
                     No hay notificaciones recientes
                     <p>hola mi pana</p>
                 </div>
-                <div>
+                <div className='nav-config'>
                     dropdown menu
+                    <span className='caret'></span>
                 </div>
             </div>
         </div>
