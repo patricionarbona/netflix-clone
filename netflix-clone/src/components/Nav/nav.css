@@ -85,6 +85,31 @@
     align-items: center;
 }
 
+.nav-config > ul {
+    /* display: none; */
+    visibility: hidden;
+    position: absolute;
+    top: 40px;
+    right: 30px;
+    background-color: black;
+    min-width: 300px;
+    opacity: 0;
+    /* transition: opacity 0.3s ease; */
+    z-index: 999;
+}
+
+.nav-config ul li {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 5px 0;
+}
+
+.nav-config ul li svg {
+    height: 18px;
+    width: 18px;
+}
+
 .caret {
     border-color: #fff transparent transparent transparent;
     border-style: solid;
@@ -99,6 +124,11 @@
     /*
     TODO: Improve translation
     */
+}
+
+.nav-config:hover ul {
+    visibility: visible;
+    opacity: 1;
 }
 
 .nav-config:hover .caret {
