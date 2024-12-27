@@ -9,7 +9,17 @@ interface useFetchReturn<T> {
     error: ErrorType
 }
 
-export const useFetch = <T>(url:string) :useFetchReturn<T> => {
+const claveApi = import.meta.env.VITE_API_KEY
+
+const options = {
+    method: 'GET',
+    headers: {
+        accept: 'application/json',
+        Authorization: `Bearer ${claveApi}`
+    }
+}
+
+export const useFetch = <T>(url:string, params? : URLSearchParams) :useFetchReturn<T> => {
     const [data, setData] = useState<Data<T>>(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState<ErrorType>(null) 
@@ -17,7 +27,9 @@ export const useFetch = <T>(url:string) :useFetchReturn<T> => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(url)
+                const newURL = new URL(url)
+                newURL.search = params?.toString() || ''
+                const response = await fetch(newURL, options)
                 if(!response.ok) {
                     throw new Error(`Error fetching from: ${url}`)
                 }
