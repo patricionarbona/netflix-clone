@@ -1,11 +1,12 @@
 import './App.css'
-import { Banner, Nav } from "./components"
+import { Banner, Carousel, Nav } from "./components"
 
 function App() {
   return (
     <>
     <Nav></Nav>
-    <Banner></Banner>
+    {/* <Banner/> */}
+    <Carousel genre_id={35} />
     </>
   )
 }
