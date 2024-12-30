@@ -1,3 +1,12 @@
+interface Genero {
+    id: number;
+    name: string;
+  }
+  
+  interface GenerosMovies {
+    genres: Genero[];
+  }
+
 const claveApi = import.meta.env.VITE_API_KEY
 
 const options = {
@@ -7,6 +16,8 @@ const options = {
         Authorization: `Bearer ${claveApi}`
     }
 }
+
+const URL_MOVIE_GENRES = 'https://api.themoviedb.org/3/genre/movie/list'
 
 export const fetchPages = async <T>(url: string, params: URLSearchParams, numPages= 1): Promise<T[]> => {
     const newUrl = new URL(url)
@@ -29,6 +40,25 @@ export const fetchPages = async <T>(url: string, params: URLSearchParams, numPag
         return results.flat()
     } catch (er) {
         console.error('error en las peticiones', er)
+        throw er
+    }
+} 
+
+export const fetchMovieGenres = async (language = 'es'): Promise<Genero[]> => {
+    const url = new URL(URL_MOVIE_GENRES)
+    const params = new URLSearchParams({
+        'language': language
+    })
+    url.search = params.toString()
+    try {
+        const response = await fetch(url,options)
+        if(!response.ok) {
+            throw new Error('Error peticion generos')
+        }
+        const data: GenerosMovies = await response.json()
+        return data.genres
+    } catch(er) {
+        console.error('Error al obtener los generos', er)
         throw er
     }
 } 
