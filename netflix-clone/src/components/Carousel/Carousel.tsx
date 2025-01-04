@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { fetchPages } from "../../services/fetchs"
+import './Carousel.css'
 
 interface Movie {
     adult: boolean
@@ -32,7 +33,7 @@ const paramsLanguage = new URLSearchParams({
     sort_by: 'popularity.desc'
 })
 
-export const Carousel = ({genre_id}: {genre_id:number}) => {
+export const Carousel = ({genre_id, name}: {genre_id:number, name:string}) => {
     const [movies, setMovies] = useState<FetchMovies[]>([])
     const [loading, setLoading] = useState<boolean>(true)
     const [error, setError] = useState<string | null>(null)
@@ -62,11 +63,22 @@ export const Carousel = ({genre_id}: {genre_id:number}) => {
     if(error) {return <div>{error}</div>}
 
     return(
-        <div>
-            {movies && movies.map(movieResponse => (
-                movieResponse.results.map(movie => (
-                <img key={movie.id} src={`${urlPoster + movie.poster_path}`} alt={movie.title} />
-                ))
-            ))}
+        <div className="carousel">
+            <h3 className="carousel-name">{name}</h3>
+            <div className="carousel-items"
+                style={{ "--quantity": movies.length } as React.CSSProperties}
+            >
+                <ul className="carousel-list">
+                    {movies && movies.map(movieResponse => (
+                        movieResponse.results.map(movie => (
+                            <li key={movie.id} className="carousel-item"><img className="carousel-img" src={`${urlPoster + movie.backdrop_path}`} alt={movie.title} /></li>
+                        ))
+                    ))}
+                </ul>
+            </div>
+            <div className="carousel-arrows">
+                    <button>&lt;</button>
+                    <button>&gt;</button>
+            </div>
         </div>
 )} 
