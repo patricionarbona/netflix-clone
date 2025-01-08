@@ -1,53 +1,76 @@
-.carousel {
-    /* margin: 0 60px; */
-    /* margin: 0 35px; */
-    position: relative;
-    width: 100%;
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+.carousel-container {
+    display: flex;
+    justify-content: center;
     overflow: hidden;
 }
 
-.carousel-items {
-    mask-image: linear-gradient(
-        to right,
-        transparent,
-        #000 10% 90%,
-        transparent
-    );
-}
-
-.carousel-item {
-    width: 220px;
-    height: 115px;
-    flex-shrink: 0;
-}
-
-.carousel-img {
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
-}
-
-.carousel-list {
+.carousel-slider {
     display: flex;
-    gap: 4px;
+    flex-grow: 1;
+    margin: 0 .25rem;
+    transform: translateX(-00%);
 }
 
-.carousel-arrows {
-    position: absolute;
-    top: 40%;
-    background-color: transparent;
-    width: 100%;
-    color: #fff;
-    display: flex;
-    justify-content: space-between ;
+.carousel-slider > img {
+    flex: 0 0 25%;
+    max-width: 25%;
+    aspect-ratio: 16 / 9;
+    border-radius: 1.25rem;
+    padding: .25rem;
 }
 
-.carousel-arrows button {
-    width: 40px;
-    height: 40px;
-    /* font-weight: bold; */
-    /* font-size: large; */
-    font-size: 40px;
+.carousel-handle {
+    border: none;
+    border-radius: 1rem;
+    flex-grow: 0;
+    width: 7rem;
+    background-color: red;
+    background-color: rgba(0, 0, 0, .25);
+    z-index: 1;
+    margin: .25rem 0;
+    cursor: pointer;
+    font-size: 5rem;
+    color: transparent;
+    line-height: 0;
+    padding: 0 .5rem;
+    transition: background-color 150ms ease-in-out;
+}
+
+.carousel-left-handle {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.carousel-right-handle {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.carousel-handle:hover {
+    background-color: rgba(0, 0, 0, .5);
+}
+
+.carousel-text {
+    transition: transform 150ms ease-in-out;
+    text-align: center;
+}
+
+.carousel-handle:hover .carousel-text {
+    transform: scale(1.2);
+}
+
+.carousel-container:hover .carousel-handle {
+    visibility: visible;
+}
+
+.carousel-container:hover .carousel-handle{
     color: #fff;
-    /* z-index: 100; */
 }
