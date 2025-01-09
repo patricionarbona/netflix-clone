@@ -39,7 +39,7 @@ export const Carousel = ({
   genre_id: number;
   name: string;
 }) => {
-  const [movies, setMovies] = useState<FetchMovies[]>([]);
+  const [movies, setMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   // states del carousel
@@ -57,6 +57,8 @@ export const Carousel = ({
       if (item) {
         setOffSet((prevOffset) => prevOffset - 100);
         setPosition((position) => position + 1);
+        console.log(Math.ceil(movies.length / 3))
+        console.log(movies.length / 3)
       }
     }
   };
@@ -83,7 +85,7 @@ export const Carousel = ({
     const fetchData = async () => {
       try {
         const data = await fetchPages<FetchMovies>(urlGenre, paramsLanguage, 2);
-        setMovies(data);
+        setMovies(data.map(item => item.results).flat());
         setLoading(false);
       } catch (error) {
         setError(`Error al cargar las peliculas: ${error}`);
@@ -103,22 +105,36 @@ export const Carousel = ({
   }
 
   return (
-    <div className="carousel-container" ref={carouselRef}>
-      <button className="carousel-handle carousel-left-handle" onClick={handlePrev}>
-        <div className="text">&#8249;</div>
-      </button>
-      <div className="carousel-slider"
-      style={{
-        transform: `translateX(${offset}%)`
-      }}>
-        {movies.map((moviesResponse) => 
-          moviesResponse.results.map((movie) => (
-            <img key={`${genre_id}-slider-${movie.id}`} src={urlPoster + movie.backdrop_path}/>
-          )))}
+    <div className="carousel">
+      <div className="carousel-header">
+        <h4 className="carousel-title">{name}</h4>
+        <div className="carousel-progress-bar">
+          {
+            Array.from({length: Math.ceil(movies.length / 4)}).map((_,index) => (
+              <div 
+                key={'bar-' + index}
+                className={`bar ${index === position? "bar-active" : ""}`}
+              ></div>
+            ))
+          }
+        </div>
       </div>
-      <button className="carousel-handle carousel-right-handle" onClick={handleNext}>
-        <div className="carousel-text">&#8250;</div>
-      </button>
+      <div className="carousel-container" ref={carouselRef}>
+        <button className="carousel-handle carousel-left-handle" onClick={handlePrev}>
+          <div className="text">&#8249;</div>
+        </button>
+        <div className="carousel-slider"
+        style={{
+          transform: `translateX(${offset}%)`
+        }}>
+          {movies.map((movie) => (
+              <img key={`${genre_id}-slider-${movie.id}`} src={urlPoster + movie.backdrop_path}/>
+            ))}
+        </div>
+        <button className="carousel-handle carousel-right-handle" onClick={handleNext}>
+          <div className="carousel-text">&#8250;</div>
+        </button>
+      </div>
     </div>
   );
 };

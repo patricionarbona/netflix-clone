@@ -74,3 +74,32 @@ body {
 .carousel-container:hover .carousel-handle{
     color: #fff;
 }
+
+.carousel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 3.25rem;
+}
+
+.carousel-title {
+    color: #fff;
+    font-family: monospace;
+}
+
+.carousel-progress-bar {
+    display: flex;
+    gap: .25rem;
+}
+
+.bar {
+    width: .5rem;
+    height: .25rem;
+    background-color: #96909037;
+    transition: background-color 250ms ease-in-out;
+}
+
+.bar-active {
+    background-color: #fff;
+}
