@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { fetchPages } from "../../services/fetchs";
 import "./Carousel.css";
 
@@ -46,38 +46,77 @@ export const Carousel = ({
   const [position, setPosition] = useState(0);
   const [offset, setOffSet] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
+  const [itemsView, setItemsView] = useState(0)
 
   const handleNext = () => {
-    console.log("next");
-    console.log(position);
     if (carouselRef.current) {
       const item = carouselRef.current.querySelector(
         ".carousel-slider"
       ) as HTMLElement;
-      if (item) {
-        setOffSet((prevOffset) => prevOffset - 100);
-        setPosition((position) => position + 1);
-        console.log(Math.ceil(movies.length / 3))
-        console.log(movies.length / 3)
+      if (!item) {
+        return;
       }
+
+      const widthImg = 16.6;
+      const lastSpace = ((movies.length / 6) % 1).toFixed(2);
+      const numLastItems = Math.round((parseFloat(lastSpace) / widthImg) * 100);
+
+      if (position === Math.ceil(movies.length / 6) - 2) {
+        setOffSet(
+          (prevOffset) =>
+            prevOffset - (numLastItems === 0 ? 100 : widthImg * numLastItems)
+        );
+      } else {
+        setOffSet((prevOffset) => prevOffset - 100);
+      }
+
+      setPosition((position) => position + 1);
     }
   };
 
   const handlePrev = () => {
-    console.log("prev");
-    console.log(position);
     if (carouselRef.current) {
       const item = carouselRef.current.querySelector(
         ".carousel-slider"
       ) as HTMLElement;
-      if (item) {
+
+      if (!item) return;
+
+      const widthImg = 16.6;
+      const lastSpace = ((movies.length / 6) % 1).toFixed(2);
+      const numLastItems = Math.round((parseFloat(lastSpace) / widthImg) * 100);
+
+      if (position === Math.ceil(movies.length / 6) - 2) {
+        setOffSet(
+          (prevOffset) =>
+            prevOffset + (numLastItems === 0 ? 100 : widthImg * numLastItems)
+        );
+      } else {
         setOffSet((prevOffset) => prevOffset + 100);
-        setPosition((position) => position - 1);
       }
+
+      setPosition((position) => position - 1);
     }
   };
 
-  useEffect(() => {
+  // Event resize
+  const handleResize = () => {
+    console.log('first')
+    const slider = carouselRef.current?.querySelector(
+      '.carousel-slider'
+    ) as HTMLElement
+    if (slider) {
+      // Obtener el valor de la propiedad CSS personalizada
+      const style = getComputedStyle(slider);
+      const itemsPerScreen = style.getPropertyValue('--items-per-screen');
+      setItemsView(parseInt(itemsPerScreen))
+      
+      console.log('Items per screen:', itemsPerScreen);
+    }
+  }
+
+  //useLayout to get --items-per-screen from css
+  useLayoutEffect(() => {
     paramsLanguage.append("with_genres", String(genre_id));
     paramsLanguage.append("primary_release_date.gte", "2024-01-01");
     paramsLanguage.append("primary_release_date.lte", "2024-12-31");
@@ -85,7 +124,13 @@ export const Carousel = ({
     const fetchData = async () => {
       try {
         const data = await fetchPages<FetchMovies>(urlGenre, paramsLanguage, 2);
-        setMovies(data.map(item => item.results).flat());
+        setMovies(data.map((item) => item.results).flat());
+        const slider = carouselRef.current?.querySelector('.carousel-slider') as HTMLElement;
+        if (slider) {
+          const style = getComputedStyle(slider);
+          const itemsPerScreen = style.getPropertyValue('--items-per-screen');
+          setItemsView(parseInt(itemsPerScreen) || 1); // Valor por defecto si no se encuentra
+        }
         setLoading(false);
       } catch (error) {
         setError(`Error al cargar las peliculas: ${error}`);
@@ -97,6 +142,14 @@ export const Carousel = ({
     fetchData();
   }, [genre_id]);
 
+
+  useEffect(() => {
+    window.addEventListener('resize',handleResize)
+    return()=> {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -105,33 +158,44 @@ export const Carousel = ({
   }
 
   return (
-    <div className="carousel">
+    <div className="carousel" ref={carouselRef}>
       <div className="carousel-header">
         <h4 className="carousel-title">{name}</h4>
         <div className="carousel-progress-bar">
-          {
-            Array.from({length: Math.ceil(movies.length / 4)}).map((_,index) => (
-              <div 
-                key={'bar-' + index}
-                className={`bar ${index === position? "bar-active" : ""}`}
+          {itemsView > 0 && Array.from({ length: Math.ceil(movies.length / itemsView) }).map(
+            (_, index) => (
+              <div
+                key={"bar-" + index}
+                className={`bar ${index === position ? "bar-active" : ""}`}
               ></div>
-            ))
-          }
+            )
+          )}
         </div>
       </div>
-      <div className="carousel-container" ref={carouselRef}>
-        <button className="carousel-handle carousel-left-handle" onClick={handlePrev}>
+      <div className="carousel-container">
+        <button
+          className="carousel-handle carousel-left-handle"
+          onClick={handlePrev}
+        >
           <div className="text">&#8249;</div>
         </button>
-        <div className="carousel-slider"
-        style={{
-          transform: `translateX(${offset}%)`
-        }}>
+        <div
+          className="carousel-slider"
+          style={{
+            transform: `translateX(${offset}%)`,
+          }}
+        >
           {movies.map((movie) => (
-              <img key={`${genre_id}-slider-${movie.id}`} src={urlPoster + movie.backdrop_path}/>
-            ))}
+            <img
+              key={`${genre_id}-slider-${movie.id}`}
+              src={urlPoster + movie.backdrop_path}
+            />
+          ))}
         </div>
-        <button className="carousel-handle carousel-right-handle" onClick={handleNext}>
+        <button
+          className="carousel-handle carousel-right-handle"
+          onClick={handleNext}
+        >
           <div className="carousel-text">&#8250;</div>
         </button>
       </div>
