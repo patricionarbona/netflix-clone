@@ -13,6 +13,7 @@ body {
 }
 
 .carousel-slider {
+    --items-per-screen: 2;
     display: flex;
     flex-grow: 1;
     margin: 0 .25rem;
@@ -20,8 +21,8 @@ body {
 }
 
 .carousel-slider > img {
-    flex: 0 0 25%;
-    max-width: 25%;
+    flex: 0 0 calc( 100% / var(--items-per-screen));
+    max-width: calc( 100% / var(--items-per-screen));
     aspect-ratio: 16 / 9;
     border-radius: 1.25rem;
     padding: .25rem;
@@ -102,4 +103,36 @@ body {
 
 .bar-active {
     background-color: #fff;
+}
+
+@media (max-width: 500px) {
+    .carousel-slider {
+        --items-per-screen: 2;
+    }
+}
+
+
+
+@media (min-width: 501px) and (max-width: 800px) {
+    .carousel-slider {
+        --items-per-screen: 3;
+    }
+}
+
+@media (min-width: 801px) and (max-width: 1100px) {
+    .carousel-slider {
+        --items-per-screen: 4;
+    }
+}
+
+@media (min-width: 1101px) and (max-width: 1400px) {
+    .carousel-slider {
+        --items-per-screen: 5;
+    }
+}
+
+@media (min-width: 1401px) {
+    .carousel-slider {
+        --items-per-screen: 6;
+    }
 }
