@@ -47,6 +47,7 @@ export const Carousel = ({
   const carouselRef = useRef<HTMLDivElement>(null);
   const [itemsView, setItemsView] = useState(0);
   const [moved, setMoved] = useState(false); //saber si se movio al inicio
+  const [isReadJust, setIsReadJust] = useState(false)
 
   const handleNext = () => {
     if (carouselRef.current) {
@@ -57,10 +58,15 @@ export const Carousel = ({
         return;
       }
 
-      if (moved) {
-        const imgs = item.querySelectorAll("img");
+      const imgs = item.querySelectorAll("img");
+
+      if (moved && position !== Math.ceil(movies.length / itemsView) - 2) {
         const groupToMove = Array.from(imgs).slice(0, itemsView);
         groupToMove.map((newImg) => item.appendChild(newImg));
+      } else if(moved) {
+        const groupToMove = Array.from(imgs).slice(0, movies.length % itemsView);
+        groupToMove.map((newImg) => item.appendChild(newImg));
+        setIsReadJust(true)
       }
 
       if(position === Math.ceil(movies.length / itemsView) - 1) {
@@ -68,7 +74,6 @@ export const Carousel = ({
       } else {
         setPosition((position) => position + 1);
       }
-
       setMoved(true);
     }
   };
@@ -81,10 +86,16 @@ export const Carousel = ({
 
       if (!item) return;
 
-      if (moved) {
-        const imgs = item.querySelectorAll("img");
-        const groupToMove = Array.from(imgs).slice(-itemsView, imgs.length);
-        groupToMove.reverse().map((newImg) => item.prepend(newImg));
+      const imgs = item.querySelectorAll("img");
+      if(moved) {
+        if(position === 1 && isReadJust) {
+          const groupToMove = Array.from(imgs).slice(-(movies.length % itemsView), imgs.length);
+          groupToMove.reverse().map((newImg) => item.prepend(newImg));
+          setIsReadJust(false)
+        } else {
+          const groupToMove = Array.from(imgs).slice(-itemsView, imgs.length);
+          groupToMove.reverse().map((newImg) => item.prepend(newImg));
+        }
       }
 
       if(position === 0) {
@@ -160,7 +171,7 @@ export const Carousel = ({
       <div className="carousel-header">
         <h4 className="carousel-title">{name}</h4>
         <div className="carousel-progress-bar">
-          {itemsView > 0 &&
+          {itemsView > 0 && movies.length > 0 &&
             Array.from({ length: Math.ceil(movies.length / itemsView) }).map(
               (_, index) => (
                 <div
