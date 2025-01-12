@@ -63,7 +63,12 @@ export const Carousel = ({
         groupToMove.map((newImg) => item.appendChild(newImg));
       }
 
-      setPosition((position) => position + 1);
+      if(position === Math.ceil(movies.length / itemsView) - 1) {
+        setPosition(0)
+      } else {
+        setPosition((position) => position + 1);
+      }
+
       setMoved(true);
     }
   };
@@ -79,11 +84,15 @@ export const Carousel = ({
       if (moved) {
         const imgs = item.querySelectorAll("img");
         const groupToMove = Array.from(imgs).slice(-itemsView, imgs.length);
-        console.log(groupToMove);
         groupToMove.reverse().map((newImg) => item.prepend(newImg));
       }
 
-      setPosition((position) => position - 1);
+      if(position === 0) {
+        setPosition(Math.ceil(movies.length / itemsView) - 1)
+      } else {
+        setPosition((position) => position - 1);
+      }
+
     }
   };
 
@@ -167,7 +176,7 @@ export const Carousel = ({
           className="carousel-handle carousel-left-handle"
           onClick={handlePrev}
           style={{
-            visibility: `${moved ? 'visible' : 'hidden'}`
+            visibility: `${moved ? "visible" : "hidden"}`,
           }}
         >
           <div className="text">&#8249;</div>
