@@ -166,6 +166,9 @@ export const Carousel = ({
         <button
           className="carousel-handle carousel-left-handle"
           onClick={handlePrev}
+          style={{
+            visibility: `${moved ? 'visible' : 'hidden'}`
+          }}
         >
           <div className="text">&#8249;</div>
         </button>

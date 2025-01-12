@@ -9,7 +9,7 @@ body {
 .carousel-container {
     display: flex;
     justify-content: center;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 .carousel-slider {
@@ -46,8 +46,13 @@ body {
 }
 
 .carousel-left-handle {
+    visibility: hidden;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+}
+
+.carousel-container:hover .carousel-left-handle {
+    visibility: hidden;
 }
 
 .carousel-right-handle {
