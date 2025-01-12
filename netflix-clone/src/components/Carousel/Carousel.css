@@ -9,7 +9,7 @@ body {
 .carousel-container {
     display: flex;
     justify-content: center;
-    /* overflow: hidden; */
+    overflow: hidden;
 }
 
 .carousel-slider {
