@@ -44,9 +44,9 @@ export const Carousel = ({
   const [error, setError] = useState<string | null>(null);
   // states del carousel
   const [position, setPosition] = useState(0);
-  const [offset, setOffSet] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
-  const [itemsView, setItemsView] = useState(0)
+  const [itemsView, setItemsView] = useState(0);
+  const [moved, setMoved] = useState(false); //saber si se movio al inicio
 
   const handleNext = () => {
     if (carouselRef.current) {
@@ -57,20 +57,14 @@ export const Carousel = ({
         return;
       }
 
-      const widthImg = 16.6;
-      const lastSpace = ((movies.length / 6) % 1).toFixed(2);
-      const numLastItems = Math.round((parseFloat(lastSpace) / widthImg) * 100);
-
-      if (position === Math.ceil(movies.length / 6) - 2) {
-        setOffSet(
-          (prevOffset) =>
-            prevOffset - (numLastItems === 0 ? 100 : widthImg * numLastItems)
-        );
-      } else {
-        setOffSet((prevOffset) => prevOffset - 100);
+      if (moved) {
+        const imgs = item.querySelectorAll("img");
+        const groupToMove = Array.from(imgs).slice(0, itemsView);
+        groupToMove.map((newImg) => item.appendChild(newImg));
       }
 
       setPosition((position) => position + 1);
+      setMoved(true);
     }
   };
 
@@ -82,17 +76,11 @@ export const Carousel = ({
 
       if (!item) return;
 
-      const widthImg = 16.6;
-      const lastSpace = ((movies.length / 6) % 1).toFixed(2);
-      const numLastItems = Math.round((parseFloat(lastSpace) / widthImg) * 100);
-
-      if (position === Math.ceil(movies.length / 6) - 2) {
-        setOffSet(
-          (prevOffset) =>
-            prevOffset + (numLastItems === 0 ? 100 : widthImg * numLastItems)
-        );
-      } else {
-        setOffSet((prevOffset) => prevOffset + 100);
+      if (moved) {
+        const imgs = item.querySelectorAll("img");
+        const groupToMove = Array.from(imgs).slice(-itemsView, imgs.length);
+        console.log(groupToMove);
+        groupToMove.reverse().map((newImg) => item.prepend(newImg));
       }
 
       setPosition((position) => position - 1);
@@ -101,19 +89,19 @@ export const Carousel = ({
 
   // Event resize
   const handleResize = () => {
-    console.log('first')
+    console.log("first");
     const slider = carouselRef.current?.querySelector(
-      '.carousel-slider'
-    ) as HTMLElement
+      ".carousel-slider"
+    ) as HTMLElement;
     if (slider) {
       // Obtener el valor de la propiedad CSS personalizada
       const style = getComputedStyle(slider);
-      const itemsPerScreen = style.getPropertyValue('--items-per-screen');
-      setItemsView(parseInt(itemsPerScreen))
-      
-      console.log('Items per screen:', itemsPerScreen);
+      const itemsPerScreen = style.getPropertyValue("--items-per-screen");
+      setItemsView(parseInt(itemsPerScreen));
+
+      console.log("Items per screen:", itemsPerScreen);
     }
-  }
+  };
 
   //useLayout to get --items-per-screen from css
   useLayoutEffect(() => {
@@ -125,10 +113,12 @@ export const Carousel = ({
       try {
         const data = await fetchPages<FetchMovies>(urlGenre, paramsLanguage, 2);
         setMovies(data.map((item) => item.results).flat());
-        const slider = carouselRef.current?.querySelector('.carousel-slider') as HTMLElement;
+        const slider = carouselRef.current?.querySelector(
+          ".carousel-slider"
+        ) as HTMLElement;
         if (slider) {
           const style = getComputedStyle(slider);
-          const itemsPerScreen = style.getPropertyValue('--items-per-screen');
+          const itemsPerScreen = style.getPropertyValue("--items-per-screen");
           setItemsView(parseInt(itemsPerScreen) || 1); // Valor por defecto si no se encuentra
         }
         setLoading(false);
@@ -142,13 +132,12 @@ export const Carousel = ({
     fetchData();
   }, [genre_id]);
 
-
   useEffect(() => {
-    window.addEventListener('resize',handleResize)
-    return()=> {
-      window.removeEventListener('resize', handleResize)
-    }
-  }, [])
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -162,14 +151,15 @@ export const Carousel = ({
       <div className="carousel-header">
         <h4 className="carousel-title">{name}</h4>
         <div className="carousel-progress-bar">
-          {itemsView > 0 && Array.from({ length: Math.ceil(movies.length / itemsView) }).map(
-            (_, index) => (
-              <div
-                key={"bar-" + index}
-                className={`bar ${index === position ? "bar-active" : ""}`}
-              ></div>
-            )
-          )}
+          {itemsView > 0 &&
+            Array.from({ length: Math.ceil(movies.length / itemsView) }).map(
+              (_, index) => (
+                <div
+                  key={"bar-" + index}
+                  className={`bar ${index === position ? "bar-active" : ""}`}
+                ></div>
+              )
+            )}
         </div>
       </div>
       <div className="carousel-container">
@@ -182,7 +172,7 @@ export const Carousel = ({
         <div
           className="carousel-slider"
           style={{
-            transform: `translateX(${offset}%)`,
+            transform: `translateX(${moved ? "-100" : "0"}%)`,
           }}
         >
           {movies.map((movie) => (
