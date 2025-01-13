@@ -48,6 +48,9 @@ export const Carousel = ({
   const [itemsView, setItemsView] = useState(0);
   const [moved, setMoved] = useState(false); //saber si se movio al inicio
   const [isReadJust, setIsReadJust] = useState(false)
+  //Resize refs
+  const itemsViewRef = useRef<number>(0)
+  const positionRef = useRef<number>(0)
 
   const handleNext = () => {
     if (carouselRef.current) {
@@ -59,14 +62,16 @@ export const Carousel = ({
       }
 
       const imgs = item.querySelectorAll("img");
-
-      if (moved && position !== Math.ceil(movies.length / itemsView) - 2) {
-        const groupToMove = Array.from(imgs).slice(0, itemsView);
-        groupToMove.map((newImg) => item.appendChild(newImg));
-      } else if(moved) {
-        const groupToMove = Array.from(imgs).slice(0, movies.length % itemsView);
-        groupToMove.map((newImg) => item.appendChild(newImg));
-        setIsReadJust(true)
+      // -2 cause position start at 0
+      if(moved) {
+        if(movies.length % itemsView !== 0 && position === Math.ceil(movies.length / itemsView) - 2) {
+          const groupToMove = Array.from(imgs).slice(0, movies.length % itemsView);
+          groupToMove.map((newImg) => item.appendChild(newImg));
+          setIsReadJust(true)
+        } else {
+          const groupToMove = Array.from(imgs).slice(0, itemsView);
+          groupToMove.map((newImg) => item.appendChild(newImg));
+        }
       }
 
       if(position === Math.ceil(movies.length / itemsView) - 1) {
@@ -107,6 +112,36 @@ export const Carousel = ({
     }
   };
 
+  const moveToRight = (steps:number) => {
+    console.log('muevo dereita')
+    if(carouselRef.current) {
+      const item = carouselRef.current.querySelector(
+        ".carousel-slider"
+      ) as HTMLElement;
+  
+      if (!item) return;
+      //igual que next
+      const imgs = item.querySelectorAll("img");
+      const groupToMove = Array.from(imgs).slice(0, steps);
+        groupToMove.map((newImg) => item.appendChild(newImg));
+    }
+  }
+
+  const moveToLeft = (steps:number) => {
+    console.log('muevo izquierda')
+    if(carouselRef.current) {
+      const item = carouselRef.current.querySelector(
+        ".carousel-slider"
+      ) as HTMLElement;
+  
+      if (!item) return;
+      //igual que prev
+      const imgs = item.querySelectorAll("img");
+      const groupToMove = Array.from(imgs).slice(-(steps), imgs.length);
+      groupToMove.reverse().map((newImg) => item.prepend(newImg));
+    }
+  }
+
   // Event resize
   const handleResize = () => {
     console.log("first");
@@ -116,8 +151,30 @@ export const Carousel = ({
     if (slider) {
       // Obtener el valor de la propiedad CSS personalizada
       const style = getComputedStyle(slider);
-      const itemsPerScreen = style.getPropertyValue("--items-per-screen");
-      setItemsView(parseInt(itemsPerScreen));
+      const itemsPerScreen = parseInt(style.getPropertyValue("--items-per-screen"));
+
+      if (itemsPerScreen !== itemsViewRef.current) {
+        const isLastPosition = position === Math.ceil(movies.length / itemsView) - 1;
+        const difference = Math.abs(itemsPerScreen - itemsViewRef.current);
+      
+        if (itemsViewRef.current < itemsPerScreen) {
+          // Si estamos en una posición menor que itemsPerScreen, movemos en la dirección correspondiente
+          if (isLastPosition) {
+            moveToLeft(difference);
+          } else {
+            moveToRight(difference);
+          }
+        } else {
+          // Si estamos en una posición mayor que itemsPerScreen, movemos en la dirección opuesta
+          if (isLastPosition) {
+            moveToRight(difference);
+          } else {
+            moveToLeft(difference);
+          }
+        }
+      }
+      
+      setItemsView(itemsPerScreen);
 
       console.log("Items per screen:", itemsPerScreen);
     }
@@ -158,6 +215,10 @@ export const Carousel = ({
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  useEffect(() => {
+    itemsViewRef.current = itemsView
+  } , [itemsView])
 
   if (loading) {
     return <div>Loading...</div>;
