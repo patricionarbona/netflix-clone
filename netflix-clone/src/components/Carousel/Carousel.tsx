@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { fetchPages } from "../../services/fetchs";
 import "./Carousel.css";
 
@@ -50,7 +50,6 @@ export const Carousel = ({
   const [isReadJust, setIsReadJust] = useState(false);
   //Resize refs
   const itemsViewRef = useRef<number>(0);
-  const positionRef = useRef<number>(0);
 
   const handleNext = () => {
     if (carouselRef.current) {
