@@ -6,6 +6,7 @@
 .video-container iframe {
     border: 0;
 }
+
 .video-container iframe,
 .video-container img {
     width: 100%;
