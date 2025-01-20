@@ -123,12 +123,14 @@ body {
 
 .carousel-progress-bar {
     display: flex;
-    gap: .25rem;
+    gap: .12rem;
+    align-self: flex-end;
+    margin-bottom: .5rem;
 }
 
 .bar {
     width: .5rem;
-    height: .25rem;
+    height: .06rem;
     background-color: #96909037;
     transition: background-color 250ms ease-in-out;
 }
