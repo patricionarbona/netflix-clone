@@ -5,3 +5,20 @@
 body {
     background-color: #141414;
 }
+
+#root {
+    display: grid;
+}
+
+#root > * {
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
+}
+
+#root > .video-container {
+    z-index: -1;
+}
+
+.container-carousels {
+    margin-top: 65vh;
+}

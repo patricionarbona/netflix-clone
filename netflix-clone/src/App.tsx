@@ -39,10 +39,11 @@ function App() {
 
   return (
     <>
-      <Nav></Nav>
-      {/* <Banner/> */}
+      {/* <Nav></Nav> */}
 
       <VideoContainer route={ejemplo.key} banner={true} />
+      <div className="container-carousels">
+
       {generos && generos.length > 0 && (
         <>
           <Carousel genre_id={35} name={`Películas de ${generos[0].name}`} />
@@ -76,6 +77,7 @@ function App() {
           />
         </>
       )}
+      </div>
     </>
   );
 }
