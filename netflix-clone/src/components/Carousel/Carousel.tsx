@@ -271,10 +271,15 @@ export const Carousel = ({
           }}
         >
           {movies.map((movie) => (
-            <img
+            <div
               key={`${genre_id}-slider-${movie.id}`}
-              src={urlPoster + movie.backdrop_path}
-            />
+              className="carousel-img-container"
+            >
+              <img
+                src={urlPoster + movie.backdrop_path}
+              />
+              <h5>{movie.title}</h5>
+            </div>
           ))}
         </div>
         <button
