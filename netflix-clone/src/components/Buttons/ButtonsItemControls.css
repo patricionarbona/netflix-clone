@@ -1,0 +1,13 @@
+.like:last-child {
+    width: 5rem;
+    height: 5rem;
+}
+
+.like {
+ background-color: blue;
+}
+
+.like > svg {
+    width: 10rem;
+    height: 10rem;
+}
