@@ -7,7 +7,7 @@
  background-color: blue;
 }
 
-.like > svg {
-    width: 10rem;
-    height: 10rem;
+.buttonsItemControls svg {
+    width: 2.5rem;
+    height: 2.5rem;
 }
