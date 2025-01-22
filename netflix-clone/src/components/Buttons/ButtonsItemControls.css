@@ -1,10 +1,14 @@
-.like:last-child {
-    width: 5rem;
-    height: 5rem;
+section {
+    width: 20vw;
+    justify-self: center;
+    margin-top: 50px;
 }
 
 .buttonsItemControls {
  background-color: blue;
+ display: flex;
+ justify-content: space-between;
+ padding: .5rem .5rem;
 }
 
 .buttonsItemControls svg {
@@ -28,4 +32,50 @@
     border-color: #ffffff93;
     background-color: hsl(0, 0%, 15%);
     transform: scale(1.025);
+}
+
+.buttons-container {
+    display: flex;
+    gap: .35rem;
+}
+
+.like {
+    position: relative;
+}
+
+.like-group {
+    /* background-color: #141414; */
+    background-color: #a3f;
+    position: absolute;
+    top: -.25rem;
+    left: -3.2rem;
+    padding: .5rem 1rem;
+    border-radius: 4rem;
+    z-index: 10;
+    display: none;
+}
+
+.like-group button {
+    border: 0;
+    background-color: transparent;
+}
+
+/* .like > button:hover + .like-group{
+    display: flex;
+} */
+
+.like:hover > .like-group {
+    display: flex;
+}
+
+.playOnly > button {
+    background-color: #fff;
+}
+
+.playOnly > button:hover {
+    background-color: #d9d7d7;
+}
+
+.playOnly svg {
+    color: #000;
 }
