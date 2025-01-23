@@ -7,6 +7,23 @@ interface Genero {
     genres: Genero[];
   }
 
+interface VideoMovie {
+    iso_639_1: string;
+  iso_3166_1: string;
+  name: string;
+  key: string; 
+  site: string;
+  size: number;
+  type: string;
+  official: boolean;
+  published_at: string;
+  id: string;
+}
+interface VideosMovie {
+    id: number
+    results: VideoMovie[]
+}
+
 const claveApi = import.meta.env.VITE_API_KEY
 
 const options = {
@@ -59,6 +76,22 @@ export const fetchMovieGenres = async (language = 'es'): Promise<Genero[]> => {
         return data.genres
     } catch(er) {
         console.error('Error al obtener los generos', er)
+        throw er
+    }
+} 
+
+export const fetchMovieVideos = async (idMovie: number, language='es'): Promise<VideoMovie[]> => {
+    const url = `https://api.themoviedb.org/3/movie/${idMovie}/videos?language=${language}`
+
+    try {
+        const response = await fetch(url,options)
+        if(!response.ok) {
+            throw new Error('Error peticion videos movies')
+        }
+        const data: VideosMovie = await response.json()
+        return data.results
+    } catch(er) {
+        console.error('Error al obtener los videos de movies', er)
         throw er
     }
 } 
