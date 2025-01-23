@@ -2,7 +2,6 @@ import "./ButtonsItemControls.css";
 
 export const ButtonsItemControls = () => {
   return (
-    <section>
       <div className="buttonsItemControls">
         <div className="buttons-container">
           <div className="playOnly">
@@ -24,6 +23,7 @@ export const ButtonsItemControls = () => {
           </div>
           <div className="addList">
             <button>
+              <span className="tooltip">Añadir a Mi lista</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -131,6 +131,5 @@ export const ButtonsItemControls = () => {
           </button>
         </div>
       </div>
-    </section>
   );
 };
