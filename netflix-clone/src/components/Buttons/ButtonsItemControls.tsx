@@ -57,6 +57,7 @@ export const ButtonsItemControls = () => {
             </button>
             <div className="like-group">
               <button>
+                <span className="tooltip">No es para mí</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -72,6 +73,7 @@ export const ButtonsItemControls = () => {
                 </svg>
               </button>
               <button>
+                <span className="tooltip">Me gusta</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -87,6 +89,7 @@ export const ButtonsItemControls = () => {
                 </svg>
               </button>
               <button>
+                <span className="tooltip">¡Me encanta!</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -111,6 +114,7 @@ export const ButtonsItemControls = () => {
         </div>
         <div className="moreInfo">
           <button>
+            <span className="tooltip">Episodios e información</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
