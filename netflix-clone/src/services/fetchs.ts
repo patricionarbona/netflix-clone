@@ -24,6 +24,42 @@ interface VideosMovie {
     results: VideoMovie[]
 }
 
+interface CastMovie {
+    adult: boolean;
+    gender: number;
+    id: number;
+    known_for_department: string;
+    name: string;
+    original_name: string;
+    popularity: number;
+    profile_path: string | null;
+    cast_id: number;
+    character: string;
+    credit_id: string;
+    order: number;
+}
+
+interface CrewMovie {
+    adult: boolean;
+    credit_id: string;
+    department: string;
+    gender: number;
+    id: number;
+    job: string;
+    known_for_department: string;
+    name: string;
+    original_name: string;
+    popularity: number;
+    profile_path: string | null;
+  }
+  
+
+interface CastsMovie {
+    id: number,
+    cast: CastMovie[]
+    crew: CrewMovie[]
+}
+
 const claveApi = import.meta.env.VITE_API_KEY
 
 const options = {
@@ -90,6 +126,25 @@ export const fetchMovieVideos = async (idMovie: number, language='es'): Promise<
         }
         const data: VideosMovie = await response.json()
         return data.results
+    } catch(er) {
+        console.error('Error al obtener los videos de movies', er)
+        throw er
+    }
+} 
+
+export const fetchMovieCast = async (idMovie: number, language='es'): Promise<{cast: CastMovie[], crew: CrewMovie[] }> => {
+    const url = `https://api.themoviedb.org/3/movie/${idMovie}/credits?language=${language}`
+
+    try {
+        const response = await fetch(url,options)
+        if(!response.ok) {
+            throw new Error('Error peticion videos movies')
+        }
+        const data: CastsMovie = await response.json()
+        return {
+            cast: data.cast,
+            crew: data.crew
+        }
     } catch(er) {
         console.error('Error al obtener los videos de movies', er)
         throw er
