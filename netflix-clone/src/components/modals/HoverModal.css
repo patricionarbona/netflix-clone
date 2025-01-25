@@ -1,0 +1,51 @@
+.hoverModal {
+    margin: 8rem auto;
+    width: 30rem;
+    height: 32.5rem;
+    background-color: #181818;
+    display: grid;
+    grid-template-rows: 3fr 1.25fr;
+    border-radius: .5rem;
+}
+
+.hoverModal img {
+    width: 100%;
+    height: 100%;
+    border-top-left-radius: .5rem;
+    border-top-right-radius: .5rem;
+    object-fit: cover;
+}
+.hoverModal .video-container {
+    height: 100%;
+    border-top-left-radius: .5rem;
+    border-top-right-radius: .5rem;
+
+}
+
+.hoverModal-info {
+    /* padding-top: .5rem;
+    padding: .5rem .25rem; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.video-container {
+    --border-radius-hoverModal: .5rem;
+  position: relative;
+  /* The next three declarations simulate
+     `filter: drop-shadow(0 0 4px rgb(0 0 0 / 50%));` 
+  */
+  border-top-right-radius: var(--border-radius-hoverModal);
+  border-top-left-radius: var(--border-radius-hoverModal);
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    clip-path: inset(0% 0% 0% 0% round var(--border-radius-hoverModal) 
+        var(--border-radius-hoverModal) 0 0);
+  }
