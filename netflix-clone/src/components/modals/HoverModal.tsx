@@ -72,7 +72,7 @@ export const HoverModal = ({
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowVideo(true);
-    }, 3000);
+    }, 500);
 
     return () => clearTimeout(timer);
   }, []);
@@ -88,14 +88,16 @@ export const HoverModal = ({
           />
         ) : (
           <img
-            src={urlPoster + movie.poster_path}
+            src={urlPoster + movie.backdrop_path}
             alt=""
             className={showVideo ? "hidden" : "show"}
           />
         )}
       </div>
-      <ButtonsItemControls />
-      <GenresList genres={movieGenres} />
+      <div className="hoverModal-info">
+        <ButtonsItemControls />
+        <GenresList genres={movieGenres} />
+      </div>
     </div>
   );
 };
