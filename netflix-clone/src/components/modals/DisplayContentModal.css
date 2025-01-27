@@ -1,0 +1,26 @@
+.displayContentModal {
+    color: #fff;
+    
+}
+
+.list-container {
+    display: flex;
+    align-items: center;
+    width: 40vw;
+    flex-wrap: wrap;
+    gap: .5rem;
+}
+
+.list-head {
+    color: #777;
+}
+
+.list-content > a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.list-content:hover {
+    text-decoration: underline;
+    text-decoration-color: #fff;
+}
