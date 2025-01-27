@@ -33,34 +33,6 @@
     gap: .35rem;
 }
 
-.like {
-    position: relative;
-}
-
-.like-group {
-    /* background-color: #141414; */
-    background-color: #232323;
-    position: absolute;
-    top: -.25rem;
-    left: -3.2rem;
-    padding: .5rem 1rem;
-    border-radius: 4rem;
-    z-index: 10;
-    display: none;
-}
-
-.like-group button {
-    border: 0;
-}
-
-.like-group button:hover {
-    background-color: #80808033;
-}
-
-.like:hover > .like-group {
-    display: flex;
-}
-
 .playOnly > button {
     background-color: #fff;
 }
@@ -71,33 +43,6 @@
 
 .playOnly svg {
     color: #000;
-}
-
-.tooltip {
-    position: absolute;
-  top: 0;
-  font-size: .8rem;
-  background: #fff;
-  color: #000;
-  width: 7rem;
-  padding: .7rem .5rem;
-  border-radius: 5px;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-
-.tooltip::before {
-    position: absolute;
-    content: "";
-    height: 8px;
-    width: 8px;
-    background: #fff;
-    bottom: -3px;
-    left: 50%;
-    transform: translate(-50%) rotate(45deg);
-    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 .buttonsItemControls button:hover .tooltip {
