@@ -65,33 +65,7 @@
     gap: 6px;
 }
 
-.video-container-buttons button {
-    /* width: 9rem;
-    height: 2rem; */
-    width: fit-content;
-    flex-shrink: 0;
-    padding: .5rem 1rem ;
-    text-align: center;
-    border-radius: .25rem;
-    border: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    font-size: .8rem;
-}
-
 .video-container-buttons button svg {
     width: 1.25rem;
     height: 1rem;
-}
-
-.video-container-buttons button:first-child {
-    color: #000;
-    background-color: #fff;
-}
-
-.video-container-buttons button:last-child {
-    color: #fff;
-    background-color: #6d6d6eb3;
 }
