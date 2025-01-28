@@ -1,0 +1,23 @@
+.btn-playRect {
+    width: fit-content;
+}
+
+.btn-playRect button {
+    background-color: #fff;
+    display: flex;
+    gap: .7rem;
+    align-items: center;
+    border-radius: .35rem;
+    padding: .8rem 1.5rem;
+}
+
+.btn-playRect svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: #000;
+} 
+
+.btn-playRect:hover button {
+    background-color: hsl(0, 0%, 90%);
+    cursor: pointer;
+}
