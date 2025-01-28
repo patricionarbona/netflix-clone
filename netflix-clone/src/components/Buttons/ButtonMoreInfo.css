@@ -1,0 +1,24 @@
+.btn-moreInfo {
+    width: fit-content;
+}
+
+.btn-moreInfo button {
+    background-color: rgba(109, 109, 110, 0.7);
+    display: flex;
+    gap: .7rem;
+    align-items: center;
+    border-radius: .35rem;
+    padding: .8rem 1.5rem;
+    border: 0;
+}
+
+.btn-moreInfo svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: #000;
+} 
+
+.btn-moreInfo:hover button {
+    background-color: rgba(109, 109, 110, 0.4);
+    cursor: pointer;
+}
