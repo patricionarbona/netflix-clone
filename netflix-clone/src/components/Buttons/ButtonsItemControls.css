@@ -33,18 +33,6 @@
     gap: .35rem;
 }
 
-.playOnly > button {
-    background-color: #fff;
-}
-
-.playOnly > button:hover {
-    background-color: #d9d7d7;
-}
-
-.playOnly svg {
-    color: #000;
-}
-
 .buttonsItemControls button:hover .tooltip {
     top: -45px;
   opacity: 1;
