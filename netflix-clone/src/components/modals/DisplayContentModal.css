@@ -1,12 +1,26 @@
 .displayContentModal {
     color: #fff;
-    
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    overflow-y: auto;
+    width: 100vw;
+    height: 100vh;
+    background-color: transparent;
+}
+
+.displayContentModal-content {
+    background-color: #141414;
+    margin: 0 auto;
+    margin-top: 4rem;
+    border-radius: .7rem;
+    width: 50%;
 }
 
 .list-container {
     display: flex;
     align-items: center;
-    width: 40vw;
     flex-wrap: wrap;
     gap: .5rem;
 }
@@ -23,4 +37,11 @@
 .list-content:hover {
     text-decoration: underline;
     text-decoration-color: #fff;
+}
+
+.displayContentModal-info {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    gap: 1.5rem;
+    position: relative;
 }
