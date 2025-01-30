@@ -60,6 +60,30 @@ interface CastsMovie {
     crew: CrewMovie[]
 }
 
+interface Movie {
+    adult: boolean;
+    backdrop_path: string;
+    genre_ids: number[];
+    id: number;
+    original_language: string;
+    original_title: string;
+    overview: string;
+    popularity: number;
+    poster_path: string;
+    release_date: string;
+    title: string;
+    video: boolean;
+    vote_average: number;
+    vote_count: number;
+  }
+
+  interface MovieSimilar {
+    page: number
+    results: Movie[]
+    total_pages: number
+    total_results: number
+  }
+
 const claveApi = import.meta.env.VITE_API_KEY
 
 const options = {
@@ -150,3 +174,19 @@ export const fetchMovieCast = async (idMovie: number, language='es'): Promise<{c
         throw er
     }
 } 
+
+export const fetchMovieSimilar = async (idMovie: number, language='es'): Promise<Movie[]> => {
+    const url = `https://api.themoviedb.org/3/movie/${idMovie}/similar?language=${language}`
+
+    try {
+        const response = await fetch(url,options)
+        if(!response.ok) {
+            throw new Error('Error peticion similar movies')
+        }
+        const data: MovieSimilar = await response.json()
+        return data.results
+    } catch(er) {
+        console.error('Error al obtener los videos de movies', er)
+        throw er
+    }
+}
