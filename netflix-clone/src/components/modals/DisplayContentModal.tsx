@@ -7,6 +7,7 @@ import {
 import { VideoContainer } from "../Video/VideoContainer";
 import "./DisplayContentModal.css";
 import { ButtonAddList } from "../Buttons/ButtonAddList";
+import { ButtonArrowDown } from "../Buttons/ButtonArrowDown";
 interface Movie {
   adult: boolean;
   backdrop_path: string;
@@ -205,7 +206,6 @@ export const DisplayContentModal = ({
                   </div>
                   <h2>{movie.title}</h2>
                   <div className="card-metadata">
-
                     <span>{movie?.release_date}</span>
                     <ButtonAddList showTooltip={true} />
                   </div>
@@ -214,6 +214,9 @@ export const DisplayContentModal = ({
                   </div>
                 </div>
               ))}
+            </div>
+            <div className="accordion-up-down">
+              <ButtonArrowDown />
             </div>
           </div>
           <h3>Acerca de {movie.title}</h3>
