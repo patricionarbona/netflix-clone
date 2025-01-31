@@ -3,6 +3,10 @@
     height: 80vh;
 }
 
+.hoverModal-video {
+    height: 100%;
+}
+
 .video-container iframe {
     border: 0;
 }

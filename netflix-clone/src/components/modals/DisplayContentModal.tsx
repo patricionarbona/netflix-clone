@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { fetchMovieCast, fetchMovieSimilar, fetchMovieVideos } from "../../services/fetchs";
+import {
+  fetchMovieCast,
+  fetchMovieSimilar,
+  fetchMovieVideos,
+} from "../../services/fetchs";
 import { VideoContainer } from "../Video/VideoContainer";
 import "./DisplayContentModal.css";
 import { ButtonAddList } from "../Buttons/ButtonAddList";
@@ -96,12 +100,12 @@ export const DisplayContentModal = ({
         const [data, dataCast, dataSimilar] = await Promise.all([
           fetchMovieVideos(movie.id),
           fetchMovieCast(movie.id),
-          fetchMovieSimilar(movie.id)
+          fetchMovieSimilar(movie.id),
         ]);
         setVideos(data.filter((video) => video.type === "Teaser"));
         setCast(dataCast);
-        setMovieSimilar(dataSimilar)
-        console.log('similar: ', movieSimilar)
+        setMovieSimilar(dataSimilar);
+        console.log("similar: ", movieSimilar);
         console.log("cast entero: ", dataCast);
         const departments = new Set(
           dataCast.cast.map((actor) => actor.known_for_department)
@@ -126,7 +130,7 @@ export const DisplayContentModal = ({
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowVideo(true);
-    }, 1500);
+    }, 15000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -149,6 +153,7 @@ export const DisplayContentModal = ({
             />
           )}
         </div>
+        <div className="displayContentModal-wrapper">
         <div className="displayContentModal-info">
           <div>
             <h3>Sinopsis:</h3>
@@ -183,17 +188,34 @@ export const DisplayContentModal = ({
         </div>
         <h3>Similares</h3>
         <div className="display-accordion">
-              <div className="accordion-grid-container">
-                {movieSimilar.map((movie) => (
-                  <div className="card">
-                    <img src={urlPoster + movie.poster_path} alt="" />
-                    <ButtonAddList showTooltip={true} />
-                    <p>{movie.overview}</p>
-                  </div>
-                ))}
+          <div className="accordion-grid-container">
+            {movieSimilar.map((movie) => (
+              <div key={movie.id} className="card">
+                <div className="card-img">
+                  <img
+                    src={
+                      movie?.backdrop_path
+                        ? urlPoster + movie.backdrop_path
+                        : movie?.poster_path
+                        ? urlPoster + movie.poster_path
+                        : "/assets/netflix-logo.png"
+                    }
+                    alt=""
+                  />
+                </div>
+                <div className="card-metadata">
+                  <span>{movie?.release_date}</span>
+                  <ButtonAddList showTooltip={true} />
+                </div>
+                <div className="card-overview">
+                  <p>{movie?.overview ? movie.overview : "Sin sinopsis"}</p>
+                </div>
               </div>
+            ))}
+          </div>
         </div>
         <h3>Acerca de {movie.title}</h3>
+        </div>
       </div>
     </div>
   );
