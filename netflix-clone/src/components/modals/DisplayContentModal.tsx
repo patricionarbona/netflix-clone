@@ -154,67 +154,69 @@ export const DisplayContentModal = ({
           )}
         </div>
         <div className="displayContentModal-wrapper">
-        <div className="displayContentModal-info">
-          <div>
-            <h3>Sinopsis:</h3>
-            <p>{movie.overview}</p>
-          </div>
-          <div>
-            <div className="list-container">
-              <h4 className="list-head">Reparto:</h4>
-              {cast.crew
-                ?.filter((actor) => actor.known_for_department === "Acting")
-                .map((actor, index, array) => (
-                  <span key={actor.id} className="list-content">
+          <div className="displayContentModal-info">
+            <div>
+              <h3>Sinopsis:</h3>
+              <p>{movie.overview}</p>
+            </div>
+            <div>
+              <div className="list-container">
+                <h4 className="list-head">Reparto:</h4>
+                {cast.crew
+                  ?.filter((actor) => actor.known_for_department === "Acting")
+                  .map((actor, index, array) => (
+                    <span key={actor.id} className="list-content">
+                      <a href={"#"}>
+                        {actor.name}
+                        {index !== array.length - 1 && ","}
+                      </a>
+                    </span>
+                  ))}
+              </div>
+              <div className="list-container">
+                <h4 className="list-head">Géneros:</h4>
+                {movieGenres.map((genero, index, array) => (
+                  <span key={genero.id} className="list-content">
                     <a href={"#"}>
-                      {actor.name}
+                      {genero.name}
                       {index !== array.length - 1 && ","}
                     </a>
                   </span>
                 ))}
+              </div>
             </div>
-            <div className="list-container">
-              <h4 className="list-head">Géneros:</h4>
-              {movieGenres.map((genero, index, array) => (
-                <span key={genero.id} className="list-content">
-                  <a href={"#"}>
-                    {genero.name}
-                    {index !== array.length - 1 && ","}
-                  </a>
-                </span>
+          </div>
+          <h3>Similares</h3>
+          <div className="display-accordion">
+            <div className="accordion-grid-container">
+              {movieSimilar.map((movie) => (
+                <div key={movie.id} className="card">
+                  <div className="card-img">
+                    <img
+                      src={
+                        movie?.backdrop_path
+                          ? urlPoster + movie.backdrop_path
+                          : movie?.poster_path
+                          ? urlPoster + movie.poster_path
+                          : "/assets/netflix-logo.png"
+                      }
+                      alt=""
+                    />
+                  </div>
+                  <h2>{movie.title}</h2>
+                  <div className="card-metadata">
+
+                    <span>{movie?.release_date}</span>
+                    <ButtonAddList showTooltip={true} />
+                  </div>
+                  <div className="card-overview">
+                    <p>{movie?.overview ? movie.overview : "Sin sinopsis"}</p>
+                  </div>
+                </div>
               ))}
             </div>
           </div>
-        </div>
-        <h3>Similares</h3>
-        <div className="display-accordion">
-          <div className="accordion-grid-container">
-            {movieSimilar.map((movie) => (
-              <div key={movie.id} className="card">
-                <div className="card-img">
-                  <img
-                    src={
-                      movie?.backdrop_path
-                        ? urlPoster + movie.backdrop_path
-                        : movie?.poster_path
-                        ? urlPoster + movie.poster_path
-                        : "/assets/netflix-logo.png"
-                    }
-                    alt=""
-                  />
-                </div>
-                <div className="card-metadata">
-                  <span>{movie?.release_date}</span>
-                  <ButtonAddList showTooltip={true} />
-                </div>
-                <div className="card-overview">
-                  <p>{movie?.overview ? movie.overview : "Sin sinopsis"}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-        <h3>Acerca de {movie.title}</h3>
+          <h3>Acerca de {movie.title}</h3>
         </div>
       </div>
     </div>

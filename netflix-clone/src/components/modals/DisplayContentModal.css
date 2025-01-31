@@ -63,7 +63,7 @@
 .card-img {
     position: relative;
     width: 100%;
-    flex: 1.5;
+    flex: 2;
     border-top-left-radius: var(--card-radius);
     border-top-right-radius: var(--card-radius);
 }
@@ -75,6 +75,19 @@
     height: 100%;
 }
 
+.card > h2 {
+    margin: 0;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 0 var(--card-h-padding);
+}
+
+.card > h2:hover {
+    white-space: wrap;
+}
+
 .card > .card-metadata{
     display: flex;
     flex: 1;
@@ -84,7 +97,7 @@
 }
 
 .card > .card-overview {
-    flex: 2;
+    flex: 1;
     position: relative;
 }
 
@@ -95,8 +108,8 @@
     padding: 0 var(--card-h-padding);
 
     display: -webkit-box;
-    line-clamp: 7;
-    -webkit-line-clamp: 7;
+    line-clamp: 3;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical; 
 }
 
