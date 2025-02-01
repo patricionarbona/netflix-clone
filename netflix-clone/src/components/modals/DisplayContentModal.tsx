@@ -95,8 +95,7 @@ export const DisplayContentModal = ({
   const [movieSimilar, setMovieSimilar] = useState<Movie[]>([]);
   const [showVideo, setShowVideo] = useState(false);
 
-
-  const [isAccordionOpen, setIsAccordionOpen] = useState(false)
+  const [isAccordionOpen, setIsAccordionOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -140,9 +139,9 @@ export const DisplayContentModal = ({
   }, []);
 
   const handleClickAccordion = () => {
-    setIsAccordionOpen(!isAccordionOpen)
-    console.log('esta ', isAccordionOpen? 'abierto' : 'cerrado')
-  }
+    setIsAccordionOpen(!isAccordionOpen);
+    console.log("esta ", isAccordionOpen ? "abierto" : "cerrado");
+  };
 
   return (
     <div className="displayContentModal">
@@ -196,8 +195,10 @@ export const DisplayContentModal = ({
             </div>
           </div>
           <h3>Similares</h3>
-          <div className={`display-accordion ${isAccordionOpen ? 'open' : 'close'}`}
-            
+          <div
+            className={`display-accordion ${
+              isAccordionOpen ? "open" : "close"
+            }`}
           >
             <div className="accordion-grid-container">
               {movieSimilar.map((movie) => (
@@ -225,24 +226,29 @@ export const DisplayContentModal = ({
                 </div>
               ))}
             </div>
-            <div className={`accordion-up-down ${isAccordionOpen? 'open' : 'close'}`} onClick={handleClickAccordion}>
+            <div
+              className={`accordion-up-down ${
+                isAccordionOpen ? "open" : "close"
+              }`}
+              onClick={handleClickAccordion}
+            >
               <ButtonArrowDown />
             </div>
           </div>
           <div className="displayContentModal-about">
             <h3>Acerca de {movie.title}</h3>
             <div className="list-container">
-                  <h4 className="list-head">Dirigida por:</h4>
-                  {cast.crew
-                    ?.filter((actor) => actor.known_for_department === "Directing")
-                    .map((actor, index, array) => (
-                      <span key={actor.id} className="list-content">
-                        <a href={"#"}>
-                          {actor.name}
-                          {index !== array.length - 1 && ","}
-                        </a>
-                      </span>
-                    ))}
+              <h4 className="list-head">Dirigida por:</h4>
+              {cast.crew
+                ?.filter((actor) => actor.known_for_department === "Directing")
+                .map((actor, index, array) => (
+                  <span key={actor.id} className="list-content">
+                    <a href={"#"}>
+                      {actor.name}
+                      {index !== array.length - 1 && ","}
+                    </a>
+                  </span>
+                ))}
             </div>
             <div className="list-container">
               <h4 className="list-head">Reparto:</h4>
@@ -258,28 +264,28 @@ export const DisplayContentModal = ({
                 ))}
             </div>
             <div className="list-container">
-                <h4 className="list-head">Guionista:</h4>
-                {cast.crew
-                  ?.filter((actor) => actor.known_for_department === "Writing")
-                  .map((actor, index, array) => (
-                    <span key={actor.id} className="list-content">
-                      <a href={"#"}>
-                        {actor.name}
-                        {index !== array.length - 1 && ","}
-                      </a>
-                    </span>
-                  ))}
-            </div>
-            <div className="list-container">
-                <h4 className="list-head">Géneros:</h4>
-                {movieGenres.map((genero, index, array) => (
-                  <span key={genero.id} className="list-content">
+              <h4 className="list-head">Guionista:</h4>
+              {cast.crew
+                ?.filter((actor) => actor.known_for_department === "Writing")
+                .map((actor, index, array) => (
+                  <span key={actor.id} className="list-content">
                     <a href={"#"}>
-                      {genero.name}
+                      {actor.name}
                       {index !== array.length - 1 && ","}
                     </a>
                   </span>
                 ))}
+            </div>
+            <div className="list-container">
+              <h4 className="list-head">Géneros:</h4>
+              {movieGenres.map((genero, index, array) => (
+                <span key={genero.id} className="list-content">
+                  <a href={"#"}>
+                    {genero.name}
+                    {index !== array.length - 1 && ","}
+                  </a>
+                </span>
+              ))}
             </div>
           </div>
         </div>
