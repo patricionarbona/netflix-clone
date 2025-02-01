@@ -1,9 +1,10 @@
 import "./ButtonArrowDown.css";
 
-export const ButtonArrowDown = () => {
+export const ButtonArrowDown = ({ tooltip = false, tooltipText = "" }) => {
   return (
     <div className="arrowDown">
       <button>
+        {tooltip && <span className="tooltip">{tooltipText}</span>}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
