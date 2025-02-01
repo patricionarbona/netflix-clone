@@ -41,12 +41,23 @@
     position: relative;
 }
 
+.display-accordion.open {
+    height: 100%;
+}
+
+.display-accordion.close {
+    height: calc(3 * 18.5rem + 3 * 1.5rem - 2rem);
+}
+
+.display-accordion > :first-child{
+    height: inherit;
+}
+
 .accordion-grid-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1.8rem;
     overflow: hidden;
-    height: calc(3 * 18.5rem + 3 * 1.5rem - 2rem);
 }
 
 .accordion-grid-container > div {
@@ -60,7 +71,6 @@
     align-items: flex-end;
     position: relative;
     height: 4.5rem;
-    bottom: 4rem;
     background-image: linear-gradient(
         0deg,
         #181818 0,
@@ -73,6 +83,22 @@
 .accordion-up-down > .arrowDown {
     position: absolute;
     bottom: -1.5rem;
+}
+
+.accordion-up-down.open {
+    bottom: 0;
+}
+
+.accordion-up-down.close {
+    bottom: 4rem;
+}
+
+.accordion-up-down.open svg {
+    transform: rotate(180deg);
+}
+
+.accordion-up-down.close svg {
+    transform: rotate(0deg);
 }
 
 .card {

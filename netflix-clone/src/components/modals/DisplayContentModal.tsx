@@ -95,6 +95,9 @@ export const DisplayContentModal = ({
   const [movieSimilar, setMovieSimilar] = useState<Movie[]>([]);
   const [showVideo, setShowVideo] = useState(false);
 
+
+  const [isAccordionOpen, setIsAccordionOpen] = useState(false)
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -135,6 +138,11 @@ export const DisplayContentModal = ({
 
     return () => clearTimeout(timer);
   }, []);
+
+  const handleClickAccordion = () => {
+    setIsAccordionOpen(!isAccordionOpen)
+    console.log('esta ', isAccordionOpen? 'abierto' : 'cerrado')
+  }
 
   return (
     <div className="displayContentModal">
@@ -188,7 +196,9 @@ export const DisplayContentModal = ({
             </div>
           </div>
           <h3>Similares</h3>
-          <div className="display-accordion">
+          <div className={`display-accordion ${isAccordionOpen ? 'open' : 'close'}`}
+            
+          >
             <div className="accordion-grid-container">
               {movieSimilar.map((movie) => (
                 <div key={movie.id} className="card">
@@ -215,7 +225,7 @@ export const DisplayContentModal = ({
                 </div>
               ))}
             </div>
-            <div className="accordion-up-down">
+            <div className={`accordion-up-down ${isAccordionOpen? 'open' : 'close'}`} onClick={handleClickAccordion}>
               <ButtonArrowDown />
             </div>
           </div>
