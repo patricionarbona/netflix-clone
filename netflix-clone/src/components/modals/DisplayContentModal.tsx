@@ -229,7 +229,59 @@ export const DisplayContentModal = ({
               <ButtonArrowDown />
             </div>
           </div>
-          <h3>Acerca de {movie.title}</h3>
+          <div className="displayContentModal-about">
+            <h3>Acerca de {movie.title}</h3>
+            <div className="list-container">
+                  <h4 className="list-head">Dirigida por:</h4>
+                  {cast.crew
+                    ?.filter((actor) => actor.known_for_department === "Directing")
+                    .map((actor, index, array) => (
+                      <span key={actor.id} className="list-content">
+                        <a href={"#"}>
+                          {actor.name}
+                          {index !== array.length - 1 && ","}
+                        </a>
+                      </span>
+                    ))}
+            </div>
+            <div className="list-container">
+              <h4 className="list-head">Reparto:</h4>
+              {cast.crew
+                ?.filter((actor) => actor.known_for_department === "Acting")
+                .map((actor, index, array) => (
+                  <span key={actor.id} className="list-content">
+                    <a href={"#"}>
+                      {actor.name}
+                      {index !== array.length - 1 && ","}
+                    </a>
+                  </span>
+                ))}
+            </div>
+            <div className="list-container">
+                <h4 className="list-head">Guionista:</h4>
+                {cast.crew
+                  ?.filter((actor) => actor.known_for_department === "Writing")
+                  .map((actor, index, array) => (
+                    <span key={actor.id} className="list-content">
+                      <a href={"#"}>
+                        {actor.name}
+                        {index !== array.length - 1 && ","}
+                      </a>
+                    </span>
+                  ))}
+            </div>
+            <div className="list-container">
+                <h4 className="list-head">Géneros:</h4>
+                {movieGenres.map((genero, index, array) => (
+                  <span key={genero.id} className="list-content">
+                    <a href={"#"}>
+                      {genero.name}
+                      {index !== array.length - 1 && ","}
+                    </a>
+                  </span>
+                ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>
