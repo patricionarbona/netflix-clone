@@ -23,6 +23,7 @@
 .btn-playCirc button:hover {
     border-color: #ffffff93;
     background-color: #d9d7d7;
+    cursor: pointer;
     transform: scale(1.025);
 }
 

@@ -24,6 +24,7 @@
     border-color: #ffffff93;
     background-color: hsl(0, 0%, 15%);
     transform: scale(1.025);
+    cursor: pointer;
 }
 
 .btn-close button:hover .tooltip {

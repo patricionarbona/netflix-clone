@@ -36,6 +36,7 @@
 }
 
 .like-group button:hover {
+    cursor: pointer;
     background-color: #80808033;
 }
 
