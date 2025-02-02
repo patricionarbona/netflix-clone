@@ -8,6 +8,7 @@ import { VideoContainer } from "../Video/VideoContainer";
 import "./DisplayContentModal.css";
 import { ButtonAddList } from "../Buttons/ButtonAddList";
 import { ButtonArrowDown } from "../Buttons/ButtonArrowDown";
+import { ButtonClose } from "../Buttons/ButtonClose";
 interface Movie {
   adult: boolean;
   backdrop_path: string;
@@ -77,14 +78,18 @@ interface CreditsMovie {
   crew: CrewMovie[];
 }
 
-const urlPoster = "https://image.tmdb.org/t/p/original/";
-
-export const DisplayContentModal = ({
-  movie,
-  genres,
-}: {
+interface DisplayContentModalProps {
   movie: Movie;
   genres: Genero[];
+  onClose: () => void;
+}
+
+const urlPoster = "https://image.tmdb.org/t/p/original/";
+
+export const DisplayContentModal: React.FC<DisplayContentModalProps> = ({
+  movie,
+  genres,
+  onClose,
 }) => {
   const movieGenres = genres.filter((genero) =>
     movie.genre_ids.includes(genero.id)
@@ -96,6 +101,16 @@ export const DisplayContentModal = ({
   const [showVideo, setShowVideo] = useState(false);
 
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
+
+  const handleClickOutside = (e: React.MouseEvent) => {
+    // Cerrar el modal si se hace clic fuera de él
+    if (
+      e.target instanceof HTMLElement &&
+      e.target.classList.contains("displayContentModal")
+    ) {
+      onClose();
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -144,9 +159,10 @@ export const DisplayContentModal = ({
   };
 
   return (
-    <div className="displayContentModal">
+    <div className="displayContentModal" onClick={handleClickOutside}>
       <div className="displayContentModal-content">
         <div className="displayContentModal-player">
+          <ButtonClose onClick={onClose} />
           {showVideo ? (
             <VideoContainer
               route={videos[0]?.key}
