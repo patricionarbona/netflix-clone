@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
 import { fetchMovieVideos } from "../../services/fetchs";
-import { ButtonsItemControls } from "../Buttons/ButtonsItemControls";
 import { GenresList } from "../Carousel/GenresList";
 import { VideoContainer } from "../Video/VideoContainer";
 import "./HoverModal.css";
+import { ButtonArrowDown } from "../Buttons/ButtonArrowDown";
+import { DisplayContentModal } from "./DisplayContentModal";
+import { ButtonPlayCirc } from "../Buttons/ButtonPlayCirc";
+import { ButtonAddList } from "../Buttons/ButtonAddList";
+import { LikeGroupButton } from "../Buttons/LikeGroupButton";
 
 interface Movie {
   adult: boolean;
@@ -77,6 +81,11 @@ export const HoverModal = ({
     return () => clearTimeout(timer);
   }, []);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
   return (
     <div className="hoverModal">
       <div className="hoverModal-display-container">
@@ -95,8 +104,28 @@ export const HoverModal = ({
         )}
       </div>
       <div className="hoverModal-info">
-        <ButtonsItemControls />
+        <div className="buttonsItemControls">
+          <div className="buttons-container">
+            <ButtonPlayCirc />
+            <ButtonAddList showTooltip={true} />
+            <LikeGroupButton />
+          </div>
+          <div className="moreInfo">
+            <ButtonArrowDown
+              tooltip={true}
+              tooltipText="Episodios e información"
+              onClick={openModal}
+            />
+          </div>
+        </div>
         <GenresList genres={movieGenres} />
+        {isModalOpen && (
+          <DisplayContentModal
+            movie={movie}
+            genres={genres}
+            onClose={closeModal}
+          />
+        )}
       </div>
     </div>
   );
