@@ -1,9 +1,15 @@
 import "./ButtonArrowDown.css";
 
-export const ButtonArrowDown = ({ tooltip = false, tooltipText = "" }) => {
+interface ButtonArrowDownProps {
+  tooltip?: boolean
+  tooltipText?:string
+  onClick?: () => void
+}
+
+export const ButtonArrowDown: React.FC<ButtonArrowDownProps> = ({ tooltip = false, tooltipText = "", onClick}) => {
   return (
     <div className="arrowDown">
-      <button>
+      <button onClick={onClick}>
         {tooltip && <span className="tooltip">{tooltipText}</span>}
         <svg
           xmlns="http://www.w3.org/2000/svg"
