@@ -8,20 +8,25 @@ interface Genero {
 interface GlobalContextType {
     generos: Genero[];
     setGeneros: React.Dispatch<React.SetStateAction<Genero[]>>;
+    loading: boolean;
   }
 
 
 
   export const GlobalContext = createContext<GlobalContextType>({
     generos: [],
-    setGeneros: () => {}
+    setGeneros: () => {},
+    loading: true
   });
   
 
 export const useGlobalContext = () => {
     const context = useContext(GlobalContext)
     
-    
+    console.log('en el context: ', context)
+    if(!context) {
+        throw new Error('Error en el context')
+    }
   
     return context
   }
