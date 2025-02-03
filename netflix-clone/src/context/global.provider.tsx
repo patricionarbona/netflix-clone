@@ -1,10 +1,6 @@
-import { createContext, ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { fetchMovieGenres } from "../services/fetchs";
-
-interface GlobalContextType {
-  generos: Genero[];
-  setGeneros: React.Dispatch<React.SetStateAction<Genero[]>>;
-}
+import { GlobalContext } from "./global.context";
 
 interface GlobalProviderProps {
   children: ReactNode;
@@ -15,7 +11,6 @@ interface Genero {
   name: string;
 }
 
-export const GlobalContext = createContext<GlobalContextType | null>(null);
 
 export const GlobalProvider = ({ children }: GlobalProviderProps) => {
   const [generos, setGeneros] = useState<Genero[]>([]);
