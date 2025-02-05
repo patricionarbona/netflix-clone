@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { fetchMovieVideos } from "../../services/fetchs";
 import { GenresList } from "../Carousel/GenresList";
 import { VideoContainer } from "../Video/VideoContainer";
@@ -8,6 +8,7 @@ import { DisplayContentModal } from "./DisplayContentModal";
 import { ButtonPlayCirc } from "../Buttons/ButtonPlayCirc";
 import { ButtonAddList } from "../Buttons/ButtonAddList";
 import { LikeGroupButton } from "../Buttons/LikeGroupButton";
+import { GlobalContext } from "../../context/global.context";
 
 interface Movie {
   adult: boolean;
@@ -46,19 +47,24 @@ interface VideoMovie {
 
 const urlPoster = "https://image.tmdb.org/t/p/original/";
 
-export const HoverModal = ({
-  movie,
-  genres,
-}: {
-  movie: Movie;
-  genres: Genero[];
-}) => {
-  const movieGenres = genres.filter((genero) =>
+export const HoverModal = () => {
+
+
+  const {generos, moviePicked, setShowHover} = useContext(GlobalContext)
+
+  const movie: Movie = {...moviePicked}
+  const genres = generos 
+
+  const movieGenres = Object.values(genres).filter((genero) =>
     movie.genre_ids.includes(genero.id)
   );
 
   const [videos, setVideos] = useState<VideoMovie[]>([]);
   const [showVideo, setShowVideo] = useState(false);
+
+  const handleMouseLeave = () => {
+    setShowHover(false)
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -87,7 +93,8 @@ export const HoverModal = ({
   const closeModal = () => setIsModalOpen(false);
 
   return (
-    <div className="hoverModal">
+    <div className="hoverModal"
+    onMouseLeave={handleMouseLeave}>
       <div className="hoverModal-display-container">
         {showVideo ? (
           <VideoContainer
