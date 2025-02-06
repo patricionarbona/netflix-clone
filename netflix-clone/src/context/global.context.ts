@@ -29,6 +29,8 @@ interface GlobalContextType {
   setShowHover: React.Dispatch<React.SetStateAction<boolean>>;
   moviePicked: Movie;
   setMoviePicked: React.Dispatch<React.SetStateAction<Movie>>;
+  moviePickedPos: {x: number, y: number};
+  setMoviePickedPos: React.Dispatch<React.SetStateAction<{x: number, y: number}>>;
   loading: boolean;
 }
 
@@ -57,6 +59,8 @@ export const GlobalContext = createContext<GlobalContextType>({
   setShowHover: () => {},
   moviePicked: defaultMovie,
   setMoviePicked: () => {},
+  moviePickedPos: {x:0, y:0},
+  setMoviePickedPos: () => {},
 });
 
 export const useGlobalContext = () => {
