@@ -48,12 +48,11 @@ interface VideoMovie {
 const urlPoster = "https://image.tmdb.org/t/p/original/";
 
 export const HoverModal = () => {
+  const { generos, moviePicked, setShowHover, moviePickedPos } =
+    useContext(GlobalContext);
 
-
-  const {generos, moviePicked, setShowHover} = useContext(GlobalContext)
-
-  const movie: Movie = {...moviePicked}
-  const genres = generos 
+  const movie: Movie = { ...moviePicked };
+  const genres = generos;
 
   const movieGenres = Object.values(genres).filter((genero) =>
     movie.genre_ids.includes(genero.id)
@@ -62,15 +61,18 @@ export const HoverModal = () => {
   const [videos, setVideos] = useState<VideoMovie[]>([]);
   const [showVideo, setShowVideo] = useState(false);
 
-  const handleMouseLeave = () => {
-    setShowHover(false)
-  }
+  const handleMouseLeave = (e) => {
+    console.log('hover pos: ', e.target.getBoundingClientRect())
+    console.log('posicion hover: ', moviePickedPos)
+    setShowHover(false);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await fetchMovieVideos(movie.id);
         setVideos(data.filter((video) => video.type === "Teaser"));
+        console.log("ppos: ", moviePickedPos);
       } catch (error) {
         console.error("Error al obtener videos:", error);
       }
@@ -90,11 +92,20 @@ export const HoverModal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setShowHover(false);
+  };
 
   return (
-    <div className="hoverModal"
-    onMouseLeave={handleMouseLeave}>
+    <div
+      className="hoverModal"
+      onMouseLeave={(e) => handleMouseLeave(e)}
+      style={{
+        left: `${moviePickedPos.x}px`,
+        top: `${moviePickedPos.y}px`,
+      }}
+    >
       <div className="hoverModal-display-container">
         {showVideo ? (
           <VideoContainer
