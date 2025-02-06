@@ -5,6 +5,7 @@
     display: grid;
     grid-template-rows: 3fr 1.25fr;
     border-radius: .5rem;
+    position: absolute;
 }
 
 .hoverModal img {
