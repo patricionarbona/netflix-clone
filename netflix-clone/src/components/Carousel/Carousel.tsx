@@ -41,7 +41,7 @@ export const Carousel = ({
   name: string;
 }) => {
 
-  const {setShowHover, setMoviePicked } = useContext(GlobalContext)
+  const {setShowHover, setMoviePicked, setMoviePickedPos } = useContext(GlobalContext)
 
   const [movies, setMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -55,9 +55,16 @@ export const Carousel = ({
   //Resize refs
   const itemsViewRef = useRef<number>(0);
 
-  const handleMouseEnter = (e, movie) => {
+  const handleMouseEnter = (e: React.MouseEvent<HTMLElement>, movie:Movie) => {
     setMoviePicked(movie)
     setShowHover(true)
+    const htmlTarget = e.target as HTMLElement
+    const htmlPos = htmlTarget.getBoundingClientRect()
+    setMoviePickedPos({
+      x: htmlPos.x - htmlPos.width / 2 + window.scrollX,
+      y: htmlPos.y - htmlPos.height / 2 + window.scrollY
+    })
+
   }
 
   const handleNext = () => {
