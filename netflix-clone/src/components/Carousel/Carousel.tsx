@@ -60,8 +60,9 @@ export const Carousel = ({
     setShowHover(true)
     const htmlTarget = e.target as HTMLElement
     const htmlPos = htmlTarget.getBoundingClientRect()
+    console.log('posicion hover: ', htmlPos)
     setMoviePickedPos({
-      x: htmlPos.x - htmlPos.width / 2 + window.scrollX,
+      x:htmlPos.x - htmlPos.width/4,
       y: htmlPos.y - htmlPos.height / 2 + window.scrollY
     })
 
