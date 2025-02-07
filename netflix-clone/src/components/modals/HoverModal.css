@@ -1,20 +1,25 @@
 .hoverModal {
-    width: 30rem;
-    height: 32.5rem;
+    width: 25rem;
+    height: 22rem;
     background-color: #181818;
     display: grid;
-    grid-template-rows: 3fr 1.25fr;
+    grid-template-rows: 1fr 1fr;
     border-radius: .5rem;
     position: absolute;
 }
 
-.hoverModal img {
-    width: 100%;
-    height: 100%;
+.hoverModal-display-container {
+    position: relative;
+}
+
+.hoverModal-display-container >  img {
     border-top-left-radius: .5rem;
     border-top-right-radius: .5rem;
-    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    position: absolute;
 }
+
 .hoverModal .video-container {
     height: 100%;
     border-top-left-radius: .5rem;
