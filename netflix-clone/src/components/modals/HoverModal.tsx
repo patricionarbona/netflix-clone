@@ -64,14 +64,13 @@ export const HoverModal = () => {
       try {
         const data = await fetchMovieVideos(movie.id);
         setVideos(data.filter((video) => video.type === "Teaser"));
-        console.log("ppos: ", moviePickedPos);
       } catch (error) {
         console.error("Error al obtener videos:", error);
       }
     };
 
     fetchData();
-  }, []);
+  }, [moviePicked, movie.id]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
