@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   fetchMovieCast,
   fetchMovieSimilar,
@@ -9,6 +9,7 @@ import "./DisplayContentModal.css";
 import { ButtonAddList } from "../Buttons/ButtonAddList";
 import { ButtonArrowDown } from "../Buttons/ButtonArrowDown";
 import { ButtonClose } from "../Buttons/ButtonClose";
+import { GlobalContext } from "../../context/global.context";
 interface Movie {
   adult: boolean;
   backdrop_path: string;
@@ -78,21 +79,16 @@ interface CreditsMovie {
   crew: CrewMovie[];
 }
 
-interface DisplayContentModalProps {
-  movie: Movie;
-  genres: Genero[];
-  onClose: () => void;
-}
-
 const urlPoster = "https://image.tmdb.org/t/p/original/";
 
-export const DisplayContentModal: React.FC<DisplayContentModalProps> = ({
-  movie,
-  genres,
-  onClose,
-}) => {
+export const DisplayContentModal = () => {
+
+  const {moviePicked, generos, setIsModalOpen} = useContext(GlobalContext)
+
+  const genres = generos
+
   const movieGenres = genres.filter((genero) =>
-    movie.genre_ids.includes(genero.id)
+    moviePicked.genre_ids.includes(genero.id)
   );
 
   const [videos, setVideos] = useState<VideoMovie[]>([]);
@@ -108,7 +104,7 @@ export const DisplayContentModal: React.FC<DisplayContentModalProps> = ({
       e.target instanceof HTMLElement &&
       e.target.classList.contains("displayContentModal")
     ) {
-      onClose();
+      setIsModalOpen(false);
     }
   };
 
@@ -116,9 +112,9 @@ export const DisplayContentModal: React.FC<DisplayContentModalProps> = ({
     const fetchData = async () => {
       try {
         const [data, dataCast, dataSimilar] = await Promise.all([
-          fetchMovieVideos(movie.id),
-          fetchMovieCast(movie.id),
-          fetchMovieSimilar(movie.id),
+          fetchMovieVideos(moviePicked.id),
+          fetchMovieCast(moviePicked.id),
+          fetchMovieSimilar(moviePicked.id),
         ]);
         setVideos(data.filter((video) => video.type === "Teaser"));
         setCast(dataCast);
@@ -162,7 +158,7 @@ export const DisplayContentModal: React.FC<DisplayContentModalProps> = ({
     <div className="displayContentModal" onClick={handleClickOutside}>
       <div className="displayContentModal-content">
         <div className="displayContentModal-player">
-          <ButtonClose onClick={onClose} />
+          <ButtonClose onClick={() => setIsModalOpen(false)} />
           {showVideo ? (
             <VideoContainer
               route={videos[0]?.key}
@@ -171,7 +167,7 @@ export const DisplayContentModal: React.FC<DisplayContentModalProps> = ({
             />
           ) : (
             <img
-              src={urlPoster + movie.backdrop_path}
+              src={urlPoster + moviePicked.backdrop_path}
               alt=""
               className={showVideo ? "hidden" : "show"}
             />
@@ -181,7 +177,7 @@ export const DisplayContentModal: React.FC<DisplayContentModalProps> = ({
           <div className="displayContentModal-info">
             <div>
               <h3>Sinopsis:</h3>
-              <p>{movie.overview}</p>
+              <p>{moviePicked.overview}</p>
             </div>
             <div>
               <div className="list-container">
@@ -252,7 +248,7 @@ export const DisplayContentModal: React.FC<DisplayContentModalProps> = ({
             </div>
           </div>
           <div className="displayContentModal-about">
-            <h3>Acerca de {movie.title}</h3>
+            <h3>Acerca de {moviePicked.title}</h3>
             <div className="list-container">
               <h4 className="list-head">Dirigida por:</h4>
               {cast.crew

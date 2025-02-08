@@ -48,7 +48,7 @@ interface VideoMovie {
 const urlPoster = "https://image.tmdb.org/t/p/original/";
 
 export const HoverModal = () => {
-  const { generos, moviePicked, setShowHover, moviePickedPos } =
+  const { generos, moviePicked, setShowHover, moviePickedPos, setIsModalOpen } =
     useContext(GlobalContext);
 
   const movie: Movie = { ...moviePicked };
@@ -62,8 +62,6 @@ export const HoverModal = () => {
   const [showVideo, setShowVideo] = useState(false);
 
   const handleMouseLeave = (e) => {
-    console.log('hover pos: ', e.target.getBoundingClientRect())
-    console.log('posicion hover: ', moviePickedPos)
     setShowHover(false);
   };
 
@@ -89,13 +87,11 @@ export const HoverModal = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => {
-    setIsModalOpen(false);
+  const openModal = () => {
+    setIsModalOpen(true) 
     setShowHover(false);
-  };
+  }
 
   return (
     <div
@@ -137,13 +133,7 @@ export const HoverModal = () => {
           </div>
         </div>
         <GenresList genres={movieGenres} />
-        {isModalOpen && (
-          <DisplayContentModal
-            movie={movie}
-            genres={genres}
-            onClose={closeModal}
-          />
-        )}
+        
       </div>
     </div>
   );
