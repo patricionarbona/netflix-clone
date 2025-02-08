@@ -27,11 +27,6 @@ interface Movie {
   vote_count: number;
 }
 
-interface Genero {
-  id: number;
-  name: string;
-}
-
 interface VideoMovie {
   iso_639_1: string;
   iso_3166_1: string;
@@ -82,17 +77,19 @@ interface CreditsMovie {
 const urlPoster = "https://image.tmdb.org/t/p/original/";
 
 export const DisplayContentModal = () => {
+  const { moviePicked, generos, setIsModalOpen } = useContext(GlobalContext);
 
-  const {moviePicked, generos, setIsModalOpen} = useContext(GlobalContext)
-
-  const genres = generos
+  const genres = generos;
 
   const movieGenres = genres.filter((genero) =>
     moviePicked.genre_ids.includes(genero.id)
   );
 
   const [videos, setVideos] = useState<VideoMovie[]>([]);
-  const [cast, setCast] = useState<CreditsMovie>([]);
+  const [cast, setCast] = useState<CreditsMovie>({
+    cast: [],
+    crew: [],
+  });
   const [movieSimilar, setMovieSimilar] = useState<Movie[]>([]);
   const [showVideo, setShowVideo] = useState(false);
 
