@@ -4,7 +4,6 @@ import { GenresList } from "../Carousel/GenresList";
 import { VideoContainer } from "../Video/VideoContainer";
 import "./HoverModal.css";
 import { ButtonArrowDown } from "../Buttons/ButtonArrowDown";
-import { DisplayContentModal } from "./DisplayContentModal";
 import { ButtonPlayCirc } from "../Buttons/ButtonPlayCirc";
 import { ButtonAddList } from "../Buttons/ButtonAddList";
 import { LikeGroupButton } from "../Buttons/LikeGroupButton";
@@ -25,11 +24,6 @@ interface Movie {
   video: boolean;
   vote_average: number;
   vote_count: number;
-}
-
-interface Genero {
-  id: number;
-  name: string;
 }
 
 interface VideoMovie {
@@ -61,7 +55,7 @@ export const HoverModal = () => {
   const [videos, setVideos] = useState<VideoMovie[]>([]);
   const [showVideo, setShowVideo] = useState(false);
 
-  const handleMouseLeave = (e) => {
+  const handleMouseLeave = () => {
     setShowHover(false);
   };
 
@@ -87,16 +81,15 @@ export const HoverModal = () => {
     return () => clearTimeout(timer);
   }, []);
 
-
   const openModal = () => {
-    setIsModalOpen(true) 
+    setIsModalOpen(true);
     setShowHover(false);
-  }
+  };
 
   return (
     <div
       className="hoverModal"
-      onMouseLeave={(e) => handleMouseLeave(e)}
+      onMouseLeave={handleMouseLeave}
       style={{
         left: `${moviePickedPos.x}px`,
         top: `${moviePickedPos.y}px`,
@@ -133,7 +126,6 @@ export const HoverModal = () => {
           </div>
         </div>
         <GenresList genres={movieGenres} />
-        
       </div>
     </div>
   );
