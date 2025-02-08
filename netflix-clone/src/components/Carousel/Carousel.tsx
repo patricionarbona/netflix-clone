@@ -55,17 +55,24 @@ export const Carousel = ({
   //Resize refs
   const itemsViewRef = useRef<number>(0);
 
-  const handleMouseEnter = (e: React.MouseEvent<HTMLElement>, movie:Movie) => {
-    setMoviePicked(movie)
-    setShowHover(true)
-    const htmlTarget = e.target as HTMLElement
-    const htmlPos = htmlTarget.getBoundingClientRect()
-    console.log('posicion hover: ', htmlPos)
-    setMoviePickedPos({
-      x:htmlPos.x - htmlPos.width/4,
-      y: htmlPos.y - htmlPos.height / 2 + window.scrollY
-    })
+  let timer: number;
 
+  const handleMouseEnter = (e: React.MouseEvent<HTMLElement>, movie:Movie) => {
+    timer = setTimeout(() => {
+      setMoviePicked(movie)
+      setShowHover(true)
+      const htmlTarget = e.target as HTMLElement
+      const htmlPos = htmlTarget.getBoundingClientRect()
+      console.log('posicion hover: ', htmlPos)
+      setMoviePickedPos({
+        x:htmlPos.x - htmlPos.width/4,
+        y: htmlPos.y - htmlPos.height / 2 + window.scrollY
+      })
+    }, 750)
+  }
+
+  const handleMouseLeave = () => {
+      clearTimeout(timer)
   }
 
   const handleNext = () => {
@@ -292,6 +299,7 @@ export const Carousel = ({
               key={`${genre_id}-slider-${movie.id}`}
               className="carousel-img-container"
               onMouseEnter={(event) => (handleMouseEnter(event, movie))}
+              onMouseLeave={handleMouseLeave}
             >
               <img
                 src={urlPoster + movie.backdrop_path}
