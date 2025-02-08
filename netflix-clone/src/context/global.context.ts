@@ -27,6 +27,8 @@ interface GlobalContextType {
   setGeneros: React.Dispatch<React.SetStateAction<Genero[]>>;
   showHover: boolean;
   setShowHover: React.Dispatch<React.SetStateAction<boolean>>;
+  isModalOpen: boolean;
+  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   moviePicked: Movie;
   setMoviePicked: React.Dispatch<React.SetStateAction<Movie>>;
   moviePickedPos: {x: number, y: number};
@@ -57,6 +59,8 @@ export const GlobalContext = createContext<GlobalContextType>({
   loading: true,
   showHover: false,
   setShowHover: () => {},
+  isModalOpen: false,
+  setIsModalOpen: () => {},
   moviePicked: defaultMovie,
   setMoviePicked: () => {},
   moviePickedPos: {x:0, y:0},

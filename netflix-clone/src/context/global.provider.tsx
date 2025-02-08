@@ -49,6 +49,7 @@ export const GlobalProvider = ({ children }: GlobalProviderProps) => {
   const [generos, setGeneros] = useState<Genero[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [showHover, setShowHover] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [moviePicked, setMoviePicked] = useState<Movie>(defaultMovie);
   const [moviePickedPos, setMoviePickedPos] = useState<{x: number, y: number}>({x:0, y:0});
 
@@ -70,7 +71,7 @@ export const GlobalProvider = ({ children }: GlobalProviderProps) => {
 
   return (
     <GlobalContext.Provider
-      value={{ generos, setGeneros, loading, showHover, setShowHover, moviePicked, setMoviePicked, moviePickedPos, setMoviePickedPos}}
+      value={{ generos, setGeneros, loading, showHover, setShowHover,isModalOpen, setIsModalOpen, moviePicked, setMoviePicked, moviePickedPos, setMoviePickedPos}}
     >
       {children}
     </GlobalContext.Provider>
