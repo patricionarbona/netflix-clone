@@ -116,20 +116,6 @@ export const DisplayContentModal = () => {
         setVideos(data.filter((video) => video.type === "Teaser"));
         setCast(dataCast);
         setMovieSimilar(dataSimilar);
-        console.log("similar: ", movieSimilar);
-        console.log("cast entero: ", dataCast);
-        const departments = new Set(
-          dataCast.cast.map((actor) => actor.known_for_department)
-        );
-        const departmentsCrew = new Set(
-          dataCast.crew.map((actor) => actor.known_for_department)
-        );
-
-        // Convertir Set a array y mostrarlo
-        console.log("cast: ", [...departments]);
-        console.log("crew: ", [...departmentsCrew]);
-        console.log("generos: ", genres);
-        console.log("mis generos: ", movieGenres);
       } catch (error) {
         console.error("Error al obtener videos:", error);
       }
@@ -148,7 +134,6 @@ export const DisplayContentModal = () => {
 
   const handleClickAccordion = () => {
     setIsAccordionOpen(!isAccordionOpen);
-    console.log("esta ", isAccordionOpen ? "abierto" : "cerrado");
   };
 
   return (
