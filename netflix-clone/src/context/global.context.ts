@@ -6,21 +6,21 @@ interface Genero {
 }
 
 interface Movie {
-    adult: boolean
-    backdrop_path: string
-    genre_ids: number[]
-    id: number
-    original_language: string
-    original_title: string
-    overview: string
-    popularity: number
-    poster_path: string
-    release_date: string
-    title: string
-    video: boolean
-    vote_average: number
-    vote_count: number
-  }
+  adult: boolean;
+  backdrop_path: string;
+  genre_ids: number[];
+  id: number;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  release_date: string;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
+}
 
 interface GlobalContextType {
   generos: Genero[];
@@ -31,27 +31,29 @@ interface GlobalContextType {
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   moviePicked: Movie;
   setMoviePicked: React.Dispatch<React.SetStateAction<Movie>>;
-  moviePickedPos: {x: number, y: number};
-  setMoviePickedPos: React.Dispatch<React.SetStateAction<{x: number, y: number}>>;
+  moviePickedPos: { x: number; y: number };
+  setMoviePickedPos: React.Dispatch<
+    React.SetStateAction<{ x: number; y: number }>
+  >;
   loading: boolean;
 }
 
 const defaultMovie = {
-    adult: false,
-    backdrop_path: "",
-    genre_ids: [],
-    id: 0,
-    original_language: "",
-    original_title: "",
-    overview: "",
-    popularity: 0,
-    poster_path: "",
-    release_date: "",
-    title: "",
-    video: false,
-    vote_average: 0,
-    vote_count: 0,
-  }
+  adult: false,
+  backdrop_path: "",
+  genre_ids: [],
+  id: 0,
+  original_language: "",
+  original_title: "",
+  overview: "",
+  popularity: 0,
+  poster_path: "",
+  release_date: "",
+  title: "",
+  video: false,
+  vote_average: 0,
+  vote_count: 0,
+};
 
 export const GlobalContext = createContext<GlobalContextType>({
   generos: [],
@@ -63,7 +65,7 @@ export const GlobalContext = createContext<GlobalContextType>({
   setIsModalOpen: () => {},
   moviePicked: defaultMovie,
   setMoviePicked: () => {},
-  moviePickedPos: {x:0, y:0},
+  moviePickedPos: { x: 0, y: 0 },
   setMoviePickedPos: () => {},
 });
 
