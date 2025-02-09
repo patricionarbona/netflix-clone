@@ -106,15 +106,15 @@ export const DisplayContentModal = () => {
   };
 
   const mountHandleScrollBarWidth = () => {
-    const ancho = window.innerWidth - document.documentElement.clientWidth
-    document.body.style.paddingRight = `${ancho}px`
-    document.body.style.overflowY= 'hidden'
-  }
+    const ancho = window.innerWidth - document.documentElement.clientWidth;
+    document.body.style.paddingRight = `${ancho}px`;
+    document.body.style.overflowY = "hidden";
+  };
 
   const dismountHandleScrollBarWidth = () => {
-    document.body.style.paddingRight = ``
-    document.body.style.overflowY= ''
-  }
+    document.body.style.paddingRight = ``;
+    document.body.style.overflowY = "";
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -132,12 +132,12 @@ export const DisplayContentModal = () => {
       }
     };
 
-    mountHandleScrollBarWidth()
+    mountHandleScrollBarWidth();
     fetchData();
 
     return () => {
-      dismountHandleScrollBarWidth()
-    }
+      dismountHandleScrollBarWidth();
+    };
   }, []);
 
   useEffect(() => {
