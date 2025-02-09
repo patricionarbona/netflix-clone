@@ -1,12 +1,16 @@
 import "./ButtonArrowDown.css";
 
 interface ButtonArrowDownProps {
-  tooltip?: boolean
-  tooltipText?:string
-  onClick?: () => void
+  tooltip?: boolean;
+  tooltipText?: string;
+  onClick?: () => void;
 }
 
-export const ButtonArrowDown: React.FC<ButtonArrowDownProps> = ({ tooltip = false, tooltipText = "", onClick}) => {
+export const ButtonArrowDown: React.FC<ButtonArrowDownProps> = ({
+  tooltip = false,
+  tooltipText = "",
+  onClick,
+}) => {
   return (
     <div className="arrowDown">
       <button onClick={onClick}>

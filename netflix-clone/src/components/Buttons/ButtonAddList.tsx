@@ -1,4 +1,4 @@
-import './ButtonAddList.css'
+import "./ButtonAddList.css";
 
 export const ButtonAddList = ({ showTooltip = false }) => {
   return (
