@@ -24,6 +24,10 @@ body {
     margin-top: 65vh;
 }
 
+.container-carousels > * {
+    margin-bottom: 6rem;
+}
+
 .tooltip {
     position: absolute;
     top: 0;
