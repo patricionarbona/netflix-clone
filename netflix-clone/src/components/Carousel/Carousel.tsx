@@ -88,8 +88,8 @@ export const Carousel = ({
       if (!item) {
         return;
       }
-
-      const imgs = item.querySelectorAll("img");
+      console.log('?')
+      const imgs = item.querySelectorAll(".carousel-img-container");
       // -2 cause position start at 0
       if (moved) {
         if (
@@ -107,7 +107,6 @@ export const Carousel = ({
           groupToMove.map((newImg) => item.appendChild(newImg));
         }
       }
-
       if (position === Math.ceil(movies.length / itemsView) - 1) {
         setPosition(0);
       } else {
@@ -125,7 +124,7 @@ export const Carousel = ({
 
       if (!item) return;
 
-      const imgs = item.querySelectorAll("img");
+      const imgs = item.querySelectorAll(".carousel-img-container");
       if (moved) {
         if (position === 1 && isReadJust) {
           const groupToMove = Array.from(imgs).slice(
@@ -153,7 +152,6 @@ export const Carousel = ({
       const item = carouselRef.current.querySelector(
         ".carousel-slider"
       ) as HTMLElement;
-
       if (!item) return;
       //igual que next
       const imgs = item.querySelectorAll("img");
