@@ -63,7 +63,6 @@ export const Banner = () => {
     const {data} = useFetch<fetchPopularMovie>(urlPopularMovies, paramsLanguage)
 
     const fetchVideos = async (url: URL, params: any) => {
-        console.log(params)
         const response = await fetch(url, params)
         const responseJson = await response.json()
         setDataVideosMovies(responseJson)
@@ -80,7 +79,6 @@ export const Banner = () => {
         }
     }, [data])
 
-    console.log(data)
 
     return (
         <div className='banner'>

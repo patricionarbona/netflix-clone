@@ -70,7 +70,6 @@ export const GlobalContext = createContext<GlobalContextType>({
 export const useGlobalContext = () => {
   const context = useContext(GlobalContext);
 
-  console.log("en el context: ", context);
   if (!context) {
     throw new Error("Error en el context");
   }

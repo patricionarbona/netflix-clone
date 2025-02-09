@@ -63,7 +63,6 @@ export const Carousel = ({
       setShowHover(true)
       const htmlTarget = e.target as HTMLElement
       const htmlPos = htmlTarget.getBoundingClientRect()
-      console.log('posicion hover: ', htmlPos)
       setMoviePickedPos({
         x:htmlPos.x - htmlPos.width/4,
         y: htmlPos.y - htmlPos.height / 2 + window.scrollY
@@ -144,7 +143,6 @@ export const Carousel = ({
   };
 
   const moveToRight = (steps: number) => {
-    console.log("muevo dereita");
     if (carouselRef.current) {
       const item = carouselRef.current.querySelector(
         ".carousel-slider"
@@ -159,7 +157,6 @@ export const Carousel = ({
   };
 
   const moveToLeft = (steps: number) => {
-    console.log("muevo izquierda");
     if (carouselRef.current) {
       const item = carouselRef.current.querySelector(
         ".carousel-slider"
@@ -175,7 +172,6 @@ export const Carousel = ({
 
   // Event resize
   const handleResize = () => {
-    console.log("first");
     const slider = carouselRef.current?.querySelector(
       ".carousel-slider"
     ) as HTMLElement;
@@ -210,7 +206,6 @@ export const Carousel = ({
 
       setItemsView(itemsPerScreen);
 
-      console.log("Items per screen:", itemsPerScreen);
     }
   };
 
