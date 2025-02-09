@@ -1,4 +1,10 @@
-import { useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
+import {
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { fetchPages } from "../../services/fetchs";
 import "./Carousel.css";
 import { GlobalContext } from "../../context/global.context";
@@ -40,8 +46,8 @@ export const Carousel = ({
   genre_id: number;
   name: string;
 }) => {
-
-  const {setShowHover, setMoviePicked, setMoviePickedPos } = useContext(GlobalContext)
+  const { setShowHover, setMoviePicked, setMoviePickedPos } =
+    useContext(GlobalContext);
 
   const [movies, setMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -57,22 +63,22 @@ export const Carousel = ({
 
   let timer: number;
 
-  const handleMouseEnter = (e: React.MouseEvent<HTMLElement>, movie:Movie) => {
+  const handleMouseEnter = (e: React.MouseEvent<HTMLElement>, movie: Movie) => {
     timer = setTimeout(() => {
-      setMoviePicked(movie)
-      setShowHover(true)
-      const htmlTarget = e.target as HTMLElement
-      const htmlPos = htmlTarget.getBoundingClientRect()
+      setMoviePicked(movie);
+      setShowHover(true);
+      const htmlTarget = e.target as HTMLElement;
+      const htmlPos = htmlTarget.getBoundingClientRect();
       setMoviePickedPos({
-        x:htmlPos.x - htmlPos.width/4,
-        y: htmlPos.y - htmlPos.height / 2 + window.scrollY
-      })
-    }, 750)
-  }
+        x: htmlPos.x - htmlPos.width / 4,
+        y: htmlPos.y - htmlPos.height / 2 + window.scrollY,
+      });
+    }, 750);
+  };
 
   const handleMouseLeave = () => {
-      clearTimeout(timer)
-  }
+    clearTimeout(timer);
+  };
 
   const handleNext = () => {
     if (carouselRef.current) {
@@ -205,7 +211,6 @@ export const Carousel = ({
       }
 
       setItemsView(itemsPerScreen);
-
     }
   };
 
@@ -293,12 +298,10 @@ export const Carousel = ({
             <div
               key={`${genre_id}-slider-${movie.id}`}
               className="carousel-img-container"
-              onMouseEnter={(event) => (handleMouseEnter(event, movie))}
+              onMouseEnter={(event) => handleMouseEnter(event, movie)}
               onMouseLeave={handleMouseLeave}
             >
-              <img
-                src={urlPoster + movie.backdrop_path}
-              />
+              <img src={urlPoster + movie.backdrop_path} />
               <h5>{movie.title}</h5>
             </div>
           ))}
