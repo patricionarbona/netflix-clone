@@ -12,20 +12,20 @@ interface Genero {
 }
 
 interface Movie {
-  adult: boolean
-  backdrop_path: string
-  genre_ids: number[]
-  id: number
-  original_language: string
-  original_title: string
-  overview: string
-  popularity: number
-  poster_path: string
-  release_date: string
-  title: string
-  video: boolean
-  vote_average: number
-  vote_count: number
+  adult: boolean;
+  backdrop_path: string;
+  genre_ids: number[];
+  id: number;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  release_date: string;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
 }
 
 const defaultMovie = {
@@ -43,7 +43,7 @@ const defaultMovie = {
   video: false,
   vote_average: 0,
   vote_count: 0,
-}
+};
 
 export const GlobalProvider = ({ children }: GlobalProviderProps) => {
   const [generos, setGeneros] = useState<Genero[]>([]);
@@ -51,7 +51,10 @@ export const GlobalProvider = ({ children }: GlobalProviderProps) => {
   const [showHover, setShowHover] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [moviePicked, setMoviePicked] = useState<Movie>(defaultMovie);
-  const [moviePickedPos, setMoviePickedPos] = useState<{x: number, y: number}>({x:0, y:0});
+  const [moviePickedPos, setMoviePickedPos] = useState<{
+    x: number;
+    y: number;
+  }>({ x: 0, y: 0 });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -71,7 +74,19 @@ export const GlobalProvider = ({ children }: GlobalProviderProps) => {
 
   return (
     <GlobalContext.Provider
-      value={{ generos, setGeneros, loading, showHover, setShowHover,isModalOpen, setIsModalOpen, moviePicked, setMoviePicked, moviePickedPos, setMoviePickedPos}}
+      value={{
+        generos,
+        setGeneros,
+        loading,
+        showHover,
+        setShowHover,
+        isModalOpen,
+        setIsModalOpen,
+        moviePicked,
+        setMoviePicked,
+        moviePickedPos,
+        setMoviePickedPos,
+      }}
     >
       {children}
     </GlobalContext.Provider>

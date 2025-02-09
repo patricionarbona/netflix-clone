@@ -48,12 +48,12 @@ export const VideoContainer = ({
   route,
   site = "Youtube",
   banner = false,
-  className = ''
+  className = "",
 }: {
   route: string;
   site?: string;
   banner?: boolean;
-  className?: string
+  className?: string;
 }) => {
   // Para YouTube, añadimos el parámetro autoplay a la URL
   const videoUrl =
@@ -63,7 +63,11 @@ export const VideoContainer = ({
 
   return (
     <>
-      <div className={`video-container ${banner ? "banner" : "hoverModal-video"} ${className ? className : ''}`}>
+      <div
+        className={`video-container ${banner ? "banner" : "hoverModal-video"} ${
+          className ? className : ""
+        }`}
+      >
         {banner && (
           <div className="video-container-data">
             <h3>
