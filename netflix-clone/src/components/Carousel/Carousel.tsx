@@ -171,7 +171,7 @@ export const Carousel = ({
       ) as HTMLElement;
       if (!item) return;
       //igual que next
-      const imgs = item.querySelectorAll("img");
+      const imgs = item.querySelectorAll(".carousel-img-container");
       const groupToMove = Array.from(imgs).slice(0, steps);
       groupToMove.map((newImg) => item.appendChild(newImg));
     }
@@ -185,7 +185,7 @@ export const Carousel = ({
 
       if (!item) return;
       //igual que prev
-      const imgs = item.querySelectorAll("img");
+      const imgs = item.querySelectorAll(".carousel-img-container");
       const groupToMove = Array.from(imgs).slice(-steps, imgs.length);
       groupToMove.reverse().map((newImg) => item.prepend(newImg));
     }
