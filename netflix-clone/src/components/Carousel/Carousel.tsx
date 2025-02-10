@@ -57,7 +57,7 @@ export const Carousel = ({
   const carouselRef = useRef<HTMLDivElement>(null);
   const [itemsView, setItemsView] = useState(0);
   const [moved, setMoved] = useState(false); //saber si se movio al inicio
-  const [isReadJust, setIsReadJust] = useState(false);
+  const [needReadJust, setNeedReadJust] = useState(true);
   //Resize refs
   const itemsViewRef = useRef<number>(0);
 
@@ -88,23 +88,29 @@ export const Carousel = ({
       if (!item) {
         return;
       }
-      console.log('?')
+
+      const itemsToReadjust = movies.length % itemsView;
       const imgs = item.querySelectorAll(".carousel-img-container");
       // -2 cause position start at 0
       if (moved) {
-        if (
-          movies.length % itemsView !== 0 &&
-          position === Math.ceil(movies.length / itemsView) - 2
-        ) {
-          const groupToMove = Array.from(imgs).slice(
-            0,
-            movies.length % itemsView
-          );
-          groupToMove.map((newImg) => item.appendChild(newImg));
-          setIsReadJust(true);
+        if (needReadJust && itemsToReadjust !== 0) {
+          //reajuste de antes del final al final
+          if (position === Math.ceil(movies.length / itemsView) - 2) {
+            const groupToMove = Array.from(imgs).slice(0, itemsToReadjust);
+            groupToMove.map((newImg) => item.appendChild(newImg));
+            setNeedReadJust(false);
+          } else {
+            const groupToMove = Array.from(imgs).slice(0, itemsView);
+            groupToMove.map((newImg) => item.appendChild(newImg));
+          }
         } else {
           const groupToMove = Array.from(imgs).slice(0, itemsView);
           groupToMove.map((newImg) => item.appendChild(newImg));
+        }
+
+        //siempre que pase del final al principio se resetea needReajust
+        if (position === Math.ceil(movies.length / itemsView) - 1) {
+          setNeedReadJust(true);
         }
       }
       if (position === Math.ceil(movies.length / itemsView) - 1) {
@@ -124,19 +130,30 @@ export const Carousel = ({
 
       if (!item) return;
 
+      const itemsToReadjust = movies.length % itemsView;
       const imgs = item.querySelectorAll(".carousel-img-container");
       if (moved) {
-        if (position === 1 && isReadJust) {
-          const groupToMove = Array.from(imgs).slice(
-            -(movies.length % itemsView),
-            imgs.length
-          );
-          groupToMove.reverse().map((newImg) => item.prepend(newImg));
-          setIsReadJust(false);
+        if (!needReadJust && itemsToReadjust !== 0) {
+          //reajuste de antes del principio al principio
+          if (position === 1 && itemsToReadjust !== 0) {
+            const groupToMove = Array.from(imgs).slice(
+              -itemsToReadjust,
+              imgs.length
+            );
+            groupToMove.reverse().map((newImg) => item.prepend(newImg));
+          } else {
+            const groupToMove = Array.from(imgs).slice(-itemsView, imgs.length);
+            groupToMove.reverse().map((newImg) => item.prepend(newImg));
+          }
         } else {
           const groupToMove = Array.from(imgs).slice(-itemsView, imgs.length);
           groupToMove.reverse().map((newImg) => item.prepend(newImg));
         }
+      }
+
+      //siempre que pase del principio al final se deshabilita needReajust
+      if (position === 0) {
+        setNeedReadJust(false);
       }
 
       if (position === 0) {
