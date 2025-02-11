@@ -58,8 +58,6 @@ export const Carousel = ({
   const [itemsView, setItemsView] = useState(0);
   const [moved, setMoved] = useState(false); //saber si se movio al inicio
   const [needReadJust, setNeedReadJust] = useState(true);
-  //Resize refs
-  const itemsViewRef = useRef<number>(0);
 
   let timer: number;
 
@@ -164,71 +162,6 @@ export const Carousel = ({
     }
   };
 
-  const moveToRight = (steps: number) => {
-    if (carouselRef.current) {
-      const item = carouselRef.current.querySelector(
-        ".carousel-slider"
-      ) as HTMLElement;
-      if (!item) return;
-      //igual que next
-      const imgs = item.querySelectorAll(".carousel-img-container");
-      const groupToMove = Array.from(imgs).slice(0, steps);
-      groupToMove.map((newImg) => item.appendChild(newImg));
-    }
-  };
-
-  const moveToLeft = (steps: number) => {
-    if (carouselRef.current) {
-      const item = carouselRef.current.querySelector(
-        ".carousel-slider"
-      ) as HTMLElement;
-
-      if (!item) return;
-      //igual que prev
-      const imgs = item.querySelectorAll(".carousel-img-container");
-      const groupToMove = Array.from(imgs).slice(-steps, imgs.length);
-      groupToMove.reverse().map((newImg) => item.prepend(newImg));
-    }
-  };
-
-  // Event resize
-  const handleResize = () => {
-    const slider = carouselRef.current?.querySelector(
-      ".carousel-slider"
-    ) as HTMLElement;
-    if (slider) {
-      // Obtener el valor de la propiedad CSS personalizada
-      const style = getComputedStyle(slider);
-      const itemsPerScreen = parseInt(
-        style.getPropertyValue("--items-per-screen")
-      );
-
-      if (itemsPerScreen !== itemsViewRef.current) {
-        const isLastPosition =
-          position === Math.ceil(movies.length / itemsView) - 1;
-        const difference = Math.abs(itemsPerScreen - itemsViewRef.current);
-
-        if (itemsViewRef.current < itemsPerScreen) {
-          // Si estamos en una posición menor que itemsPerScreen, movemos en la dirección correspondiente
-          if (isLastPosition) {
-            moveToLeft(difference);
-          } else {
-            moveToRight(difference);
-          }
-        } else {
-          // Si estamos en una posición mayor que itemsPerScreen, movemos en la dirección opuesta
-          if (isLastPosition) {
-            moveToRight(difference);
-          } else {
-            moveToLeft(difference);
-          }
-        }
-      }
-
-      setItemsView(itemsPerScreen);
-    }
-  };
-
   //useLayout to get --items-per-screen from css
   useLayoutEffect(() => {
     paramsLanguage.append("with_genres", String(genre_id));
@@ -257,17 +190,6 @@ export const Carousel = ({
 
     fetchData();
   }, [genre_id]);
-
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  useEffect(() => {
-    itemsViewRef.current = itemsView;
-  }, [itemsView]);
 
   if (loading) {
     return <div>Loading...</div>;
