@@ -48,6 +48,7 @@ const defaultMovie = {
 export const GlobalProvider = ({ children }: GlobalProviderProps) => {
   const [generos, setGeneros] = useState<Genero[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [clientWidth, setClientWidth] = useState(0);
   const [showHover, setShowHover] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [moviePicked, setMoviePicked] = useState<Movie>(defaultMovie);
@@ -72,6 +73,17 @@ export const GlobalProvider = ({ children }: GlobalProviderProps) => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setClientWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <GlobalContext.Provider
       value={{
@@ -86,6 +98,7 @@ export const GlobalProvider = ({ children }: GlobalProviderProps) => {
         setMoviePicked,
         moviePickedPos,
         setMoviePickedPos,
+        clientWidth,
       }}
     >
       {children}

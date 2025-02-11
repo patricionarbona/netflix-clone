@@ -36,6 +36,7 @@ interface GlobalContextType {
     React.SetStateAction<{ x: number; y: number }>
   >;
   loading: boolean;
+  clientWidth: number;
 }
 
 const defaultMovie = {
@@ -67,6 +68,7 @@ export const GlobalContext = createContext<GlobalContextType>({
   setMoviePicked: () => {},
   moviePickedPos: { x: 0, y: 0 },
   setMoviePickedPos: () => {},
+  clientWidth: 0,
 });
 
 export const useGlobalContext = () => {
