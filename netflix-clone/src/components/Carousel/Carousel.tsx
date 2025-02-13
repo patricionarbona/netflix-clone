@@ -203,15 +203,29 @@ export const Carousel = ({
     if (itemsPerScreen !== itemsView && moved) {
       setItemsView(itemsPerScreen);
       const previous = getAllPreviousElements("first");
-      if(position === 0){
+      if (position === 0) {
         if (itemsView > itemsPerScreen) {
           //obtengo los elementos previos a first y los muevo al final
           for (let i = previous.length; i > itemsPerScreen; i--) {
             moveFirstElement2End(slider, ".carousel-img-container");
           }
-        } else if(itemsView < itemsPerScreen) {
+        } else if (itemsView < itemsPerScreen) {
           //obtengo los elementos previos a first y los muevo al inicio
           for (let i = previous.length; i < itemsPerScreen; i++) {
+            moveLastElement2Start(slider, ".carousel-img-container");
+          }
+        }
+      }
+
+      //resize carousel al final
+      if (position === Math.ceil(movies.length / itemsView) - 1) {
+        const next = getAllPreviousElements("last");
+        if (itemsView > itemsPerScreen) {
+          for (let i = next.length; i > itemsPerScreen * 2 - 1; i--) {
+            moveFirstElement2End(slider, ".carousel-img-container");
+          }
+        } else if (itemsView < itemsPerScreen) {
+          for (let i = next.length; i < itemsPerScreen * 2 - 1; i++) {
             moveLastElement2Start(slider, ".carousel-img-container");
           }
         }
@@ -269,7 +283,7 @@ export const Carousel = ({
 
       elementContainer.insertBefore(lastItem, elementContainer.firstChild);
     }
-  }
+  };
 
   useEffect(() => {
     handleResize();
