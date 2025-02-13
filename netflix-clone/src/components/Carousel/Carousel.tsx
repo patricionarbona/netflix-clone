@@ -210,7 +210,7 @@ export const Carousel = ({
             moveFirstElement2End(slider, ".carousel-img-container");
           }
         } else if(itemsView < itemsPerScreen) {
-          //obtengo los elementos previos a first y los muevo al final
+          //obtengo los elementos previos a first y los muevo al inicio
           for (let i = previous.length; i < itemsPerScreen; i++) {
             moveLastElement2Start(slider, ".carousel-img-container");
           }
@@ -246,7 +246,6 @@ export const Carousel = ({
     classElements: string
   ) => {
     const items = Array.from(elementContainer.querySelectorAll(classElements));
-    console.log(items);
 
     if (items.length > 0) {
       const firstItem = items.slice(0, 1)[0];
@@ -262,7 +261,6 @@ export const Carousel = ({
     classElements: string
   ) => {
     const items = Array.from(elementContainer.querySelectorAll(classElements));
-    console.log(items);
 
     if (items.length > 0) {
       const lastItem = items[items.length - 1];
