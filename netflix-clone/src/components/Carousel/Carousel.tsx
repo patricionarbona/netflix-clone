@@ -202,11 +202,18 @@ export const Carousel = ({
     );
     if (itemsPerScreen !== itemsView && moved) {
       setItemsView(itemsPerScreen);
-      if (itemsView > itemsPerScreen) {
-        //obtengo los elementos previos a first y los muevo al final
-        const previous = getAllPreviousElements("first");
-        for (let i = previous.length; i > itemsPerScreen; i--) {
-          moveFirstElement2End(slider, ".carousel-img-container");
+      const previous = getAllPreviousElements("first");
+      if(position === 0){
+        if (itemsView > itemsPerScreen) {
+          //obtengo los elementos previos a first y los muevo al final
+          for (let i = previous.length; i > itemsPerScreen; i--) {
+            moveFirstElement2End(slider, ".carousel-img-container");
+          }
+        } else if(itemsView < itemsPerScreen) {
+          //obtengo los elementos previos a first y los muevo al final
+          for (let i = previous.length; i < itemsPerScreen; i++) {
+            moveLastElement2Start(slider, ".carousel-img-container");
+          }
         }
       }
     }
