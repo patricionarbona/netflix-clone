@@ -248,8 +248,8 @@ export const Carousel = ({
   };
 
   useEffect(() => {
-    console.log('resize')
-  }, [clientWidth])
+    handleResize();
+  }, [clientWidth]);
 
   if (loading) {
     return <div>Loading...</div>;
