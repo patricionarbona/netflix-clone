@@ -203,6 +203,7 @@ export const Carousel = ({
     if (itemsPerScreen !== itemsView && moved) {
       setItemsView(itemsPerScreen);
       if (itemsView > itemsPerScreen) {
+        //obtengo los elementos previos a first y los muevo al final
         const previous = getAllPreviousElements("first");
         for (let i = previous.length; i > itemsPerScreen; i--) {
           moveFirstElement2End(slider, ".carousel-img-container");
