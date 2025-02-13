@@ -191,6 +191,62 @@ export const Carousel = ({
     fetchData();
   }, [genre_id]);
 
+  const handleResize = () => {
+    const slider = carouselRef.current?.querySelector(
+      ".carousel-slider"
+    ) as HTMLElement;
+    if (!slider) return;
+    const style = getComputedStyle(slider);
+    const itemsPerScreen = parseInt(
+      style.getPropertyValue("--items-per-screen")
+    );
+    if (itemsPerScreen !== itemsView && moved) {
+      setItemsView(itemsPerScreen);
+      const previous = getAllPreviousElements("first");
+      for (let i = previous.length; i > itemsPerScreen; i--) {
+        moveFirstElement2End(slider, ".carousel-img-container");
+      }
+    }
+  };
+
+  const getAllPreviousElements = (classTagName: string): HTMLElement[] => {
+    const tagElements = document.getElementsByClassName(
+      classTagName
+    ) as HTMLCollectionOf<HTMLElement>;
+
+    if (tagElements.length === 0) {
+      console.log("No elements found with the provided class tag.");
+      return [];
+    }
+    const tagElement = tagElements[0];
+    const prevElements = [];
+    let currentElement: HTMLElement | null = tagElement;
+    while (currentElement) {
+      currentElement =
+        currentElement.previousElementSibling as HTMLElement | null;
+      if (currentElement) {
+        prevElements.push(currentElement);
+      }
+    }
+    return prevElements;
+  };
+
+  const moveFirstElement2End = (
+    elementContainer: HTMLElement,
+    classElements: string
+  ) => {
+    const items = Array.from(elementContainer.querySelectorAll(classElements));
+    console.log(items);
+
+    if (items.length > 0) {
+      const firstItem = items.slice(0, 1)[0];
+
+      firstItem.remove();
+
+      elementContainer.appendChild(firstItem);
+    }
+  };
+
   useEffect(() => {
     console.log('resize')
   }, [clientWidth])
