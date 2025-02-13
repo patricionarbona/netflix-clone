@@ -204,6 +204,7 @@ export const Carousel = ({
       setItemsView(itemsPerScreen);
       const previous = getAllPreviousElements("first");
       if (position === 0) {
+        //reduce tamaño
         if (itemsView > itemsPerScreen) {
           //obtengo los elementos previos a first y los muevo al final
           for (let i = previous.length; i > itemsPerScreen; i--) {
@@ -220,6 +221,7 @@ export const Carousel = ({
       //resize carousel al final
       if (position === Math.ceil(movies.length / itemsView) - 1) {
         const next = getAllPreviousElements("last");
+        //reduce tamaño
         if (itemsView > itemsPerScreen) {
           for (let i = next.length; i > itemsPerScreen * 2 - 1; i--) {
             moveFirstElement2End(slider, ".carousel-img-container");
