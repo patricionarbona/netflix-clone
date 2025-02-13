@@ -202,9 +202,11 @@ export const Carousel = ({
     );
     if (itemsPerScreen !== itemsView && moved) {
       setItemsView(itemsPerScreen);
-      const previous = getAllPreviousElements("first");
-      for (let i = previous.length; i > itemsPerScreen; i--) {
-        moveFirstElement2End(slider, ".carousel-img-container");
+      if(itemsPerScreen > itemsPerScreen) {
+        const previous = getAllPreviousElements("first");
+        for (let i = previous.length; i > itemsPerScreen; i--) {
+          moveFirstElement2End(slider, ".carousel-img-container");
+        }
       }
     }
   };
