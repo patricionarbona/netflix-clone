@@ -291,10 +291,16 @@ export const Carousel = ({
             transform: `translateX(${moved ? "-100" : "0"}%)`,
           }}
         >
-          {movies.map((movie) => (
+          {movies.map((movie, index) => (
             <div
               key={`${genre_id}-slider-${movie.id}`}
-              className="carousel-img-container"
+              className={`carousel-img-container ${
+                index === 0
+                  ? "first"
+                  : index === movies.length - 1
+                  ? "last"
+                  : ""
+              }`}
               onMouseEnter={(event) => handleMouseEnter(event, movie)}
               onMouseLeave={handleMouseLeave}
             >
