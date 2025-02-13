@@ -250,6 +250,22 @@ export const Carousel = ({
     }
   };
 
+  const moveLastElement2Start = (
+    elementContainer: HTMLElement,
+    classElements: string
+  ) => {
+    const items = Array.from(elementContainer.querySelectorAll(classElements));
+    console.log(items);
+
+    if (items.length > 0) {
+      const lastItem = items[items.length - 1];
+
+      lastItem.remove();
+
+      elementContainer.insertBefore(lastItem, elementContainer.firstChild);
+    }
+  }
+
   useEffect(() => {
     handleResize();
   }, [clientWidth]);
