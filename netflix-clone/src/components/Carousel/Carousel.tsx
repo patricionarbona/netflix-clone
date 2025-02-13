@@ -231,6 +231,7 @@ export const Carousel = ({
             moveLastElement2Start(slider, ".carousel-img-container");
           }
         }
+        setPosition(Math.ceil(movies.length / itemsPerScreen) - 1)
       }
     }
   };
