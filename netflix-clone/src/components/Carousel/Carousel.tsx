@@ -86,31 +86,19 @@ export const Carousel = ({
       if (!item) {
         return;
       }
-
-      const itemsToReadjust = movies.length % itemsView;
-      const imgs = item.querySelectorAll(".carousel-img-container");
-      // -2 cause position start at 0
-      if (moved) {
-        if (needReadJust && itemsToReadjust !== 0) {
-          //reajuste de antes del final al final
-          if (position === Math.ceil(movies.length / itemsView) - 2) {
-            const groupToMove = Array.from(imgs).slice(0, itemsToReadjust);
-            groupToMove.map((newImg) => item.appendChild(newImg));
-            setNeedReadJust(false);
-          } else {
-            const groupToMove = Array.from(imgs).slice(0, itemsView);
-            groupToMove.map((newImg) => item.appendChild(newImg));
-          }
-        } else {
-          const groupToMove = Array.from(imgs).slice(0, itemsView);
-          groupToMove.map((newImg) => item.appendChild(newImg));
+      
+      //si se mueve a la ultima posicion
+      if (position === Math.ceil(movies.length / itemsView) - 2) {
+        const next = getAllPreviousElements('last', item)
+        for (let i = next.length; i > itemsView * 2 - 1; i--) {
+          moveFirstElement2End(item, ".carousel-img-container");
         }
-
-        //siempre que pase del final al principio se resetea needReajust
-        if (position === Math.ceil(movies.length / itemsView) - 1) {
-          setNeedReadJust(true);
-        }
+      } else {
+        const imgs = item.querySelectorAll(".carousel-img-container");
+        const groupToMove = Array.from(imgs).slice(0, itemsView);
+        groupToMove.map((newImg) => item.appendChild(newImg));
       }
+
       if (position === Math.ceil(movies.length / itemsView) - 1) {
         setPosition(0);
       } else {
@@ -118,7 +106,7 @@ export const Carousel = ({
       }
       setMoved(true);
     }
-  };
+  }
 
   const handlePrev = () => {
     if (carouselRef.current) {
