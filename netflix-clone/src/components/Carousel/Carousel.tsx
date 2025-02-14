@@ -57,7 +57,6 @@ export const Carousel = ({
   const carouselRef = useRef<HTMLDivElement>(null);
   const [itemsView, setItemsView] = useState(0);
   const [moved, setMoved] = useState(false); //saber si se movio al inicio
-  const [needReadJust, setNeedReadJust] = useState(true);
 
   let timer: number;
 
@@ -116,30 +115,16 @@ export const Carousel = ({
 
       if (!item) return;
 
-      const itemsToReadjust = movies.length % itemsView;
-      const imgs = item.querySelectorAll(".carousel-img-container");
-      if (moved) {
-        if (!needReadJust && itemsToReadjust !== 0) {
-          //reajuste de antes del principio al principio
-          if (position === 1 && itemsToReadjust !== 0) {
-            const groupToMove = Array.from(imgs).slice(
-              -itemsToReadjust,
-              imgs.length
-            );
-            groupToMove.reverse().map((newImg) => item.prepend(newImg));
-          } else {
-            const groupToMove = Array.from(imgs).slice(-itemsView, imgs.length);
-            groupToMove.reverse().map((newImg) => item.prepend(newImg));
-          }
-        } else {
-          const groupToMove = Array.from(imgs).slice(-itemsView, imgs.length);
-          groupToMove.reverse().map((newImg) => item.prepend(newImg));
+      if (position === 1) {
+        const previous = getAllPreviousElements('first', item)
+        for (let i = previous.length; i < itemsView; i++) {
+          moveLastElement2Start(item, ".carousel-img-container");
         }
-      }
+      } else {
+        const imgs = item.querySelectorAll(".carousel-img-container");
 
-      //siempre que pase del principio al final se deshabilita needReajust
-      if (position === 0) {
-        setNeedReadJust(false);
+        const groupToMove = Array.from(imgs).slice(-itemsView, imgs.length);
+        groupToMove.reverse().map((newImg) => item.prepend(newImg));
       }
 
       if (position === 0) {
@@ -148,7 +133,7 @@ export const Carousel = ({
         setPosition((position) => position - 1);
       }
     }
-  };
+  }
 
   //useLayout to get --items-per-screen from css
   useLayoutEffect(() => {
