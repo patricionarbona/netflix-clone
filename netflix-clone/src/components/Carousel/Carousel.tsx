@@ -85,10 +85,10 @@ export const Carousel = ({
       if (!item) {
         return;
       }
-      
+
       //si se mueve a la ultima posicion
       if (position === Math.ceil(movies.length / itemsView) - 2) {
-        const next = getAllPreviousElements('last', item)
+        const next = getAllPreviousElements("last", item);
         for (let i = next.length; i > itemsView * 2 - 1; i--) {
           moveFirstElement2End(item, ".carousel-img-container");
         }
@@ -105,7 +105,7 @@ export const Carousel = ({
       }
       setMoved(true);
     }
-  }
+  };
 
   const handlePrev = () => {
     if (carouselRef.current) {
@@ -116,7 +116,7 @@ export const Carousel = ({
       if (!item) return;
 
       if (position === 1) {
-        const previous = getAllPreviousElements('first', item)
+        const previous = getAllPreviousElements("first", item);
         for (let i = previous.length; i < itemsView; i++) {
           moveLastElement2Start(item, ".carousel-img-container");
         }
@@ -133,7 +133,7 @@ export const Carousel = ({
         setPosition((position) => position - 1);
       }
     }
-  }
+  };
 
   //useLayout to get --items-per-screen from css
   useLayoutEffect(() => {
