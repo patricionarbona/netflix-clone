@@ -203,6 +203,7 @@ export const Carousel = ({
     if (itemsPerScreen !== itemsView && moved) {
       setItemsView(itemsPerScreen);
       const previous = getAllPreviousElements("first");
+      //carousel al inicio
       if (position === 0) {
         //reduce tamaño
         if (itemsView > itemsPerScreen) {
