@@ -202,7 +202,7 @@ export const Carousel = ({
     );
     if (itemsPerScreen !== itemsView && moved) {
       setItemsView(itemsPerScreen);
-      const previous = getAllPreviousElements("first");
+      const previous = getAllPreviousElements("first", slider);
       //carousel al inicio
       if (position === 0) {
         //reduce tamaño
@@ -221,7 +221,7 @@ export const Carousel = ({
 
       //resize carousel al final
       if (position === Math.ceil(movies.length / itemsView) - 1) {
-        const next = getAllPreviousElements("last");
+        const next = getAllPreviousElements("last", slider);
         //reduce tamaño
         if (itemsView > itemsPerScreen) {
           for (let i = next.length; i > itemsPerScreen * 2 - 1; i--) {
@@ -232,13 +232,22 @@ export const Carousel = ({
             moveLastElement2Start(slider, ".carousel-img-container");
           }
         }
-        setPosition(Math.ceil(movies.length / itemsPerScreen) - 1)
+        setPosition(Math.ceil(movies.length / itemsPerScreen) - 1);
+      }
+    } else if (itemsPerScreen !== itemsView && !moved) {
+      setItemsView(itemsPerScreen);
+      const previous = getAllPreviousElements("first", slider);
+      for (let i = previous.length; i > 0; i--) {
+        moveFirstElement2End(slider, ".carousel-img-container");
       }
     }
   };
 
-  const getAllPreviousElements = (classTagName: string): HTMLElement[] => {
-    const tagElements = document.getElementsByClassName(
+  const getAllPreviousElements = (
+    classTagName: string,
+    containerElement: HTMLElement
+  ): HTMLElement[] => {
+    const tagElements = containerElement.getElementsByClassName(
       classTagName
     ) as HTMLCollectionOf<HTMLElement>;
 
