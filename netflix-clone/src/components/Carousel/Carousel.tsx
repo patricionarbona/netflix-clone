@@ -176,7 +176,9 @@ export const Carousel = ({
     if (itemsPerScreen !== itemsView && moved) {
       setItemsView(itemsPerScreen);
       const previous = getAllPreviousElements("first", slider);
+
       //carousel al inicio
+      //posicion sigue en 0
       if (position === 0) {
         //reduce tamaño
         if (itemsView > itemsPerScreen) {
@@ -193,6 +195,7 @@ export const Carousel = ({
       }
 
       //resize carousel al final
+      //posicion se pone al nuevo final
       if (position === Math.ceil(movies.length / itemsView) - 1) {
         const next = getAllPreviousElements("last", slider);
         //reduce tamaño
@@ -207,6 +210,17 @@ export const Carousel = ({
         }
         setPosition(Math.ceil(movies.length / itemsPerScreen) - 1);
       }
+
+      //resize posicion 1
+      //posicion sigue siendo 1
+      if(position === 1) {
+        const previous = getAllPreviousElements('first', slider)
+        //reduce o amplia tamaño hace lo mismo
+          for(let i = previous.length; i > 0; i--) {
+            moveFirstElement2End(slider, '.carousel-img-container')
+        }
+      }
+
     } else if (itemsPerScreen !== itemsView && !moved) {
       setItemsView(itemsPerScreen);
       const previous = getAllPreviousElements("first", slider);
