@@ -220,6 +220,17 @@ export const Carousel = ({
             moveFirstElement2End(slider, '.carousel-img-container')
         }
       }
+      
+      //resize posicion penultima final - 1
+      //posicion se recalcula a final - 1
+      if(position === Math.ceil(movies.length / itemsView) - 2) {
+        const previous = getAllPreviousElements('last', slider)
+        for(let i = previous.length; i > (3 * itemsPerScreen - 1); i--) {
+          moveFirstElement2End(slider, '.carousel-img-container')
+        }
+
+        setPosition(Math.ceil(movies.length / itemsPerScreen) - 2)
+      }
 
     } else if (itemsPerScreen !== itemsView && !moved) {
       setItemsView(itemsPerScreen);
