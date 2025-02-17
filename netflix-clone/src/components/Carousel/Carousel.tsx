@@ -85,17 +85,18 @@ export const Carousel = ({
       if (!item) {
         return;
       }
-
-      //si se mueve a la ultima posicion
-      if (position === Math.ceil(movies.length / itemsView) - 2) {
-        const next = getAllPreviousElements("last", item);
-        for (let i = next.length; i > itemsView * 2 - 1; i--) {
-          moveFirstElement2End(item, ".carousel-img-container");
+      if(moved) {
+        //si se mueve a la ultima posicion
+        if (position === Math.ceil(movies.length / itemsView) - 2) {
+          const next = getAllPreviousElements("last", item);
+          for (let i = next.length; i > itemsView * 2 - 1; i--) {
+            moveFirstElement2End(item, ".carousel-img-container");
+          }
+        } else {
+          const imgs = item.querySelectorAll(".carousel-img-container");
+          const groupToMove = Array.from(imgs).slice(0, itemsView);
+          groupToMove.map((newImg) => item.appendChild(newImg));
         }
-      } else {
-        const imgs = item.querySelectorAll(".carousel-img-container");
-        const groupToMove = Array.from(imgs).slice(0, itemsView);
-        groupToMove.map((newImg) => item.appendChild(newImg));
       }
 
       if (position === Math.ceil(movies.length / itemsView) - 1) {
