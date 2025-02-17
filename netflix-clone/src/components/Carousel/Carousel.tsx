@@ -232,6 +232,30 @@ export const Carousel = ({
         setPosition(Math.ceil(movies.length / itemsPerScreen) - 2)
       }
 
+      //resize posicion > 1 y < final -1
+      //formula: Posicion = (( Total imgs - (previousLast + 1) ) / itemsPerScreen ) + 1
+      if(position > 1 && position < Math.ceil(movies.length / itemsView) - 2) {
+        console.log('df')
+        //aumenta tamaño
+        if (itemsView < itemsPerScreen) {
+          //obtengo previous preResize
+          const previousPreResize = getAllPreviousElements('last', slider)
+          //calculo posibles posiciones para ese previous pre resize
+          let previousPostResize = 0
+          for(let i = movies.length; i > previousPreResize.length; i = i - itemsPerScreen) {
+            console.log(i)
+            previousPostResize = i
+          }
+          console.log(previousPostResize)
+          const newPos = calculatePos(movies.length, itemsPerScreen, previousPostResize)
+          console.log(newPos)
+          setPosition(newPos)
+          for(let i = previousPreResize.length; i < previousPostResize - 1; i++) {
+            moveLastElement2Start(slider, '.carousel-img-container')
+          }
+        }
+      }
+
     } else if (itemsPerScreen !== itemsView && !moved) {
       setItemsView(itemsPerScreen);
       const previous = getAllPreviousElements("first", slider);
@@ -240,6 +264,10 @@ export const Carousel = ({
       }
     }
   };
+
+  const calculatePos= (total: number, vista: number, previosLast:number) => {
+    return (total - previosLast) / vista + 1 
+  }
 
   const getAllPreviousElements = (
     classTagName: string,
