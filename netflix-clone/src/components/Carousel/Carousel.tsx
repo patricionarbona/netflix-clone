@@ -213,51 +213,57 @@ export const Carousel = ({
 
       //resize posicion 1
       //posicion sigue siendo 1
-      if(position === 1) {
-        const previous = getAllPreviousElements('first', slider)
+      if (position === 1) {
+        const previous = getAllPreviousElements("first", slider);
         //reduce o amplia tamaño hace lo mismo
-          for(let i = previous.length; i > 0; i--) {
-            moveFirstElement2End(slider, '.carousel-img-container')
+        for (let i = previous.length; i > 0; i--) {
+          moveFirstElement2End(slider, ".carousel-img-container");
         }
       }
-      
+
       //resize posicion penultima final - 1
       //posicion se recalcula a final - 1
-      if(position === Math.ceil(movies.length / itemsView) - 2) {
-        const previous = getAllPreviousElements('last', slider)
-        for(let i = previous.length; i > (3 * itemsPerScreen - 1); i--) {
-          moveFirstElement2End(slider, '.carousel-img-container')
+      if (position === Math.ceil(movies.length / itemsView) - 2) {
+        const previous = getAllPreviousElements("last", slider);
+        for (let i = previous.length; i > 3 * itemsPerScreen - 1; i--) {
+          moveFirstElement2End(slider, ".carousel-img-container");
         }
 
-        setPosition(Math.ceil(movies.length / itemsPerScreen) - 2)
+        setPosition(Math.ceil(movies.length / itemsPerScreen) - 2);
       }
 
       //resize posicion > 1 y < final -1
-      //formula: Posicion = (( Total imgs - (previousLast + 1) ) / itemsPerScreen ) + 1
-      if(position > 1 && position < Math.ceil(movies.length / itemsView) - 2) {
-        console.log('df')
+      if (position > 1 && position < Math.ceil(movies.length / itemsView) - 2) {
         //aumenta tamaño
-        if (itemsView < itemsPerScreen  || itemsView > itemsPerScreen) {
+        if (itemsView < itemsPerScreen || itemsView > itemsPerScreen) {
           //obtengo previous preResize
-          const previousPreResize = getAllPreviousElements('last', slider)
+          const previousPreResize = getAllPreviousElements("last", slider);
           //calculo posibles posiciones para ese previous pre resize
-          let previousPostResize = 0
-          for(let i = movies.length; i > previousPreResize.length; i = i - itemsPerScreen) {
-            console.log(i)
-            previousPostResize = i
+          let previousPostResize = 0;
+          for (
+            let i = movies.length;
+            i > previousPreResize.length;
+            i = i - itemsPerScreen
+          ) {
+            previousPostResize = i;
           }
-          console.log(previousPostResize)
           //con los numeros de elementos obtengo la posicion
-          const newPos = calculatePos(movies.length, itemsPerScreen, previousPostResize)
-          console.log(newPos)
-          setPosition(newPos)
+          const newPos = calculatePos(
+            movies.length,
+            itemsPerScreen,
+            previousPostResize
+          );
+          setPosition(newPos);
           //sabida la posicion pongo muevo elementos
-          for(let i = previousPreResize.length; i < previousPostResize - 1; i++) {
-            moveLastElement2Start(slider, '.carousel-img-container')
+          for (
+            let i = previousPreResize.length;
+            i < previousPostResize - 1;
+            i++
+          ) {
+            moveLastElement2Start(slider, ".carousel-img-container");
           }
         }
       }
-
     } else if (itemsPerScreen !== itemsView && !moved) {
       setItemsView(itemsPerScreen);
       const previous = getAllPreviousElements("first", slider);
@@ -267,9 +273,9 @@ export const Carousel = ({
     }
   };
 
-  const calculatePos= (total: number, vista: number, previosLast:number) => {
-    return (total - previosLast) / vista + 1 
-  }
+  const calculatePos = (total: number, vista: number, previosLast: number) => {
+    return (total - previosLast) / vista + 1;
+  };
 
   const getAllPreviousElements = (
     classTagName: string,
