@@ -85,7 +85,7 @@ export const Carousel = ({
       if (!item) {
         return;
       }
-      if(moved) {
+      if (moved) {
         //si se mueve a la ultima posicion
         if (position === Math.ceil(movies.length / itemsView) - 2) {
           const next = getAllPreviousElements("last", item);
@@ -135,35 +135,6 @@ export const Carousel = ({
       }
     }
   };
-
-  //useLayout to get --items-per-screen from css
-  useLayoutEffect(() => {
-    paramsLanguage.append("with_genres", String(genre_id));
-    paramsLanguage.append("primary_release_date.gte", "2024-01-01");
-    paramsLanguage.append("primary_release_date.lte", "2024-12-31");
-
-    const fetchData = async () => {
-      try {
-        const data = await fetchPages<FetchMovies>(urlGenre, paramsLanguage, 2);
-        setMovies(data.map((item) => item.results).flat());
-        const slider = carouselRef.current?.querySelector(
-          ".carousel-slider"
-        ) as HTMLElement;
-        if (slider) {
-          const style = getComputedStyle(slider);
-          const itemsPerScreen = style.getPropertyValue("--items-per-screen");
-          setItemsView(parseInt(itemsPerScreen) || 1); // Valor por defecto si no se encuentra
-        }
-        setLoading(false);
-      } catch (error) {
-        setError(`Error al cargar las peliculas: ${error}`);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [genre_id]);
 
   const handleResize = () => {
     const slider = carouselRef.current?.querySelector(
@@ -332,6 +303,35 @@ export const Carousel = ({
       elementContainer.insertBefore(lastItem, elementContainer.firstChild);
     }
   };
+
+  //useLayout to get --items-per-screen from css
+  useLayoutEffect(() => {
+    paramsLanguage.append("with_genres", String(genre_id));
+    paramsLanguage.append("primary_release_date.gte", "2024-01-01");
+    paramsLanguage.append("primary_release_date.lte", "2024-12-31");
+
+    const fetchData = async () => {
+      try {
+        const data = await fetchPages<FetchMovies>(urlGenre, paramsLanguage, 2);
+        setMovies(data.map((item) => item.results).flat());
+        const slider = carouselRef.current?.querySelector(
+          ".carousel-slider"
+        ) as HTMLElement;
+        if (slider) {
+          const style = getComputedStyle(slider);
+          const itemsPerScreen = style.getPropertyValue("--items-per-screen");
+          setItemsView(parseInt(itemsPerScreen) || 1); // Valor por defecto si no se encuentra
+        }
+        setLoading(false);
+      } catch (error) {
+        setError(`Error al cargar las peliculas: ${error}`);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [genre_id]);
 
   useEffect(() => {
     handleResize();
