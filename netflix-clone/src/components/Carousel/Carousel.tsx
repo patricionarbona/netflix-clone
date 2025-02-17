@@ -237,7 +237,7 @@ export const Carousel = ({
       if(position > 1 && position < Math.ceil(movies.length / itemsView) - 2) {
         console.log('df')
         //aumenta tamaño
-        if (itemsView < itemsPerScreen) {
+        if (itemsView < itemsPerScreen  || itemsView > itemsPerScreen) {
           //obtengo previous preResize
           const previousPreResize = getAllPreviousElements('last', slider)
           //calculo posibles posiciones para ese previous pre resize
@@ -247,9 +247,11 @@ export const Carousel = ({
             previousPostResize = i
           }
           console.log(previousPostResize)
+          //con los numeros de elementos obtengo la posicion
           const newPos = calculatePos(movies.length, itemsPerScreen, previousPostResize)
           console.log(newPos)
           setPosition(newPos)
+          //sabida la posicion pongo muevo elementos
           for(let i = previousPreResize.length; i < previousPostResize - 1; i++) {
             moveLastElement2Start(slider, '.carousel-img-container')
           }
