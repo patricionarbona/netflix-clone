@@ -51,7 +51,6 @@ const urlPoster = "https://image.tmdb.org/t/p/original/";
 
 export const VideoContainer = ({
   route,
-  site = "Youtube",
   banner = false,
   className = "",
 }: {
