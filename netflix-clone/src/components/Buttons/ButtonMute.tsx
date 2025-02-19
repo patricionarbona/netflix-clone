@@ -1,8 +1,8 @@
 import "./ButtonMute.css";
 
-export const ButtonMute = () => {
+export const ButtonMute = ({onClick}) => {
   return (
-    <div className="mute">
+    <div className="mute" onClick={onClick}>
       <button>
         <svg
           xmlns="http://www.w3.org/2000/svg"
