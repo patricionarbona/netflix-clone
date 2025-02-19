@@ -1,6 +1,11 @@
+import { useState } from "react";
 import { ButtonMoreInfo } from "../Buttons/ButtonMoreInfo";
 import { ButtonPlayRect } from "../Buttons/ButtonPlayRect";
 import "./VideoContainer.css";
+import YouTubePlayer from "./YoutubePlayer";
+import { ButtonRestart } from "../Buttons/ButtonRestart";
+import { ButtonMute } from "../Buttons/ButtonMute";
+import { ButtonVolume } from "../Buttons/ButtonVolume";
 
 const sonicData = {
   adult: false,
@@ -55,11 +60,16 @@ export const VideoContainer = ({
   banner?: boolean;
   className?: string;
 }) => {
-  // Para YouTube, añadimos el parámetro autoplay a la URL
-  const videoUrl =
-    site === "Youtube"
-      ? `https://www.youtube.com/embed/${route}?autoplay=1&mute=1`
-      : route;
+  const [videoPlaying, setVideoPlaying] = useState(false);
+  const [muteVideo, setMuteVideo] = useState(true);
+
+  const handleVideoEnd = () => {
+    setVideoPlaying(false);
+  };
+
+  const handleClickRestart = () => {
+    setVideoPlaying(true);
+  };
 
   return (
     <>
@@ -83,15 +93,24 @@ export const VideoContainer = ({
             </div>
           </div>
         )}
-        {site === "Youtube" ? (
-          <iframe
-            src={videoUrl}
-            title="YouTube video player"
-            allow="autoplay"
-            allowFullScreen
-          ></iframe>
+        {videoPlaying ? (
+          <>
+            <YouTubePlayer
+              videoId={route}
+              onEnd={handleVideoEnd}
+              onMuted={muteVideo}
+            />
+            {muteVideo ? (
+              <ButtonMute onClick={() => setMuteVideo(false)} />
+            ) : (
+              <ButtonVolume onClick={() => setMuteVideo(true)} />
+            )}
+          </>
         ) : (
-          <img src={urlPoster + sonicData.backdrop_path} alt="" />
+          <>
+            <img src={urlPoster + sonicData.backdrop_path} alt="" />
+            <ButtonRestart onClick={handleClickRestart} />
+          </>
         )}
       </div>
     </>
