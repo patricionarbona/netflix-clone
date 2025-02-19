@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
-const YouTubePlayer = ({ videoId, onEnd }) => {
+const YouTubePlayer = ({ videoId, onEnd, onMuted }) => {
   const iframeRef = useRef(null);
   const playerRef = useRef(null);
 
@@ -58,6 +58,16 @@ const YouTubePlayer = ({ videoId, onEnd }) => {
       }
     };
   }, [videoId]);
+
+  useEffect(() => {
+    if (playerRef.current) {
+      if (onMuted) {
+        playerRef.current.mute();
+      } else {
+        playerRef.current.unMute();
+      }
+    }
+  }, [onMuted]);
 
   return (
     <div>
