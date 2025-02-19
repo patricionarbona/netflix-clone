@@ -143,7 +143,7 @@ export const DisplayContentModal = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowVideo(true);
-    }, 15000);
+    }, 5000);
 
     return () => clearTimeout(timer);
   }, []);
