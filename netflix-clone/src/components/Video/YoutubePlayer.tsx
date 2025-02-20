@@ -71,7 +71,7 @@ const YouTubePlayer = ({ videoId, onEnd, onMuted }) => {
 
   return (
     <div>
-      <div id="player" ref={iframeRef}></div>
+      <div className="player" ref={iframeRef}></div>
     </div>
   );
 };
