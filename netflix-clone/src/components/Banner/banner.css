@@ -1,6 +1,6 @@
 .banner {
     position: relative;
-    height: 80vh;
+    height: 97vh;
 }
 
 .banner-video-container {
@@ -15,7 +15,7 @@
     height: 100%;
 }
 .banner-video-container iframe {
-    height: 80vh;
+    height: 97vh;
     width: 100%;
 }
 
