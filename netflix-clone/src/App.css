@@ -24,6 +24,11 @@ body {
     margin-bottom: 6rem;
 }
 
+img {
+    height: 50px;
+    width: 50px;
+}
+
 .tooltip {
     position: absolute;
     top: 0;

@@ -28,6 +28,7 @@ body {
 
 .carousel-img-container > img {
     width: 100%;
+    height: auto;
     border-radius: 1.25rem;
     aspect-ratio: 16 / 9;
 }
