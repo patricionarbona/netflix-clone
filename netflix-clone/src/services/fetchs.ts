@@ -83,6 +83,13 @@ interface MovieSimilar {
   total_results: number;
 }
 
+interface MoviePopular {
+  page: number;
+  results: Movie[];
+  total_pages: number;
+  total_results: number;
+}
+
 const claveApi = import.meta.env.VITE_API_KEY;
 
 const options = {
@@ -198,6 +205,31 @@ export const fetchMovieSimilar = async (
     return data.results;
   } catch (er) {
     console.error("Error al obtener los videos de movies", er);
+    throw er;
+  }
+};
+
+export const fetchMoviePopular = async (): Promise<Movie> => {
+  const paramsLanguage = new URLSearchParams({
+    language: "es-ES",
+    sort_by: "popularity.desc",
+  });
+
+  paramsLanguage.append("primary_release_date.gte", "2024-01-01");
+  paramsLanguage.append("primary_release_date.lte", "2024-12-31");
+
+  const url = new URL("https://api.themoviedb.org/3/movie/popular");
+  url.search = paramsLanguage.toString();
+
+  try {
+    const response = await fetch(url, options);
+    if (!response.ok) {
+      throw new Error("Error peticion movies popular");
+    }
+    const data: MoviePopular = await response.json();
+    return data.results[0];
+  } catch (er) {
+    console.error("Error al obtener la pelicula más popular", er);
     throw er;
   }
 };
