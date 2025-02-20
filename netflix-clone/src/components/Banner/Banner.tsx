@@ -45,39 +45,52 @@ export const Banner = () => {
     <>
       {movie && (
         <>
-          <div className="video-container-data">
-            <h3>
-              {" "}
-              <img src="/assets/netflix-logo.png" alt="" />
-              PELÍCULA
-            </h3>
-            <h2>{movie?.original_title}</h2>
-            <p>{movie?.overview}</p>
-            <div className="video-container-buttons">
-              <ButtonPlayRect />
-              <ButtonMoreInfo />
+          <div className="banner">
+            <div className="banner-video-container">
+              {videoPlaying ? (
+                <>
+                  <YouTubePlayer
+                    videoId={video?.key}
+                    onEnd={handleVideoEnd}
+                    onMuted={muteVideo}
+                  />
+                </>
+              ) : (
+                <>
+                  <img
+                    src={urlPoster + movie.backdrop_path}
+                    alt=""
+                    className="banner-img"
+                  />
+                </>
+              )}
             </div>
-          </div>
-          <div className="banner-video-container">
-            {videoPlaying ? (
-              <>
-                <YouTubePlayer
-                  videoId={video?.key}
-                  onEnd={handleVideoEnd}
-                  onMuted={muteVideo}
-                />
-                {muteVideo ? (
-                  <ButtonMute onClick={() => setMuteVideo(false)} />
+            <div className="banner-container">
+              <div className="banner-container-data">
+                <h3>
+                  {" "}
+                  <img src="/assets/netflix-logo.png" alt="" />
+                  PELÍCULA
+                </h3>
+                <h2>{movie?.original_title}</h2>
+                <p>{movie?.overview}</p>
+                <div className="banner-container-buttons">
+                  <ButtonPlayRect />
+                  <ButtonMoreInfo />
+                </div>
+              </div>
+              <div className="banner-buttons">
+                {videoPlaying ? (
+                  muteVideo ? (
+                    <ButtonMute onClick={() => setMuteVideo(false)} />
+                  ) : (
+                    <ButtonVolume onClick={() => setMuteVideo(true)} />
+                  )
                 ) : (
-                  <ButtonVolume onClick={() => setMuteVideo(true)} />
+                  <ButtonRestart onClick={handleClickRestart} />
                 )}
-              </>
-            ) : (
-              <>
-                <img src={urlPoster + movie.backdrop_path} alt="" />
-                <ButtonRestart onClick={handleClickRestart} />
-              </>
-            )}
+              </div>
+            </div>
           </div>
         </>
       )}
