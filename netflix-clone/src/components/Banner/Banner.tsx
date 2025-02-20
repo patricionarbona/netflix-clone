@@ -1,97 +1,86 @@
 import { useEffect, useState } from "react";
-import { useFetch } from "../../hook";
 import "./banner.css";
-
-interface Movie {
-  adult: boolean;
-  backdrop_path: string;
-  genre_ids: number[];
-  id: number;
-  original_language: string;
-  original_title: string;
-  overview: string;
-  popularity: number;
-  poster_path: string;
-  release_date: string;
-  title: string;
-  video: boolean;
-  vote_average: number;
-  vote_count: number;
-}
-
-interface Video {
-  iso_639_1: string;
-  iso_3166_1: string;
-  name: string;
-  key: string;
-  site: string;
-  size: number;
-  type: string;
-  official: boolean;
-  published_at: string;
-  id: string;
-}
-
-interface fetchPopularMovie {
-  page: number;
-  results: Movie[];
-}
-
-interface fetchVideosMovie {
-  id: number;
-  results: Video[];
-}
-
-const urlPopularMovies = "https://api.themoviedb.org/3/movie/popular";
-
-const paramsLanguage = new URLSearchParams({
-  language: "es-ES",
-});
-
-const claveApi = import.meta.env.VITE_API_KEY;
-
-const options = {
-  method: "GET",
-  headers: {
-    accept: "application/json",
-    Authorization: `Bearer ${claveApi}`,
-  },
-};
+import { Movie, VideoMovie } from "../../interfaces";
+import { fetchMoviePopular, fetchMovieVideos } from "../../services/fetchs";
+import { ButtonPlayRect } from "../Buttons/ButtonPlayRect";
+import { ButtonMoreInfo } from "../Buttons/ButtonMoreInfo";
+import YouTubePlayer from "../Video/YoutubePlayer";
+import { ButtonMute } from "../Buttons/ButtonMute";
+import { ButtonVolume } from "../Buttons/ButtonVolume";
+import { ButtonRestart } from "../Buttons/ButtonRestart";
 
 export const Banner = () => {
-  const [dataVideosMovie, setDataVideosMovies] =
-    useState<fetchVideosMovie | null>(null);
-  const { data } = useFetch<fetchPopularMovie>(
-    urlPopularMovies,
-    paramsLanguage
-  );
+  const [movie, setMovie] = useState<Movie | null>(null);
+  const [video, setVideo] = useState<VideoMovie | null>(null);
+  const [videoPlaying, setVideoPlaying] = useState(true);
+  const [muteVideo, setMuteVideo] = useState(true);
 
-  const fetchVideos = async (url: URL, params: any) => {
-    const response = await fetch(url, params);
-    const responseJson = await response.json();
-    setDataVideosMovies(responseJson);
+  const urlPoster = "https://image.tmdb.org/t/p/original/";
+
+  const handleVideoEnd = () => {
+    setVideoPlaying(false);
+  };
+
+  const handleClickRestart = () => {
+    setVideoPlaying(true);
   };
 
   useEffect(() => {
-    if (data) {
-      const peli = data.results[0];
-      if (peli?.id) {
-        const urlVideosMovie = new URL(
-          `https://api.themoviedb.org/3/movie/${peli.id}/videos`
-        );
-        urlVideosMovie.search = paramsLanguage.toString();
-        fetchVideos(urlVideosMovie, options);
+    const fetchMovie = async () => {
+      try {
+        const data = await fetchMoviePopular();
+        const dataVideos = await fetchMovieVideos(data.id);
+        setVideo(dataVideos.filter((video) => video.type === "Teaser")[0]);
+
+        setMovie(data);
+      } catch (error) {
+        console.error("error al recuperar los datos", error);
       }
-    }
-  }, [data]);
+    };
+
+    fetchMovie();
+  }, []);
 
   return (
-    <div className="banner">
-      {dataVideosMovie
-        ? dataVideosMovie.results
-            .filter((video) => video.type === "Trailer")
-            .map((video) => <div key={video.id}>{video.key}</div>)
-        : null}
-    </div>
+    <>
+      {movie && (
+        <>
+          <div className="video-container-data">
+            <h3>
+              {" "}
+              <img src="/assets/netflix-logo.png" alt="" />
+              PELÍCULA
+            </h3>
+            <h2>{movie?.original_title}</h2>
+            <p>{movie?.overview}</p>
+            <div className="video-container-buttons">
+              <ButtonPlayRect />
+              <ButtonMoreInfo />
+            </div>
+          </div>
+          <div className="banner-video-container">
+            {videoPlaying ? (
+              <>
+                <YouTubePlayer
+                  videoId={video?.key}
+                  onEnd={handleVideoEnd}
+                  onMuted={muteVideo}
+                />
+                {muteVideo ? (
+                  <ButtonMute onClick={() => setMuteVideo(false)} />
+                ) : (
+                  <ButtonVolume onClick={() => setMuteVideo(true)} />
+                )}
+              </>
+            ) : (
+              <>
+                <img src={urlPoster + movie.backdrop_path} alt="" />
+                <ButtonRestart onClick={handleClickRestart} />
+              </>
+            )}
+          </div>
+        </>
+      )}
+    </>
   );
 };
