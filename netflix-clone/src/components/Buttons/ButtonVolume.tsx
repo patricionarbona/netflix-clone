@@ -1,8 +1,8 @@
 import "./ButtonVolume.css";
 
-export const ButtonVolume = ({onClick}) => {
+export const ButtonVolume = ({onClick}: {onClick: () => void}) => {
   return (
-    <div className="btn-volume" onClick={onClick}>
+    <div className="btn btn-volume" onClick={onClick}>
       <button>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -10,7 +10,6 @@ export const ButtonVolume = ({onClick}) => {
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="size-6"
         >
           <path
             stroke-linecap="round"
