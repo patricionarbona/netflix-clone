@@ -13,7 +13,7 @@
     position: relative;
 }
 
-.hoverModal-display-container >  img {
+.hoverModal-video-container >  img {
     border-top-left-radius: .5rem;
     border-top-right-radius: .5rem;
     width: 100%;
@@ -21,11 +21,10 @@
     position: absolute;
 }
 
-.hoverModal .video-container {
+.hoverModal .hoverModal-video-container {
     height: 100%;
     border-top-left-radius: .5rem;
     border-top-right-radius: .5rem;
-
 }
 
 .hoverModal-info {
@@ -36,7 +35,7 @@
     justify-content: space-evenly;
 }
 
-.video-container {
+.hoverModal-video-container {
     --border-radius-hoverModal: .5rem;
   position: relative;
   /* The next three declarations simulate
@@ -44,17 +43,25 @@
   */
   border-top-right-radius: var(--border-radius-hoverModal);
   border-top-left-radius: var(--border-radius-hoverModal);
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
 }
 
-.video-container iframe {
+.hoverModal-video-container iframe {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    z-index: -1;
     clip-path: inset(0% 0% 0% 0% round var(--border-radius-hoverModal) 
         var(--border-radius-hoverModal) 0 0);
   }
+
+.hoverModal-video-container > .btn {
+    margin: 1rem 1rem;
+}
 
 
   .buttonsItemControls {
