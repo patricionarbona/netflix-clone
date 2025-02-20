@@ -1,8 +1,17 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
-const YouTubePlayer = ({ videoId, onEnd, onMuted }) => {
+const YouTubePlayer = ({
+  videoId,
+  onEnd,
+  onMuted,
+}: {
+  videoId: string;
+  onEnd?: () => void;
+  onMuted?: boolean,
+}) => {
   const iframeRef = useRef(null);
   const playerRef = useRef(null);
+  const [playerReady, setPlayerReady] = useState(false)
 
   useEffect(() => {
     // Verifica si la API de YouTube ya está cargada
@@ -43,6 +52,7 @@ const YouTubePlayer = ({ videoId, onEnd, onMuted }) => {
 
     function onPlayerReady(event) {
       console.log("El video está listo");
+      setPlayerReady(true)
     }
 
     function onPlayerStateChange(event) {
@@ -60,14 +70,17 @@ const YouTubePlayer = ({ videoId, onEnd, onMuted }) => {
   }, [videoId]);
 
   useEffect(() => {
-    if (playerRef.current) {
-      if (onMuted) {
-        playerRef.current.mute();
-      } else {
-        playerRef.current.unMute();
-      }
+    if (playerReady && playerRef.current) {
+        if (playerRef.current && typeof playerRef.current.mute === "function") {
+          if (onMuted) {
+            playerRef.current.mute();
+          } else {
+            playerRef.current.unMute();
+          }
+        }
     }
   }, [onMuted]);
+  
 
   return (
     <div>
