@@ -1,14 +1,14 @@
-.mute {
+.btn-mute {
     position: relative;
 }
 
-.mute svg {
+.btn-mute svg {
     width: 1.5rem;
     height: 1.5rem;
     color: #fff;
 }
 
-.mute button {
+.btn-mute button {
     position: relative;
     background-color: #141414;
     border-radius: 50%;
@@ -20,14 +20,14 @@
     transition: "border-color" .2s ease-in-out;
 }
 
-.mute button:hover {
+.btn-mute button:hover {
     border-color: #ffffff93;
     background-color: hsl(0, 0%, 15%);
     transform: scale(1.025);
     cursor: pointer;
 }
 
-.mute button:hover .tooltip {
+.btn-mute button:hover .tooltip {
     top: -45px;
   opacity: 1;
   width: 7rem;
