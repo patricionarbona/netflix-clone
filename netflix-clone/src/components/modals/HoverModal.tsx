@@ -8,6 +8,9 @@ import { ButtonPlayCirc } from "../Buttons/ButtonPlayCirc";
 import { ButtonAddList } from "../Buttons/ButtonAddList";
 import { LikeGroupButton } from "../Buttons/LikeGroupButton";
 import { GlobalContext } from "../../context/global.context";
+import YouTubePlayer from "../Video/YoutubePlayer";
+import { ButtonMute } from "../Buttons/ButtonMute";
+import { ButtonVolume } from "../Buttons/ButtonVolume";
 
 interface Movie {
   adult: boolean;
@@ -54,6 +57,8 @@ export const HoverModal = () => {
 
   const [videos, setVideos] = useState<VideoMovie[]>([]);
   const [showVideo, setShowVideo] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(true);
 
   const handleMouseLeave = () => {
     setShowHover(false);
@@ -96,11 +101,28 @@ export const HoverModal = () => {
     >
       <div className="hoverModal-display-container">
         {showVideo ? (
-          <VideoContainer
-            route={videos[0]?.key}
-            banner={false}
-            className={showVideo ? "show" : "hidden"}
-          />
+          <div className="hoverModal-video-container">
+            {isPlaying ? (
+              <>
+                <YouTubePlayer
+                  videoId={videos[0]?.key}
+                  onMuted={isMuted}
+                  onEnd={() => setIsPlaying(false)}
+                />
+                {isMuted ? (
+                  <ButtonMute onClick={() => setIsMuted(false)} />
+                ) : (
+                  <ButtonVolume onClick={() => setIsMuted(true)} />
+                )}
+              </>
+            ) : (
+              <img
+                src={urlPoster + movie.backdrop_path}
+                alt=""
+                className="hoverModal-img"
+              />
+            )}
+          </div>
         ) : (
           <img
             src={urlPoster + movie.backdrop_path}
