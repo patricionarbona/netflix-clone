@@ -4,7 +4,6 @@ import {
   fetchMovieSimilar,
   fetchMovieVideos,
 } from "../../services/fetchs";
-import { VideoContainer } from "../Video/VideoContainer";
 import "./DisplayContentModal.css";
 import { ButtonAddList } from "../Buttons/ButtonAddList";
 import { ButtonArrowDown } from "../Buttons/ButtonArrowDown";
@@ -144,7 +143,7 @@ export const DisplayContentModal = () => {
     return () => {
       dismountHandleScrollBarWidth();
     };
-  }, []);
+  }, [moviePicked.id]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
