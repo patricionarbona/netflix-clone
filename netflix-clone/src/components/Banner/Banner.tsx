@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./banner.css";
 import { Movie, VideoMovie } from "../../interfaces";
 import { fetchMoviePopular, fetchMovieVideos } from "../../services/fetchs";
@@ -8,12 +8,14 @@ import YouTubePlayer from "../Video/YoutubePlayer";
 import { ButtonMute } from "../Buttons/ButtonMute";
 import { ButtonVolume } from "../Buttons/ButtonVolume";
 import { ButtonRestart } from "../Buttons/ButtonRestart";
+import { GlobalContext } from "../../context/global.context";
 
 export const Banner = () => {
   const [movie, setMovie] = useState<Movie | null>(null);
   const [video, setVideo] = useState<VideoMovie | null>(null);
   const [videoPlaying, setVideoPlaying] = useState(true);
   const [muteVideo, setMuteVideo] = useState(true);
+  const  {isModalOpen} = useContext(GlobalContext)
 
   const urlPoster = "https://image.tmdb.org/t/p/original/";
 
@@ -47,7 +49,7 @@ export const Banner = () => {
         <>
           <div className="banner">
             <div className="banner-video-container">
-              {videoPlaying ? (
+              {videoPlaying && !isModalOpen ? (
                 <>
                   <YouTubePlayer
                     videoId={video?.key}
