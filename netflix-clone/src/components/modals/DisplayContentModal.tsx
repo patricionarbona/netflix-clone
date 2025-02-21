@@ -10,6 +10,11 @@ import { ButtonAddList } from "../Buttons/ButtonAddList";
 import { ButtonArrowDown } from "../Buttons/ButtonArrowDown";
 import { ButtonClose } from "../Buttons/ButtonClose";
 import { GlobalContext } from "../../context/global.context";
+import YouTubePlayer from "../Video/YoutubePlayer";
+import { ButtonMute } from "../Buttons/ButtonMute";
+import { ButtonVolume } from "../Buttons/ButtonVolume";
+import { ButtonPlayRect } from "../Buttons/ButtonPlayRect";
+import { ButtonMoreInfo } from "../Buttons/ButtonMoreInfo";
 interface Movie {
   adult: boolean;
   backdrop_path: string;
@@ -94,6 +99,7 @@ export const DisplayContentModal = () => {
   const [showVideo, setShowVideo] = useState(false);
 
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
 
   const handleClickOutside = (e: React.MouseEvent) => {
     // Cerrar el modal si se hace clic fuera de él
@@ -143,7 +149,7 @@ export const DisplayContentModal = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowVideo(true);
-    }, 5000);
+    }, 500);
 
     return () => clearTimeout(timer);
   }, []);
@@ -155,21 +161,43 @@ export const DisplayContentModal = () => {
   return (
     <div className="displayContentModal" onClick={handleClickOutside}>
       <div className="displayContentModal-content">
-        <div className="displayContentModal-player">
+        <div className="displayContentModal-player-container">
           <ButtonClose onClick={() => setIsModalOpen(false)} />
-          {showVideo ? (
-            <VideoContainer
-              route={videos[0]?.key}
-              banner={false}
-              className={showVideo ? "show" : "hidden"}
-            />
-          ) : (
-            <img
-              src={urlPoster + moviePicked.backdrop_path}
-              alt=""
-              className={showVideo ? "hidden" : "show"}
-            />
-          )}
+          <div className="displayContentModal-player">
+            {showVideo ? (
+              <YouTubePlayer
+                videoId={videos[0]?.key}
+                onEnd={() => setShowVideo(false)}
+                onMuted={isMuted}
+              />
+            ) : (
+              <img
+                src={urlPoster + moviePicked.backdrop_path}
+                alt=""
+                className={showVideo ? "hidden" : "show"}
+              />
+            )}
+          </div>
+          <div className="displayContentModal-player-data">
+            <div className="displayContentModal-player-info">
+              <h3>
+                <img src="/assets/netflix-logo.png" alt="" />
+                PELÍCULA
+              </h3>
+              <h2>{moviePicked?.original_title}</h2>
+              <div className="player-container-buttons">
+                <ButtonPlayRect />
+                <ButtonMoreInfo />
+              </div>
+            </div>
+            <div className="displayContentModal-player-buttons">
+              {isMuted ? (
+                <ButtonMute onClick={() => setIsMuted(false)} />
+              ) : (
+                <ButtonVolume onClick={() => setIsMuted(true)} />
+              )}
+            </div>
+          </div>
         </div>
         <div className="displayContentModal-wrapper">
           <div className="displayContentModal-info">
