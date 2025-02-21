@@ -30,7 +30,7 @@ interface GlobalContextType {
   isModalOpen: boolean;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   moviePicked: Movie;
-  setMoviePicked: React.Dispatch<React.SetStateAction<Movie>>;
+  setMoviePicked: React.Dispatch<React.SetStateAction<Movie | null>>;
   moviePickedPos: { x: number; y: number };
   setMoviePickedPos: React.Dispatch<
     React.SetStateAction<{ x: number; y: number }>
