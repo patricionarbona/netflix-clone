@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { fetchMovieVideos } from "../../services/fetchs";
 import { GenresList } from "../Carousel/GenresList";
-import { VideoContainer } from "../Video/VideoContainer";
 import "./HoverModal.css";
 import { ButtonArrowDown } from "../Buttons/ButtonArrowDown";
 import { ButtonPlayCirc } from "../Buttons/ButtonPlayCirc";
