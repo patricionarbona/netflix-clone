@@ -1,8 +1,8 @@
 import "./ButtonMoreInfo.css";
 
-export const ButtonMoreInfo = () => {
+export const ButtonMoreInfo = ({onClick}: {onClick?: () => void}) => {
   return (
-    <div className="btn-moreInfo">
+    <div className="btn-moreInfo" onClick={onClick}>
       <button>
         <svg
           xmlns="http://www.w3.org/2000/svg"
