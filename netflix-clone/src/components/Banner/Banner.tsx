@@ -11,11 +11,11 @@ import { ButtonRestart } from "../Buttons/ButtonRestart";
 import { GlobalContext } from "../../context/global.context";
 
 export const Banner = () => {
+  const  {isModalOpen, setMoviePicked, setIsModalOpen} = useContext(GlobalContext)
   const [movie, setMovie] = useState<Movie | null>(null);
   const [video, setVideo] = useState<VideoMovie | null>(null);
   const [videoPlaying, setVideoPlaying] = useState(true);
   const [muteVideo, setMuteVideo] = useState(true);
-  const  {isModalOpen} = useContext(GlobalContext)
 
   const urlPoster = "https://image.tmdb.org/t/p/original/";
 
@@ -26,6 +26,11 @@ export const Banner = () => {
   const handleClickRestart = () => {
     setVideoPlaying(true);
   };
+
+  const handleMoreInfo = () => {
+    setMoviePicked(movie)
+    setIsModalOpen(true)
+  }
 
   useEffect(() => {
     const fetchMovie = async () => {
@@ -78,7 +83,7 @@ export const Banner = () => {
                 <p>{movie?.overview}</p>
                 <div className="banner-container-buttons">
                   <ButtonPlayRect />
-                  <ButtonMoreInfo />
+                  <ButtonMoreInfo onClick={handleMoreInfo}/>
                 </div>
               </div>
               <div className="banner-buttons">
