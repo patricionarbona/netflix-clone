@@ -1,34 +1,21 @@
 import "./App.css";
 import {
+  Banner,
   Carousel,
   DisplayContentModal,
   HoverModal,
   Nav,
-  VideoContainer,
 } from "./components";
 import { useGlobalContext } from "./context/global.context";
 
 function App() {
   const { generos, showHover, isModalOpen } = useGlobalContext();
 
-  const ejemplo = {
-    iso_639_1: "es",
-    iso_3166_1: "ES",
-    name: "Divertidísima",
-    key: "ndri3rlCHHs",
-    site: "YouTube",
-    size: 1080,
-    type: "Teaser",
-    official: true,
-    published_at: "2025-01-10T09:19:31.000Z",
-    id: "67849e7978cfcd77ed4ed799",
-  };
-
   return (
     <>
       <Nav></Nav>
 
-      <VideoContainer route={ejemplo.key} banner={true} />
+      <Banner />
       <div className="container-carousels">
         {generos && generos.length > 0 && (
           <>
@@ -67,6 +54,7 @@ function App() {
 
       {showHover && <HoverModal />}
       {isModalOpen && <DisplayContentModal />}
+      {/* <script src="https://www.youtube.com/iframe_api"></script> */}
     </>
   );
 }
