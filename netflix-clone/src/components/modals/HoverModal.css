@@ -59,7 +59,7 @@
         var(--border-radius-hoverModal) 0 0);
   }
 
-.hoverModal-video-container > .btn {
+.hoverModal-video-container > .btn-circle {
     margin: 1rem 1rem;
 }
 
