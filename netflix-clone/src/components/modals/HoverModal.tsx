@@ -134,7 +134,7 @@ export const HoverModal = () => {
         <div className="buttonsItemControls">
           <div className="buttons-container">
             <ButtonPlayCirc />
-            <ButtonAddList showTooltip={true} />
+            <ButtonAddList  />
             <LikeGroupButton />
           </div>
           <div className="moreInfo">
