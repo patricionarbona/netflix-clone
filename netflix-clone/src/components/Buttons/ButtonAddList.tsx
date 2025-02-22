@@ -1,4 +1,3 @@
-import "./ButtonAddList.css";
 import { ButtonCircle } from "./CircleButtons/ButtonCircle";
 
 const svgList = (
