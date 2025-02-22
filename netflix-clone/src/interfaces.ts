@@ -27,3 +27,11 @@ export interface VideoMovie {
   published_at: string;
   id: string;
 }
+
+export interface ButtonCircleProps {
+  addClass?: string;
+  showTooltip?: boolean;
+  textTooltip: string;
+  svgProp: React.ReactNode;
+  onClick?: () => void;
+}
