@@ -1,14 +1,14 @@
-.arrowDown {
+.btn-circle {
     position: relative;
 }
 
-.arrowDown svg {
+.btn-circle svg {
     width: 1.5rem;
     height: 1.5rem;
     color: #fff;
 }
 
-.arrowDown button {
+.btn-circle button {
     position: relative;
     background-color: #141414;
     border-radius: 50%;
@@ -20,14 +20,14 @@
     transition: "border-color" .2s ease-in-out;
 }
 
-.arrowDown button:hover {
+.btn-circle button:hover {
     border-color: #ffffff93;
     background-color: hsl(0, 0%, 15%);
     transform: scale(1.025);
     cursor: pointer;
 }
 
-.arrowDown button:hover .tooltip {
+.btn-circle button:hover .tooltip {
     top: -45px;
   opacity: 1;
   width: fit-content;
