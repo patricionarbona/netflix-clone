@@ -9,7 +9,7 @@ export const ButtonCircle = ({
 }: {
   addClass?: string;
   showTooltip?: boolean;
-  textTooltip: string;
+  textTooltip?: string;
   svgProp: React.ReactNode;
   onClick?: () => void;
 }) => {
