@@ -107,6 +107,7 @@
 .displayContentModal-player-info .player-container-buttons {
     display: flex;
     gap: 6px;
+    align-self: flex-end;
 }
 
 .player-container-buttons button svg {
