@@ -14,6 +14,7 @@ import { ButtonMute } from "../Buttons/ButtonMute";
 import { ButtonVolume } from "../Buttons/ButtonVolume";
 import { ButtonPlayRect } from "../Buttons/ButtonPlayRect";
 import { ButtonMoreInfo } from "../Buttons/ButtonMoreInfo";
+import { LikeGroupButton } from "../Buttons/LikeGroupButton";
 interface Movie {
   adult: boolean;
   backdrop_path: string;
@@ -186,7 +187,8 @@ export const DisplayContentModal = () => {
               <h2>{moviePicked?.original_title}</h2>
               <div className="player-container-buttons">
                 <ButtonPlayRect />
-                <ButtonMoreInfo />
+                <ButtonAddList />
+                <LikeGroupButton />
               </div>
             </div>
             <div className="displayContentModal-player-buttons">
