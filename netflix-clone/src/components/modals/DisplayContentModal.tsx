@@ -13,8 +13,8 @@ import YouTubePlayer from "../Video/YoutubePlayer";
 import { ButtonMute } from "../Buttons/ButtonMute";
 import { ButtonVolume } from "../Buttons/ButtonVolume";
 import { ButtonPlayRect } from "../Buttons/ButtonPlayRect";
-import { ButtonMoreInfo } from "../Buttons/ButtonMoreInfo";
 import { LikeGroupButton } from "../Buttons/LikeGroupButton";
+import { ButtonCheck } from "../Buttons/CircleButtons/ButtonCheck";
 interface Movie {
   adult: boolean;
   backdrop_path: string;
@@ -100,6 +100,7 @@ export const DisplayContentModal = () => {
 
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
+  const [isAddList, setIsAddList] = useState(false);
 
   const handleClickOutside = (e: React.MouseEvent) => {
     // Cerrar el modal si se hace clic fuera de él
@@ -187,7 +188,11 @@ export const DisplayContentModal = () => {
               <h2>{moviePicked?.original_title}</h2>
               <div className="player-container-buttons">
                 <ButtonPlayRect />
-                <ButtonAddList />
+                {isAddList ? (
+                  <ButtonCheck onClick={() => setIsAddList(false)} />
+                ) : (
+                  <ButtonAddList onClick={() => setIsAddList(true)} />
+                )}
                 <LikeGroupButton />
               </div>
             </div>

@@ -10,6 +10,7 @@ import { GlobalContext } from "../../context/global.context";
 import YouTubePlayer from "../Video/YoutubePlayer";
 import { ButtonMute } from "../Buttons/ButtonMute";
 import { ButtonVolume } from "../Buttons/ButtonVolume";
+import { ButtonCheck } from "../Buttons/CircleButtons/ButtonCheck";
 
 interface Movie {
   adult: boolean;
@@ -58,6 +59,7 @@ export const HoverModal = () => {
   const [showVideo, setShowVideo] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const [isPlaying, setIsPlaying] = useState(true);
+  const [isAddList, setIsAddList] = useState(false);
 
   const handleMouseLeave = () => {
     setShowHover(false);
@@ -133,8 +135,12 @@ export const HoverModal = () => {
       <div className="hoverModal-info">
         <div className="buttonsItemControls">
           <div className="buttons-container">
-            <ButtonPlayCirc />
-            <ButtonAddList  />
+            <ButtonPlayCirc onClick={() => console.log("play")} />
+            {isAddList ? (
+              <ButtonCheck onClick={() => setIsAddList(false)} />
+            ) : (
+              <ButtonAddList onClick={() => setIsAddList(true)} />
+            )}
             <LikeGroupButton />
           </div>
           <div className="moreInfo">
