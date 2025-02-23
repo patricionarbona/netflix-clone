@@ -69,7 +69,12 @@ export const HoverModal = () => {
     const fetchData = async () => {
       try {
         const data = await fetchMovieVideos(movie.id);
-        setVideos(data.filter((video) => video.type === "Teaser"));
+        if (data.length === 0) {
+          const newData = await fetchMovieVideos(movie.id, "en-US");
+          setVideos(newData.filter((video) => video.type === "Trailer"));
+        } else {
+          setVideos(data.filter((video) => video.type === "Trailer"));
+        }
       } catch (error) {
         console.error("Error al obtener videos:", error);
       }

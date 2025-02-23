@@ -11,7 +11,8 @@ import { ButtonRestart } from "../Buttons/ButtonRestart";
 import { GlobalContext } from "../../context/global.context";
 
 export const Banner = () => {
-  const  {isModalOpen, setMoviePicked, setIsModalOpen} = useContext(GlobalContext)
+  const { isModalOpen, setMoviePicked, setIsModalOpen } =
+    useContext(GlobalContext);
   const [movie, setMovie] = useState<Movie | null>(null);
   const [video, setVideo] = useState<VideoMovie | null>(null);
   const [videoPlaying, setVideoPlaying] = useState(true);
@@ -28,17 +29,21 @@ export const Banner = () => {
   };
 
   const handleMoreInfo = () => {
-    setMoviePicked(movie)
-    setIsModalOpen(true)
-  }
+    setMoviePicked(movie);
+    setIsModalOpen(true);
+  };
 
   useEffect(() => {
     const fetchMovie = async () => {
       try {
         const data = await fetchMoviePopular();
         const dataVideos = await fetchMovieVideos(data.id);
-        setVideo(dataVideos.filter((video) => video.type === "Teaser")[0]);
-
+        if (dataVideos.length === 0) {
+          const newData = await fetchMovieVideos(data.id, "en-US");
+          setVideo(newData.filter((video) => video.type === "Trailer")[0]);
+        } else {
+          setVideo(dataVideos.filter((video) => video.type === "Trailer")[0]);
+        }
         setMovie(data);
       } catch (error) {
         console.error("error al recuperar los datos", error);
@@ -83,7 +88,7 @@ export const Banner = () => {
                 <p>{movie?.overview}</p>
                 <div className="banner-container-buttons">
                   <ButtonPlayRect />
-                  <ButtonMoreInfo onClick={handleMoreInfo}/>
+                  <ButtonMoreInfo onClick={handleMoreInfo} />
                 </div>
               </div>
               <div className="banner-buttons">

@@ -131,7 +131,12 @@ export const DisplayContentModal = () => {
           fetchMovieCast(moviePicked.id),
           fetchMovieSimilar(moviePicked.id),
         ]);
-        setVideos(data.filter((video) => video.type === "Teaser"));
+        if (data.length === 0) {
+          const newData = await fetchMovieVideos(moviePicked.id, "en-US");
+          setVideos(newData.filter((video) => video.type === "Trailer"));
+        } else {
+          setVideos(data.filter((video) => video.type === "Trailer"));
+        }
         setCast(dataCast);
         setMovieSimilar(dataSimilar);
       } catch (error) {
