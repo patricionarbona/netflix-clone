@@ -306,9 +306,15 @@ export const Carousel = ({
 
   //useLayout to get --items-per-screen from css
   useLayoutEffect(() => {
+    const today = new Date();
+    const lastYear = new Date();
+    lastYear.setFullYear(today.getFullYear() - 1);
+
+    const formatDate = (date: Date) => date.toISOString().split("T")[0];
+
     paramsLanguage.append("with_genres", String(genre_id));
-    paramsLanguage.append("primary_release_date.gte", "2024-01-01");
-    paramsLanguage.append("primary_release_date.lte", "2024-12-31");
+    paramsLanguage.append("primary_release_date.gte", formatDate(lastYear));
+    paramsLanguage.append("primary_release_date.lte", formatDate(today));
 
     const fetchData = async () => {
       try {

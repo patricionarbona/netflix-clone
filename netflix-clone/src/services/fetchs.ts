@@ -215,8 +215,14 @@ export const fetchMoviePopular = async (): Promise<Movie> => {
     sort_by: "popularity.desc",
   });
 
-  paramsLanguage.append("primary_release_date.gte", "2024-01-01");
-  paramsLanguage.append("primary_release_date.lte", "2024-12-31");
+  const today = new Date();
+  const lastYear = new Date();
+  lastYear.setFullYear(today.getFullYear() - 1);
+
+  const formatDate = (date: Date) => date.toISOString().split("T")[0];
+
+  paramsLanguage.append("primary_release_date.gte", formatDate(lastYear));
+  paramsLanguage.append("primary_release_date.lte", formatDate(today));
 
   const url = new URL("https://api.themoviedb.org/3/movie/popular");
   url.search = paramsLanguage.toString();
