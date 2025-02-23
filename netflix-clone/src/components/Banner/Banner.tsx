@@ -84,7 +84,7 @@ export const Banner = () => {
                   <img src="/assets/netflix-logo.png" alt="" />
                   PELÍCULA
                 </h3>
-                <h2>{movie?.original_title}</h2>
+                <h2>{movie?.title}</h2>
                 <p>{movie?.overview}</p>
                 <div className="banner-container-buttons">
                   <ButtonPlayRect />

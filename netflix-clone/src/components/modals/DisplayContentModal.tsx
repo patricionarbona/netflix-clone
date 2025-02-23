@@ -190,7 +190,7 @@ export const DisplayContentModal = () => {
                 <img src="/assets/netflix-logo.png" alt="" />
                 PELÍCULA
               </h3>
-              <h2>{moviePicked?.original_title}</h2>
+              <h2>{moviePicked?.title}</h2>
               <div className="player-container-buttons">
                 <ButtonPlayRect />
                 {isAddList ? (
