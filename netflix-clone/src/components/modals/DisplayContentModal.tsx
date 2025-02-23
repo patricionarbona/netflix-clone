@@ -342,19 +342,3 @@ export const DisplayContentModal = () => {
     </div>
   );
 };
-
-{
-  /* <div className="list-container">
-  <h4 className="list-head">Guionista:</h4>
-  {cast.crew
-    ?.filter((actor) => actor.known_for_department === "Writing")
-    .map((actor, index, array) => (
-      <span key={actor.id} className="list-content">
-        <a href={"#"}>
-          {actor.name}
-          {index !== array.length - 1 && ","}
-        </a>
-      </span>
-    ))}
-</div>; */
-}
