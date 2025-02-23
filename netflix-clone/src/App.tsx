@@ -9,7 +9,7 @@ import {
 import { useGlobalContext } from "./context/global.context";
 
 function App() {
-  const { generos, showHover, isModalOpen } = useGlobalContext();
+  const { generos, showHover, isModalOpen, isResizing } = useGlobalContext();
 
   return (
     <>
@@ -52,7 +52,7 @@ function App() {
         )}
       </div>
 
-      {showHover && <HoverModal />}
+      {showHover && !isResizing && <HoverModal />}
       {isModalOpen && <DisplayContentModal />}
       {/* <script src="https://www.youtube.com/iframe_api"></script> */}
     </>
