@@ -46,7 +46,7 @@ export const Carousel = ({
   genre_id: number;
   name: string;
 }) => {
-  const { setShowHover, setMoviePicked, setMoviePickedPos, clientWidth } =
+  const { setShowHover, setMoviePicked, setMoviePickedPos, isResizing } =
     useContext(GlobalContext);
 
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -335,7 +335,7 @@ export const Carousel = ({
 
   useEffect(() => {
     handleResize();
-  }, [clientWidth]);
+  }, [isResizing]);
 
   if (loading) {
     return <div>Loading...</div>;
