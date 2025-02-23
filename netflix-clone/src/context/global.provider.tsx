@@ -48,6 +48,7 @@ const defaultMovie = {
 export const GlobalProvider = ({ children }: GlobalProviderProps) => {
   const [generos, setGeneros] = useState<Genero[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [isResizing, setIsResizing] = useState<boolean>(false);
   const [clientWidth, setClientWidth] = useState(0);
   const [showHover, setShowHover] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -75,6 +76,7 @@ export const GlobalProvider = ({ children }: GlobalProviderProps) => {
 
   useEffect(() => {
     const handleResize = () => {
+      setIsResizing(clientWidth !== window.innerWidth);
       setClientWidth(window.innerWidth);
     };
     window.addEventListener("resize", handleResize);
@@ -99,6 +101,7 @@ export const GlobalProvider = ({ children }: GlobalProviderProps) => {
         moviePickedPos,
         setMoviePickedPos,
         clientWidth,
+        isResizing,
       }}
     >
       {children}
