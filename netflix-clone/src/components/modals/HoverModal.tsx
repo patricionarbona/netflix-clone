@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { fetchMovieVideos } from "../../services/fetchs";
+import { fetchMovieVideos, fetchTVVideos } from "../../services/fetchs";
 import { GenresList } from "../Carousel/GenresList";
 import "./HoverModal.css";
 import { ButtonArrowDown } from "../Buttons/ButtonArrowDown";
@@ -11,6 +11,7 @@ import YouTubePlayer from "../Video/YoutubePlayer";
 import { ButtonMute } from "../Buttons/ButtonMute";
 import { ButtonVolume } from "../Buttons/ButtonVolume";
 import { ButtonCheck } from "../Buttons/CircleButtons/ButtonCheck";
+import { TVShow } from "../../interfaces";
 
 interface Movie {
   adult: boolean;
@@ -45,11 +46,16 @@ interface VideoMovie {
 const urlPoster = "https://image.tmdb.org/t/p/original/";
 
 export const HoverModal = () => {
-  const { generos, moviePicked, setShowHover, moviePickedPos, setIsModalOpen } =
-    useContext(GlobalContext);
+  const {
+    generos,
+    contentPicked,
+    setShowHover,
+    contentPickedPos,
+    setIsModalOpen,
+  } = useContext(GlobalContext);
 
-  const movie: Movie = { ...moviePicked };
-  const genres = generos;
+  const movie: Movie | TVShow = { ...contentPicked };
+  const genres = "title" in contentPicked ? generos.movies : generos.tv;
 
   const movieGenres = Object.values(genres).filter((genero) =>
     movie.genre_ids.includes(genero.id)
@@ -68,12 +74,30 @@ export const HoverModal = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchMovieVideos(movie.id);
-        if (data.length === 0) {
-          const newData = await fetchMovieVideos(movie.id, "en-US");
-          setVideos(newData.filter((video) => video.type === "Trailer"));
+        if ("title" in contentPicked) {
+          const data = await fetchMovieVideos(movie.id);
+          if (data.length === 0) {
+            const newData = await fetchMovieVideos(movie.id, "en-US");
+            setVideos(
+              newData.some((video) => video.type === "Trailer")
+                ? newData.filter((video) => video.type === "Trailer")
+                : newData
+            );
+          } else {
+            setVideos(data.filter((video) => video.type === "Trailer"));
+          }
         } else {
-          setVideos(data.filter((video) => video.type === "Trailer"));
+          const data = await fetchTVVideos(movie.id);
+          if (data.length === 0) {
+            const newData = await fetchTVVideos(movie.id, "en-US");
+            setVideos(
+              newData.some((video) => video.type === "Trailer")
+                ? newData.filter((video) => video.type === "Trailer")
+                : newData
+            );
+          } else {
+            setVideos(data.filter((video) => video.type === "Trailer"));
+          }
         }
       } catch (error) {
         console.error("Error al obtener videos:", error);
@@ -81,7 +105,7 @@ export const HoverModal = () => {
     };
 
     fetchData();
-  }, [moviePicked, movie.id]);
+  }, [contentPicked, movie.id]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -101,8 +125,8 @@ export const HoverModal = () => {
       className="hoverModal"
       onMouseLeave={handleMouseLeave}
       style={{
-        left: `${moviePickedPos.x}px`,
-        top: `${moviePickedPos.y}px`,
+        left: `${contentPickedPos.x}px`,
+        top: `${contentPickedPos.y}px`,
       }}
     >
       <div className="hoverModal-display-container">

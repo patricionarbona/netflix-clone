@@ -3,6 +3,9 @@ import {
   fetchMovieCast,
   fetchMovieSimilar,
   fetchMovieVideos,
+  fetchTVCast,
+  fetchTVSimilar,
+  fetchTVVideos,
 } from "../../services/fetchs";
 import "./DisplayContentModal.css";
 import { ButtonAddList } from "../Buttons/ButtonAddList";
@@ -15,6 +18,7 @@ import { ButtonVolume } from "../Buttons/ButtonVolume";
 import { ButtonPlayRect } from "../Buttons/ButtonPlayRect";
 import { LikeGroupButton } from "../Buttons/LikeGroupButton";
 import { ButtonCheck } from "../Buttons/CircleButtons/ButtonCheck";
+import { TVShow } from "../../interfaces";
 interface Movie {
   adult: boolean;
   backdrop_path: string;
@@ -82,12 +86,12 @@ interface CreditsMovie {
 const urlPoster = "https://image.tmdb.org/t/p/original/";
 
 export const DisplayContentModal = () => {
-  const { moviePicked, generos, setIsModalOpen } = useContext(GlobalContext);
+  const { contentPicked, generos, setIsModalOpen } = useContext(GlobalContext);
 
-  const genres = generos;
+  const genres = "title" in contentPicked ? generos.movies : generos.tv;
 
   const movieGenres = genres.filter((genero) =>
-    moviePicked.genre_ids.includes(genero.id)
+    contentPicked?.genre_ids.includes(genero.id)
   );
 
   const [videos, setVideos] = useState<VideoMovie[]>([]);
@@ -95,7 +99,7 @@ export const DisplayContentModal = () => {
     cast: [],
     crew: [],
   });
-  const [movieSimilar, setMovieSimilar] = useState<Movie[]>([]);
+  const [movieSimilar, setMovieSimilar] = useState<Movie[] | TVShow[]>([]);
   const [showVideo, setShowVideo] = useState(false);
 
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
@@ -126,19 +130,44 @@ export const DisplayContentModal = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [data, dataCast, dataSimilar] = await Promise.all([
-          fetchMovieVideos(moviePicked.id),
-          fetchMovieCast(moviePicked.id),
-          fetchMovieSimilar(moviePicked.id),
-        ]);
-        if (data.length === 0) {
-          const newData = await fetchMovieVideos(moviePicked.id, "en-US");
-          setVideos(newData.filter((video) => video.type === "Trailer"));
+        if('title' in contentPicked) {
+          const [data, dataCast, dataSimilar] = await Promise.all([
+            fetchMovieVideos(contentPicked.id),
+            fetchMovieCast(contentPicked.id),
+            fetchMovieSimilar(contentPicked.id),
+          ]);
+          if (data.length === 0) {
+            const newData = await fetchMovieVideos(contentPicked.id, "en-US");
+            setVideos(
+              newData.some((video) => video.type === "Trailer")
+                ? newData.filter((video) => video.type === "Trailer")
+                : newData
+            );
+          } else {
+            setVideos(data.filter((video) => video.type === "Trailer"));
+          }
+          setCast(dataCast);
+          setMovieSimilar(dataSimilar);
         } else {
-          setVideos(data.filter((video) => video.type === "Trailer"));
+          console.log(contentPicked.id)
+          const [data, dataCast, dataSimilar] = await Promise.all([
+            fetchTVVideos(contentPicked.id),
+            fetchTVCast(contentPicked.id),
+            fetchTVSimilar(contentPicked.id),
+          ]);
+          if (data.length === 0) {
+            const newData = await fetchTVVideos(contentPicked.id, "en-US");
+            setVideos(
+              newData.some((video) => video.type === "Trailer")
+                ? newData.filter((video) => video.type === "Trailer")
+                : newData
+            );
+          } else {
+            setVideos(data.filter((video) => video.type === "Trailer"));
+          }
+          setCast(dataCast);
+          setMovieSimilar(dataSimilar);
         }
-        setCast(dataCast);
-        setMovieSimilar(dataSimilar);
       } catch (error) {
         console.error("Error al obtener videos:", error);
       }
@@ -150,7 +179,7 @@ export const DisplayContentModal = () => {
     return () => {
       dismountHandleScrollBarWidth();
     };
-  }, [moviePicked.id]);
+  }, [contentPicked?.id]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -178,7 +207,7 @@ export const DisplayContentModal = () => {
               />
             ) : (
               <img
-                src={urlPoster + moviePicked.backdrop_path}
+                src={urlPoster + contentPicked?.backdrop_path}
                 alt=""
                 className={showVideo ? "hidden" : "show"}
               />
@@ -190,7 +219,11 @@ export const DisplayContentModal = () => {
                 <img src="/assets/netflix-logo.png" alt="" />
                 PELÍCULA
               </h3>
-              <h2>{moviePicked?.title}</h2>
+              <h2>
+                {"title" in contentPicked
+                  ? contentPicked.title
+                  : contentPicked.name}
+              </h2>
               <div className="player-container-buttons">
                 <ButtonPlayRect />
                 {isAddList ? (
@@ -214,7 +247,7 @@ export const DisplayContentModal = () => {
           <div className="displayContentModal-info">
             <div>
               <h3>Sinopsis:</h3>
-              <p>{moviePicked.overview}</p>
+              <p>{contentPicked.overview}</p>
             </div>
             <div>
               <div className="list-container">
@@ -264,10 +297,10 @@ export const DisplayContentModal = () => {
                       alt=""
                     />
                   </div>
-                  <h2>{movie.title}</h2>
+                  <h2>{'title' in movie ? movie.title : movie.name}</h2>
                   <div className="card-metadata">
-                    <span>{movie?.release_date}</span>
-                    <ButtonAddList showTooltip={true} />
+                    <span>{'title' in movie ? movie.release_date: movie.first_air_date}</span>
+                    <ButtonAddList />
                   </div>
                   <div className="card-overview">
                     <p>{movie?.overview ? movie.overview : "Sin sinopsis"}</p>
@@ -285,7 +318,12 @@ export const DisplayContentModal = () => {
             </div>
           </div>
           <div className="displayContentModal-about">
-            <h3>Acerca de {moviePicked.title}</h3>
+            <h3>
+              Acerca de{" "}
+              {"title" in contentPicked
+                ? contentPicked.title
+                : contentPicked.name}
+            </h3>
             <div className="list-container">
               <h4 className="list-head">Dirigida por:</h4>
               {cast.crew
