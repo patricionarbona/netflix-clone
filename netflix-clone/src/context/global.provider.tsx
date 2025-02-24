@@ -1,31 +1,10 @@
 import { ReactNode, useEffect, useState } from "react";
-import { fetchMovieGenres } from "../services/fetchs";
+import { fetchMovieGenres, fetchTVGenres } from "../services/fetchs";
 import { GlobalContext } from "./global.context";
+import { Genero, Movie, TVShow } from "../interfaces";
 
 interface GlobalProviderProps {
   children: ReactNode;
-}
-
-interface Genero {
-  id: number;
-  name: string;
-}
-
-interface Movie {
-  adult: boolean;
-  backdrop_path: string;
-  genre_ids: number[];
-  id: number;
-  original_language: string;
-  original_title: string;
-  overview: string;
-  popularity: number;
-  poster_path: string;
-  release_date: string;
-  title: string;
-  video: boolean;
-  vote_average: number;
-  vote_count: number;
 }
 
 const defaultMovie = {
@@ -46,14 +25,19 @@ const defaultMovie = {
 };
 
 export const GlobalProvider = ({ children }: GlobalProviderProps) => {
-  const [generos, setGeneros] = useState<Genero[]>([]);
+  const [generos, setGeneros] = useState<{ movies: Genero[]; tv: Genero[] }>({
+    movies: [],
+    tv: [],
+  });
   const [loading, setLoading] = useState<boolean>(true);
   const [isResizing, setIsResizing] = useState<boolean>(false);
   const [clientWidth, setClientWidth] = useState(0);
   const [showHover, setShowHover] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [moviePicked, setMoviePicked] = useState<Movie>(defaultMovie);
-  const [moviePickedPos, setMoviePickedPos] = useState<{
+  const [contentPicked, setContentPicked] = useState<Movie | TVShow>(
+    defaultMovie
+  );
+  const [contentPickedPos, setContentPickedPos] = useState<{
     x: number;
     y: number;
   }>({ x: 0, y: 0 });
@@ -62,7 +46,11 @@ export const GlobalProvider = ({ children }: GlobalProviderProps) => {
     const fetchData = async () => {
       try {
         const data = await fetchMovieGenres();
-        setGeneros(data);
+        const dataSeries = await fetchTVGenres();
+        setGeneros({
+          movies: data,
+          tv: dataSeries,
+        });
         setLoading(false);
       } catch (error) {
         console.error("Error al obtener géneros:", error);
@@ -96,10 +84,10 @@ export const GlobalProvider = ({ children }: GlobalProviderProps) => {
         setShowHover,
         isModalOpen,
         setIsModalOpen,
-        moviePicked,
-        setMoviePicked,
-        moviePickedPos,
-        setMoviePickedPos,
+        contentPicked,
+        setContentPicked,
+        contentPickedPos,
+        setContentPickedPos,
         clientWidth,
         isResizing,
       }}

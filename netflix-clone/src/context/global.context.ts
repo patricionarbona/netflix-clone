@@ -1,4 +1,5 @@
 import { createContext, useContext } from "react";
+import { TVShow } from "../interfaces";
 
 interface Genero {
   id: number;
@@ -23,7 +24,7 @@ interface Movie {
 }
 
 interface GlobalContextType {
-  generos: Genero[];
+  generos: { movies: Genero[]; tv: Genero[] };
   setGeneros: React.Dispatch<React.SetStateAction<Genero[]>>;
   showHover: boolean;
   setShowHover: React.Dispatch<React.SetStateAction<boolean>>;
@@ -31,10 +32,10 @@ interface GlobalContextType {
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isResizing: boolean;
   setIsResizing: React.Dispatch<React.SetStateAction<boolean>>;
-  moviePicked: Movie;
-  setMoviePicked: React.Dispatch<React.SetStateAction<Movie | null>>;
-  moviePickedPos: { x: number; y: number };
-  setMoviePickedPos: React.Dispatch<
+  contentPicked: Movie | TVShow;
+  setContentPicked: React.Dispatch<React.SetStateAction<Movie | TVShow>>;
+  contentPickedPos: { x: number; y: number };
+  setContentPickedPos: React.Dispatch<
     React.SetStateAction<{ x: number; y: number }>
   >;
   loading: boolean;
@@ -59,7 +60,10 @@ const defaultMovie = {
 };
 
 export const GlobalContext = createContext<GlobalContextType>({
-  generos: [],
+  generos: {
+    movies: [],
+    tv: [],
+  },
   setGeneros: () => {},
   loading: true,
   showHover: false,
@@ -68,10 +72,10 @@ export const GlobalContext = createContext<GlobalContextType>({
   setIsModalOpen: () => {},
   isResizing: false,
   setIsResizing: () => {},
-  moviePicked: defaultMovie,
-  setMoviePicked: () => {},
-  moviePickedPos: { x: 0, y: 0 },
-  setMoviePickedPos: () => {},
+  contentPicked: defaultMovie,
+  setContentPicked: () => {},
+  contentPickedPos: { x: 0, y: 0 },
+  setContentPickedPos: () => {},
   clientWidth: 0,
 });
 
