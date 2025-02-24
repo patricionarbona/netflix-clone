@@ -1,0 +1,46 @@
+.popular-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    position: relative;
+    height: 15rem;
+}
+
+.carousel-popular-svg {
+    position: absolute;
+    z-index: -1;
+    margin-right: 4rem;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+}
+
+.carousel-popular-content {
+    width: 50%;
+    justify-self: flex-end;
+    position: relative;
+}
+
+.carousel-popular-content > img {
+    width: 100%;
+    height: 100%;
+}
+
+.carousel-popular-content > h5 {
+    position: absolute;
+    /* top: 5%; */
+    bottom: 0;
+    left: .5rem;
+    font-size: .7rem;
+    /* width: 15ch; */
+    width: fit-content;
+    background-color: rgba(0, 0, 0, .1);
+    color: #fff;
+    z-index: 5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
