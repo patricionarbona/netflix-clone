@@ -11,7 +11,7 @@ import { ButtonRestart } from "../Buttons/ButtonRestart";
 import { GlobalContext } from "../../context/global.context";
 
 export const Banner = () => {
-  const { isModalOpen, setMoviePicked, setIsModalOpen } =
+  const { isModalOpen, setContentPicked, setIsModalOpen } =
     useContext(GlobalContext);
   const [movie, setMovie] = useState<Movie | null>(null);
   const [video, setVideo] = useState<VideoMovie | null>(null);
@@ -29,7 +29,7 @@ export const Banner = () => {
   };
 
   const handleMoreInfo = () => {
-    setMoviePicked(movie);
+    setContentPicked(movie);
     setIsModalOpen(true);
   };
 
