@@ -1,3 +1,5 @@
+import { TVShow } from "../interfaces";
+
 interface Genero {
   id: number;
   name: string;
@@ -12,11 +14,11 @@ interface VideoMovie {
   iso_3166_1: string;
   name: string;
   key: string;
+  published_at: string;
   site: string;
   size: number;
   type: string;
   official: boolean;
-  published_at: string;
   id: string;
 }
 interface VideosMovie {
@@ -83,6 +85,13 @@ interface MovieSimilar {
   total_results: number;
 }
 
+interface TVSimilar {
+  page: number;
+  results: TVShow[];
+  total_pages: number;
+  total_results: number;
+}
+
 interface MoviePopular {
   page: number;
   results: Movie[];
@@ -101,6 +110,7 @@ const options = {
 };
 
 const URL_MOVIE_GENRES = "https://api.themoviedb.org/3/genre/movie/list";
+const URL_TV_GENRES = "https://api.themoviedb.org/3/genre/tv/list";
 
 export const fetchPages = async <T>(
   url: string,
@@ -149,6 +159,25 @@ export const fetchMovieGenres = async (language = "es"): Promise<Genero[]> => {
   }
 };
 
+export const fetchTVGenres = async (language = "es"): Promise<Genero[]> => {
+  const url = new URL(URL_TV_GENRES);
+  const params = new URLSearchParams({
+    language: language,
+  });
+  url.search = params.toString();
+  try {
+    const response = await fetch(url, options);
+    if (!response.ok) {
+      throw new Error("Error peticion generos");
+    }
+    const data: GenerosMovies = await response.json();
+    return data.genres;
+  } catch (er) {
+    console.error("Error al obtener los generos", er);
+    throw er;
+  }
+};
+
 export const fetchMovieVideos = async (
   idMovie: number,
   language = "es"
@@ -168,11 +197,52 @@ export const fetchMovieVideos = async (
   }
 };
 
+export const fetchTVVideos = async (
+  idMovie: number,
+  language = "es"
+): Promise<VideoMovie[]> => {
+  const url = `https://api.themoviedb.org/3/tv/${idMovie}/videos?language=${language}`;
+
+  try {
+    const response = await fetch(url, options);
+    if (!response.ok) {
+      throw new Error("Error peticion videos tv");
+    }
+    const data: VideosMovie = await response.json();
+    return data.results;
+  } catch (er) {
+    console.error("Error al obtener los videos de tv", er);
+    throw er;
+  }
+};
+
 export const fetchMovieCast = async (
   idMovie: number,
   language = "es"
 ): Promise<{ cast: CastMovie[]; crew: CrewMovie[] }> => {
   const url = `https://api.themoviedb.org/3/movie/${idMovie}/credits?language=${language}`;
+
+  try {
+    const response = await fetch(url, options);
+    if (!response.ok) {
+      throw new Error("Error peticion videos movies");
+    }
+    const data: CastsMovie = await response.json();
+    return {
+      cast: data.cast,
+      crew: data.crew,
+    };
+  } catch (er) {
+    console.error("Error al obtener los videos de movies", er);
+    throw er;
+  }
+};
+
+export const fetchTVCast = async (
+  idMovie: number,
+  language = "es"
+): Promise<{ cast: CastMovie[]; crew: CrewMovie[] }> => {
+  const url = `https://api.themoviedb.org/3/tv/${idMovie}/credits?language=${language}`;
 
   try {
     const response = await fetch(url, options);
@@ -202,6 +272,25 @@ export const fetchMovieSimilar = async (
       throw new Error("Error peticion similar movies");
     }
     const data: MovieSimilar = await response.json();
+    return data.results;
+  } catch (er) {
+    console.error("Error al obtener los videos de movies", er);
+    throw er;
+  }
+};
+
+export const fetchTVSimilar = async (
+  idMovie: number,
+  language = "es"
+): Promise<TVShow[]> => {
+  const url = `https://api.themoviedb.org/3/tv/${idMovie}/similar?language=${language}`;
+
+  try {
+    const response = await fetch(url, options);
+    if (!response.ok) {
+      throw new Error("Error peticion similar movies");
+    }
+    const data: TVSimilar = await response.json();
     return data.results;
   } catch (er) {
     console.error("Error al obtener los videos de movies", er);
