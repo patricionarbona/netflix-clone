@@ -52,3 +52,8 @@ export interface TVShow {
   vote_average: number;
   vote_count: number;
 }
+
+export interface Genero {
+  id: number;
+  name: string;
+}
