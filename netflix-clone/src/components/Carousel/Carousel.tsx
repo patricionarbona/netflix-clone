@@ -8,6 +8,7 @@ import {
 import { fetchPages } from "../../services/fetchs";
 import "./Carousel.css";
 import { GlobalContext } from "../../context/global.context";
+import { TVShow } from "../../interfaces";
 
 interface Movie {
   adult: boolean;
@@ -31,7 +32,13 @@ interface FetchMovies {
   results: Movie[];
 }
 
-const urlGenre = "https://api.themoviedb.org/3/discover/movie";
+interface FetchTVs {
+  page: number;
+  results: TVShow[];
+}
+
+const urlGenreMovie = "https://api.themoviedb.org/3/discover/movie";
+const urlGenreTV = "https://api.themoviedb.org/3/discover/tv";
 const urlPoster = "https://image.tmdb.org/t/p/original/";
 
 const paramsLanguage = new URLSearchParams({
@@ -41,15 +48,17 @@ const paramsLanguage = new URLSearchParams({
 
 export const Carousel = ({
   genre_id,
-  name,
+  textHeader,
+  isSerie,
 }: {
   genre_id: number;
-  name: string;
+  textHeader: string;
+  isSerie: boolean;
 }) => {
-  const { setShowHover, setMoviePicked, setMoviePickedPos, isResizing } =
+  const { setShowHover, setContentPicked, setContentPickedPos, isResizing } =
     useContext(GlobalContext);
 
-  const [movies, setMovies] = useState<Movie[]>([]);
+  const [movies, setMovies] = useState<Movie[] | TVShow[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   // states del carousel
@@ -60,13 +69,16 @@ export const Carousel = ({
 
   let timer: number;
 
-  const handleMouseEnter = (e: React.MouseEvent<HTMLElement>, movie: Movie) => {
+  const handleMouseEnter = (
+    e: React.MouseEvent<HTMLElement>,
+    movie: Movie | TVShow
+  ) => {
     timer = setTimeout(() => {
-      setMoviePicked(movie);
+      setContentPicked(movie);
       setShowHover(true);
       const htmlTarget = e.target as HTMLElement;
       const htmlPos = htmlTarget.getBoundingClientRect();
-      setMoviePickedPos({
+      setContentPickedPos({
         x: htmlPos.x - htmlPos.width / 4,
         y: htmlPos.y - htmlPos.height / 2 + window.scrollY,
       });
@@ -318,8 +330,21 @@ export const Carousel = ({
 
     const fetchData = async () => {
       try {
-        const data = await fetchPages<FetchMovies>(urlGenre, paramsLanguage, 2);
-        setMovies(data.map((item) => item.results).flat());
+        if (isSerie) {
+          const data = await fetchPages<FetchTVs>(
+            urlGenreTV,
+            paramsLanguage,
+            2
+          );
+          setMovies(data.map((item) => item.results).flat());
+        } else {
+          const data = await fetchPages<FetchMovies>(
+            urlGenreMovie,
+            paramsLanguage,
+            2
+          );
+          setMovies(data.map((item) => item.results).flat());
+        }
         const slider = carouselRef.current?.querySelector(
           ".carousel-slider"
         ) as HTMLElement;
@@ -353,7 +378,7 @@ export const Carousel = ({
   return (
     <div className="carousel" ref={carouselRef}>
       <div className="carousel-header">
-        <h4 className="carousel-title">{name}</h4>
+        <h4 className="carousel-title">{textHeader}</h4>
         <div className="carousel-progress-bar">
           {itemsView > 0 &&
             movies.length > 0 &&
@@ -397,7 +422,7 @@ export const Carousel = ({
               onMouseLeave={handleMouseLeave}
             >
               <img src={urlPoster + movie.backdrop_path} />
-              <h5>{movie.title}</h5>
+              <h5>{"title" in movie ? movie.title : movie.name}</h5>
             </div>
           ))}
         </div>
