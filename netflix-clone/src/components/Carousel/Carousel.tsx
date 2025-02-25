@@ -9,6 +9,7 @@ import { fetchPages } from "../../services/fetchs";
 import "./Carousel.css";
 import { GlobalContext } from "../../context/global.context";
 import { TVShow } from "../../interfaces";
+import { PopularContent } from "./PopularContent";
 
 interface Movie {
   adult: boolean;
@@ -46,14 +47,18 @@ const paramsLanguage = new URLSearchParams({
   sort_by: "popularity.desc",
 });
 
+const minPopularLengt = 14;
+
 export const Carousel = ({
   genre_id,
   textHeader,
   isSerie,
+  isPopular = false,
 }: {
   genre_id: number;
   textHeader: string;
   isSerie: boolean;
+  isPopular?: boolean;
 }) => {
   const { setShowHover, setContentPicked, setContentPickedPos, isResizing } =
     useContext(GlobalContext);
@@ -99,7 +104,11 @@ export const Carousel = ({
       }
       if (moved) {
         //si se mueve a la ultima posicion
-        if (position === Math.ceil(movies.length / itemsView) - 2) {
+        if (
+          position ===
+          Math.ceil((isPopular ? minPopularLengt : movies.length) / itemsView) -
+            2
+        ) {
           const next = getAllPreviousElements("last", item);
           for (let i = next.length; i > itemsView * 2 - 1; i--) {
             moveFirstElement2End(item, ".carousel-img-container");
@@ -111,7 +120,10 @@ export const Carousel = ({
         }
       }
 
-      if (position === Math.ceil(movies.length / itemsView) - 1) {
+      if (
+        position ===
+        Math.ceil((isPopular ? minPopularLengt : movies.length) / itemsView) - 1
+      ) {
         setPosition(0);
       } else {
         setPosition((position) => position + 1);
@@ -141,7 +153,10 @@ export const Carousel = ({
       }
 
       if (position === 0) {
-        setPosition(Math.ceil(movies.length / itemsView) - 1);
+        setPosition(
+          Math.ceil((isPopular ? minPopularLengt : movies.length) / itemsView) -
+            1
+        );
       } else {
         setPosition((position) => position - 1);
       }
@@ -180,7 +195,10 @@ export const Carousel = ({
 
       //resize carousel al final
       //posicion se pone al nuevo final
-      if (position === Math.ceil(movies.length / itemsView) - 1) {
+      if (
+        position ===
+        Math.ceil((isPopular ? minPopularLengt : movies.length) / itemsView) - 1
+      ) {
         const next = getAllPreviousElements("last", slider);
         //reduce tamaño
         if (itemsView > itemsPerScreen) {
@@ -192,7 +210,11 @@ export const Carousel = ({
             moveLastElement2Start(slider, ".carousel-img-container");
           }
         }
-        setPosition(Math.ceil(movies.length / itemsPerScreen) - 1);
+        setPosition(
+          Math.ceil(
+            (isPopular ? minPopularLengt : movies.length) / itemsPerScreen
+          ) - 1
+        );
       }
 
       //resize posicion 1
@@ -207,17 +229,29 @@ export const Carousel = ({
 
       //resize posicion penultima final - 1
       //posicion se recalcula a final - 1
-      if (position === Math.ceil(movies.length / itemsView) - 2) {
+      if (
+        position ===
+        Math.ceil((isPopular ? minPopularLengt : movies.length) / itemsView) - 2
+      ) {
         const previous = getAllPreviousElements("last", slider);
         for (let i = previous.length; i > 3 * itemsPerScreen - 1; i--) {
           moveFirstElement2End(slider, ".carousel-img-container");
         }
 
-        setPosition(Math.ceil(movies.length / itemsPerScreen) - 2);
+        setPosition(
+          Math.ceil(
+            (isPopular ? minPopularLengt : movies.length) / itemsPerScreen
+          ) - 2
+        );
       }
 
       //resize posicion > 1 y < final -1
-      if (position > 1 && position < Math.ceil(movies.length / itemsView) - 2) {
+      if (
+        position > 1 &&
+        position <
+          Math.ceil((isPopular ? minPopularLengt : movies.length) / itemsView) -
+            2
+      ) {
         //aumenta tamaño
         if (itemsView < itemsPerScreen || itemsView > itemsPerScreen) {
           //obtengo previous preResize
@@ -225,7 +259,7 @@ export const Carousel = ({
           //calculo posibles posiciones para ese previous pre resize
           let previousPostResize = 0;
           for (
-            let i = movies.length;
+            let i = isPopular ? minPopularLengt : movies.length;
             i > previousPreResize.length;
             i = i - itemsPerScreen
           ) {
@@ -233,7 +267,7 @@ export const Carousel = ({
           }
           //con los numeros de elementos obtengo la posicion
           const newPos = calculatePos(
-            movies.length,
+            isPopular ? minPopularLengt : movies.length,
             itemsPerScreen,
             previousPostResize
           );
@@ -382,14 +416,16 @@ export const Carousel = ({
         <div className="carousel-progress-bar">
           {itemsView > 0 &&
             movies.length > 0 &&
-            Array.from({ length: Math.ceil(movies.length / itemsView) }).map(
-              (_, index) => (
-                <div
-                  key={"bar-" + index}
-                  className={`bar ${index === position ? "bar-active" : ""}`}
-                ></div>
-              )
-            )}
+            Array.from({
+              length: Math.ceil(
+                (isPopular ? minPopularLengt : movies.length) / itemsView
+              ),
+            }).map((_, index) => (
+              <div
+                key={"bar-" + index}
+                className={`bar ${index === position ? "bar-active" : ""}`}
+              ></div>
+            ))}
         </div>
       </div>
       <div className="carousel-container">
@@ -408,23 +444,36 @@ export const Carousel = ({
             transform: `translateX(${moved ? "-100" : "0"}%)`,
           }}
         >
-          {movies.map((movie, index) => (
-            <div
-              key={`${genre_id}-slider-${movie.id}`}
-              className={`carousel-img-container ${
-                index === 0
-                  ? "first"
-                  : index === movies.length - 1
-                  ? "last"
-                  : ""
-              }`}
-              onMouseEnter={(event) => handleMouseEnter(event, movie)}
-              onMouseLeave={handleMouseLeave}
-            >
-              <img src={urlPoster + movie.backdrop_path} />
-              <h5>{"title" in movie ? movie.title : movie.name}</h5>
-            </div>
-          ))}
+          {movies
+            .slice(0, isPopular ? minPopularLengt : movies.length)
+            .map((movie, index) => (
+              <div
+                key={`${genre_id}-slider-${movie.id}`}
+                className={`carousel-img-container ${
+                  index === 0
+                    ? "first"
+                    : index ===
+                      (isPopular ? minPopularLengt : movies.length) - 1
+                    ? "last"
+                    : ""
+                }`}
+                onMouseEnter={(event) => handleMouseEnter(event, movie)}
+                onMouseLeave={handleMouseLeave}
+              >
+                {isPopular ? (
+                  <PopularContent
+                    NumberPop={index}
+                    contentData={movie}
+                    nameClass=""
+                  />
+                ) : (
+                  <>
+                    <img src={urlPoster + movie.backdrop_path} />
+                    <h5>{"title" in movie ? movie.title : movie.name}</h5>
+                  </>
+                )}
+              </div>
+            ))}
         </div>
         <button
           className="carousel-handle carousel-right-handle"
