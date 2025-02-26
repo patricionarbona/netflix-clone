@@ -110,7 +110,7 @@ export const DisplayContentModal = () => {
     // Cerrar el modal si se hace clic fuera de él
     if (
       e.target instanceof HTMLElement &&
-      e.target.classList.contains("displayContentModal")
+      e.target === e.currentTarget
     ) {
       setIsModalOpen(false);
     }
@@ -194,7 +194,8 @@ export const DisplayContentModal = () => {
   };
 
   return (
-    <div className="displayContentModal" onClick={handleClickOutside}>
+    <div className="displayContentModal">
+      <div className="displayContentModal-mask" onClick={handleClickOutside}></div>
       <div className="displayContentModal-content">
         <div className="displayContentModal-player-container">
           <ButtonClose onClick={() => setIsModalOpen(false)} />
