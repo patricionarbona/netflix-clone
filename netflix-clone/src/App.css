@@ -1,5 +1,14 @@
+:root {
+    --laptop-width : 1440px;
+    --large-tablet-width: 1024px;
+    --small-tablet-width: 834px;
+    --large-movile-width: 768px;
+    --small-mobile-width: 480px;
+}
+
 * {
     box-sizing: border-box;
+    font-family:  'Helvetica Neue', 'Segoe UI', Roboto,'Open Sans', sans-serif;
 }
 
 body {
