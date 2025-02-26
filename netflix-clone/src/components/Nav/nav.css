@@ -2,16 +2,23 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 20px;
+    padding: 10px 20px;
     position: fixed;
     top: 0;
-    background-color: red;
+    background-color: transparent;
     width: 100vw;
     z-index: 100;
 
+    color: #fff;
     animation: nav-animation linear both;
     animation-timeline: scroll(root);
     animation-range: 0 10px;
+}
+
+.nav a,
+.nav svg {
+    text-decoration: none;
+    color: #fff;
 }
 
 @keyframes nav-animation {
@@ -26,16 +33,33 @@
     align-items: center;
 }
 
+.nav-left > .nav-logo {
+    font-size: large;
+    color: red;
+}
+
 .nav-right {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 20px;
+}
+
+.nav-right > button {
+    border: 0;
+    background: none;
+    padding: 0;
+    cursor: pointer;
 }
 
 .nav-list {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
+    list-style: none;
+}
+
+.nav-list > li> a:hover {
+    color: #b3b3b3;
 }
 
 .nav-menu {
@@ -84,6 +108,12 @@
 .nav-config {
     display: flex;
     align-items: center;
+}
+
+.nav-config > img {
+    border: solid 0px #fff;
+    border-radius: 10px;
+    background-color: rgba(207, 51, 51, 0.762);
 }
 
 .nav-config > ul {
