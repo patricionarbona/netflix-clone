@@ -5,7 +5,7 @@ export const Nav = () => {
     <div className="nav">
       <div className="nav-left">
         <a className="nav-logo" href="#">
-          NETFLIX
+          NETFLIX-CLON
         </a>
         <ul className="nav-list">
           <li>
