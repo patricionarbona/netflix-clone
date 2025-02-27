@@ -1,0 +1,68 @@
+.search-bar {
+    display: flex;
+    width: 2.5rem;
+    /* width: 40px; */
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+    padding: .25rem;
+    transition: width 0.5s;
+}
+
+.search-bar.active {
+    background-color: #000;
+    width: 17rem;
+    border: 1px solid #fff;
+}
+
+.search-submit {
+    flex: none;
+    background-color: transparent;
+    width: 2rem;
+    height: 1.5rem;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+}
+
+.search-bar.active .search-submit  {
+    cursor: auto;
+}
+
+.search-input {
+    flex: auto;
+    color: #2e2b2b;
+    background-color: transparent;
+    border: 0;
+    height: 100%;
+    font-size: 1rem;
+    padding-inline: .25rem;
+}
+
+.search-input:focus {
+    border: 0;
+    outline: 0;
+    color: #fff;
+}
+
+.search-delete {
+    flex: none;
+    background-color: transparent;
+    width: 2rem;
+    height: 1.5rem;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    visibility: hidden;
+    transition: visibility 0.25s;
+}
+
+.search-delete.active {
+    visibility: visible;
+}
+
+.search-delete > svg,
+.search-submit > svg {
+    width: inherit;
+    height: inherit;
+}
