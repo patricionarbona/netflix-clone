@@ -79,13 +79,15 @@ export const Nav = () => {
           <p>hola mi pana</p>
         </div>
         <div className="nav-config">
-          dropdown menu
+          <img src="/public/pikachu.png" alt="" />
           <span className="caret"></span>
           <ul>
-            <li>Usuario 1</li>
-            <li>Usuario 2</li>
-            <li>Usuario 3</li>
-            <li>Usuario 4</li>
+            <li>
+              <img src="/public/goku.png" alt="" /> Usuario 1
+            </li>
+            <li><img src="/public/saitama.png" alt="" />Usuario 2</li>
+            <li><img src="/public/gandalf.png" alt="" />Usuario 3</li>
+            <li><img src="/public/jack_sparrow.png" alt="" />Usuario 4</li>
             <hr />
             <li>
               <svg
