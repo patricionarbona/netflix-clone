@@ -230,10 +230,11 @@
     --card-h-padding: .6rem;
     border-radius: var(--card-radius);
     overflow: hidden;
-    height: 18.5rem;
+    height: 23.5rem;
     display: flex;
     flex-direction: column;
     gap: .4rem;
+    padding-bottom: 1rem;
 }
 
 .card-img {
