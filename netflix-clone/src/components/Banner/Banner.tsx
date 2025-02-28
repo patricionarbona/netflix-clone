@@ -17,6 +17,7 @@ export const Banner = () => {
   const [video, setVideo] = useState<VideoMovie | null>(null);
   const [videoPlaying, setVideoPlaying] = useState(true);
   const [muteVideo, setMuteVideo] = useState(true);
+  const [timeUp, setTimeUp] = useState(false)
 
   const urlPoster = "https://image.tmdb.org/t/p/original/";
 
@@ -53,6 +54,15 @@ export const Banner = () => {
     fetchMovie();
   }, []);
 
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setTimeUp(true)
+    }, 5000)
+
+    return () => clearTimeout(timer)
+  }, []);
+
   return (
     <>
       {movie && (
@@ -78,7 +88,7 @@ export const Banner = () => {
               )}
             </div>
             <div className="banner-container">
-              <div className="banner-container-data">
+              <div className={`banner-container-data ${timeUp ? 'active' : ''}`}>
                 <h3>
                   {" "}
                   <img src="/assets/netflix-logo.png" alt="" />
