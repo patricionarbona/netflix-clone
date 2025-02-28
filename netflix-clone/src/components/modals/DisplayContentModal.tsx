@@ -19,6 +19,7 @@ import { ButtonPlayRect } from "../Buttons/ButtonPlayRect";
 import { LikeGroupButton } from "../Buttons/LikeGroupButton";
 import { ButtonCheck } from "../Buttons/CircleButtons/ButtonCheck";
 import { TVShow } from "../../interfaces";
+import { Accordion } from "../Accordion/Accordion";
 interface Movie {
   adult: boolean;
   backdrop_path: string;
@@ -108,10 +109,7 @@ export const DisplayContentModal = () => {
 
   const handleClickOutside = (e: React.MouseEvent) => {
     // Cerrar el modal si se hace clic fuera de él
-    if (
-      e.target instanceof HTMLElement &&
-      e.target === e.currentTarget
-    ) {
+    if (e.target instanceof HTMLElement && e.target === e.currentTarget) {
       setIsModalOpen(false);
     }
   };
@@ -130,7 +128,7 @@ export const DisplayContentModal = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if('title' in contentPicked) {
+        if ("title" in contentPicked) {
           const [data, dataCast, dataSimilar] = await Promise.all([
             fetchMovieVideos(contentPicked.id),
             fetchMovieCast(contentPicked.id),
@@ -149,7 +147,7 @@ export const DisplayContentModal = () => {
           setCast(dataCast);
           setMovieSimilar(dataSimilar);
         } else {
-          console.log(contentPicked.id)
+          console.log(contentPicked.id);
           const [data, dataCast, dataSimilar] = await Promise.all([
             fetchTVVideos(contentPicked.id),
             fetchTVCast(contentPicked.id),
@@ -195,7 +193,10 @@ export const DisplayContentModal = () => {
 
   return (
     <div className="displayContentModal">
-      <div className="displayContentModal-mask" onClick={handleClickOutside}></div>
+      <div
+        className="displayContentModal-mask"
+        onClick={handleClickOutside}
+      ></div>
       <div className="displayContentModal-content">
         <div className="displayContentModal-player-container">
           <ButtonClose onClick={() => setIsModalOpen(false)} />
@@ -278,12 +279,8 @@ export const DisplayContentModal = () => {
             </div>
           </div>
           <h3>Similares</h3>
-          <div
-            className={`display-accordion ${
-              isAccordionOpen ? "open" : "close"
-            }`}
-          >
-            <div className="accordion-grid-container">
+          <Accordion alturaCerrado={"calc(3 * 18.5rem + 3 * 1.5rem - 2rem)"}>
+            <div className="similar-grid-container">
               {movieSimilar.map((movie) => (
                 <div key={movie.id} className="card">
                   <div className="card-img">
@@ -298,9 +295,13 @@ export const DisplayContentModal = () => {
                       alt=""
                     />
                   </div>
-                  <h2>{'title' in movie ? movie.title : movie.name}</h2>
+                  <h2>{"title" in movie ? movie.title : movie.name}</h2>
                   <div className="card-metadata">
-                    <span>{'title' in movie ? movie.release_date: movie.first_air_date}</span>
+                    <span>
+                      {"title" in movie
+                        ? movie.release_date
+                        : movie.first_air_date}
+                    </span>
                     <ButtonAddList />
                   </div>
                   <div className="card-overview">
@@ -309,15 +310,8 @@ export const DisplayContentModal = () => {
                 </div>
               ))}
             </div>
-            <div
-              className={`accordion-up-down ${
-                isAccordionOpen ? "open" : "close"
-              }`}
-              onClick={handleClickAccordion}
-            >
-              <ButtonArrowDown />
-            </div>
-          </div>
+          </Accordion>
+
           <div className="displayContentModal-about">
             <h3>
               Acerca de{" "}
