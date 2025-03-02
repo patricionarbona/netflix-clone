@@ -9,7 +9,6 @@ import {
 } from "../../services/fetchs";
 import "./DisplayContentModal.css";
 import { ButtonAddList } from "../Buttons/ButtonAddList";
-import { ButtonArrowDown } from "../Buttons/ButtonArrowDown";
 import { ButtonClose } from "../Buttons/ButtonClose";
 import { GlobalContext } from "../../context/global.context";
 import YouTubePlayer from "../Video/YoutubePlayer";
@@ -103,7 +102,6 @@ export const DisplayContentModal = () => {
   const [movieSimilar, setMovieSimilar] = useState<Movie[] | TVShow[]>([]);
   const [showVideo, setShowVideo] = useState(false);
 
-  const [isAccordionOpen, setIsAccordionOpen] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const [isAddList, setIsAddList] = useState(false);
 
@@ -186,10 +184,6 @@ export const DisplayContentModal = () => {
 
     return () => clearTimeout(timer);
   }, []);
-
-  const handleClickAccordion = () => {
-    setIsAccordionOpen(!isAccordionOpen);
-  };
 
   return (
     <div className="displayContentModal">
