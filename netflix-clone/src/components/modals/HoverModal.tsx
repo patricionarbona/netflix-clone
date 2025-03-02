@@ -125,10 +125,6 @@ export const HoverModal = () => {
     <motion.div
       className="hoverModal"
       onMouseLeave={handleMouseLeave}
-      // style={{
-      //   left: `${contentPickedPos.x}px`,
-      //   top: `${contentPickedPos.y}px`,
-      // }}
       initial={{
         left: `${contentPickedPos.x}px`,
         top: `${contentPickedPos.y}px`,
