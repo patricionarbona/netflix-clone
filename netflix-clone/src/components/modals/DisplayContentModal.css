@@ -73,7 +73,8 @@
 .displayContentModal-player-info {
     color: #fff;
     width: 25rem;
-    height: 12.5rem;
+    /* height: 12.5rem; */
+    height: 100%;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr 1fr ;
