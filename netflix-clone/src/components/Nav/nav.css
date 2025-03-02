@@ -142,19 +142,13 @@
 }
 
 .caret {
-    border-color: #fff transparent transparent transparent;
+    border-color: #fff transparent transparent;
     border-style: solid;
     border-width: 5px 5px 0;
     height: 0;
     margin-left: 10px;
-    transition: transform 367ms cubic-bezier(.21,0,.07,1), 
-                border-color 367ms cubic-bezier(.21,0,.07,1),
-                border-width 367ms cubic-bezier(.21,0,.07,1);
+    transition: transform 367ms cubic-bezier(.21,0,.07,1);
     width: 0;
-    transform: translateY(180deg);
-    /*
-    TODO: Improve translation
-    */
 }
 
 .nav-config:hover ul {
@@ -163,9 +157,7 @@
 }
 
 .nav-config:hover .caret {
-    border-color: transparent transparent #fff transparent;
-    border-width: 0 5px 5px 5px;
-    transform: translateY(0);
+    transform: rotate(180deg);
 }
 
 @media (max-width:1000px) {
