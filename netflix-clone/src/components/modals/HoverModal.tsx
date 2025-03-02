@@ -12,6 +12,7 @@ import { ButtonMute } from "../Buttons/ButtonMute";
 import { ButtonVolume } from "../Buttons/ButtonVolume";
 import { ButtonCheck } from "../Buttons/CircleButtons/ButtonCheck";
 import { TVShow } from "../../interfaces";
+import { motion } from "motion/react";
 
 interface Movie {
   adult: boolean;
@@ -121,12 +122,24 @@ export const HoverModal = () => {
   };
 
   return (
-    <div
+    <motion.div
       className="hoverModal"
       onMouseLeave={handleMouseLeave}
-      style={{
+      // style={{
+      //   left: `${contentPickedPos.x}px`,
+      //   top: `${contentPickedPos.y}px`,
+      // }}
+      initial={{
         left: `${contentPickedPos.x}px`,
         top: `${contentPickedPos.y}px`,
+        scale: 0,
+      }}
+
+      animate={{
+        left: `${contentPickedPos.x}px`,
+        top: `${contentPickedPos.y}px`,
+        scale: 1,
+        transition: {duration: .5}
       }}
     >
       <div className="hoverModal-display-container">
@@ -182,6 +195,6 @@ export const HoverModal = () => {
         </div>
         <GenresList genres={movieGenres} />
       </div>
-    </div>
+    </motion.div>
   );
 };
