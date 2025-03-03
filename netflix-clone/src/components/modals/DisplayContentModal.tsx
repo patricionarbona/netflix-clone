@@ -175,7 +175,7 @@ export const DisplayContentModal = () => {
     return () => {
       dismountHandleScrollBarWidth();
     };
-  }, [contentPicked?.id]);
+  }, [contentPicked]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
