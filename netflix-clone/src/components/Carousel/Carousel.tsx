@@ -396,10 +396,11 @@ export const Carousel = ({
     };
 
     fetchData();
-  }, [genre_id]);
+  }, [genre_id, isSerie]);
 
   useEffect(() => {
     handleResize();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isResizing]);
 
   if (loading) {
