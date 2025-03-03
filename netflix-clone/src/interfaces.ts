@@ -15,6 +15,23 @@ export interface Movie {
   vote_count: number;
 }
 
+export const defaultMovie = {
+  adult: false,
+  backdrop_path: "",
+  genre_ids: [],
+  id: 0,
+  original_language: "",
+  original_title: "",
+  overview: "",
+  popularity: 0,
+  poster_path: "",
+  release_date: "",
+  title: "",
+  video: false,
+  vote_average: 0,
+  vote_count: 0,
+};
+
 export interface VideoMovie {
   iso_639_1: string;
   iso_3166_1: string;
