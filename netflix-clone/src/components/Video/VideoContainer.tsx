@@ -81,7 +81,7 @@ export const VideoContainer = ({
           <div className="video-container-data">
             <h3>
               {" "}
-              <img src="/netflix-logo.png" alt="" />
+              <img src="./netflix-logo.png" alt="" />
               PELÍCULA
             </h3>
             <h2>{sonicData.original_title}</h2>
