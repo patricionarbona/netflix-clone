@@ -79,15 +79,15 @@ export const Nav = () => {
           <p>hola mi pana</p>
         </div>
         <div className="nav-config">
-          <img src="/public/pikachu.png" alt="" />
+          <img src="/pikachu.png" alt="" />
           <span className="caret"></span>
           <ul>
             <li>
-              <img src="/public/goku.png" alt="" /> Usuario 1
+              <img src="/goku.png" alt="" /> Usuario 1
             </li>
-            <li><img src="/public/saitama.png" alt="" />Usuario 2</li>
-            <li><img src="/public/gandalf.png" alt="" />Usuario 3</li>
-            <li><img src="/public/jack_sparrow.png" alt="" />Usuario 4</li>
+            <li><img src="/saitama.png" alt="" />Usuario 2</li>
+            <li><img src="/gandalf.png" alt="" />Usuario 3</li>
+            <li><img src="/jack_sparrow.png" alt="" />Usuario 4</li>
             <hr />
             <li>
               <svg

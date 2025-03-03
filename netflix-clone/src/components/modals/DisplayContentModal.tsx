@@ -212,7 +212,7 @@ export const DisplayContentModal = () => {
           <div className="displayContentModal-player-data">
             <div className="displayContentModal-player-info">
               <h3>
-                <img src="/assets/netflix-logo.png" alt="" />
+                <img src="/netflix-logo.png" alt="" />
                 PELÍCULA
               </h3>
               <h2>
@@ -284,7 +284,7 @@ export const DisplayContentModal = () => {
                           ? urlPoster + movie.backdrop_path
                           : movie?.poster_path
                           ? urlPoster + movie.poster_path
-                          : "/assets/netflix-logo.png"
+                          : "/netflix-logo.png"
                       }
                       alt=""
                     />
