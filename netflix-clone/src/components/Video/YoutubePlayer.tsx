@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { YouTubePlayerInstance, OnStateChangeEvent } from "./yt-types"; // Asegúrate de importar las interfaces correctamente
 
 const YouTubePlayer = ({
   videoId,
@@ -10,7 +11,7 @@ const YouTubePlayer = ({
   onMuted?: boolean;
 }) => {
   const iframeRef = useRef<HTMLDivElement | null>(null);
-  const playerRef = useRef<YT.Player | null>(null);
+  const playerRef = useRef<YouTubePlayerInstance | null>(null);
   const [playerReady, setPlayerReady] = useState(false);
 
   useEffect(() => {
@@ -55,8 +56,8 @@ const YouTubePlayer = ({
       setPlayerReady(true);
     }
 
-    function onPlayerStateChange(event: YT.OnStateChangeEvent) {
-      if (event.data === YT.PlayerState.ENDED) {
+    function onPlayerStateChange(event: OnStateChangeEvent) {
+      if (event.data === window.YT.PlayerState.ENDED) {
         console.log("El video ha terminado");
         if (onEnd) onEnd();
       }
