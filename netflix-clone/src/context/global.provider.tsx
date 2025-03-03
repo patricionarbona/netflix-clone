@@ -72,7 +72,7 @@ export const GlobalProvider = ({ children }: GlobalProviderProps) => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [clientWidth]);
 
   return (
     <GlobalContext.Provider
@@ -90,6 +90,7 @@ export const GlobalProvider = ({ children }: GlobalProviderProps) => {
         setContentPickedPos,
         clientWidth,
         isResizing,
+        setIsResizing,
       }}
     >
       {children}

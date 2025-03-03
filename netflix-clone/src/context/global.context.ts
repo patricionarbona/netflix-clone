@@ -25,7 +25,9 @@ interface Movie {
 
 interface GlobalContextType {
   generos: { movies: Genero[]; tv: Genero[] };
-  setGeneros: React.Dispatch<React.SetStateAction<Genero[]>>;
+  setGeneros: React.Dispatch<
+    React.SetStateAction<{ movies: Genero[]; tv: Genero[] }>
+  >;
   showHover: boolean;
   setShowHover: React.Dispatch<React.SetStateAction<boolean>>;
   isModalOpen: boolean;
