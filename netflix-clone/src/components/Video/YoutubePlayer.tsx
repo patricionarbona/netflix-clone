@@ -7,11 +7,11 @@ const YouTubePlayer = ({
 }: {
   videoId: string;
   onEnd?: () => void;
-  onMuted?: boolean,
+  onMuted?: boolean;
 }) => {
-  const iframeRef = useRef(null);
-  const playerRef = useRef(null);
-  const [playerReady, setPlayerReady] = useState(false)
+  const iframeRef = useRef<HTMLDivElement | null>(null);
+  const playerRef = useRef<YT.Player | null>(null);
+  const [playerReady, setPlayerReady] = useState(false);
 
   useEffect(() => {
     // Verifica si la API de YouTube ya está cargada
@@ -32,7 +32,7 @@ const YouTubePlayer = ({
         playerRef.current.destroy();
       }
 
-      playerRef.current = new window.YT.Player(iframeRef.current, {
+      playerRef.current = new window.YT.Player(iframeRef.current!, {
         videoId: videoId,
         playerVars: {
           autoplay: 1,
@@ -50,13 +50,13 @@ const YouTubePlayer = ({
       });
     }
 
-    function onPlayerReady(event) {
+    function onPlayerReady() {
       console.log("El video está listo");
-      setPlayerReady(true)
+      setPlayerReady(true);
     }
 
-    function onPlayerStateChange(event) {
-      if (event.data === window.YT.PlayerState.ENDED) {
+    function onPlayerStateChange(event: YT.OnStateChangeEvent) {
+      if (event.data === YT.PlayerState.ENDED) {
         console.log("El video ha terminado");
         if (onEnd) onEnd();
       }
@@ -71,16 +71,15 @@ const YouTubePlayer = ({
 
   useEffect(() => {
     if (playerReady && playerRef.current) {
-        if (playerRef.current && typeof playerRef.current.mute === "function") {
-          if (onMuted) {
-            playerRef.current.mute();
-          } else {
-            playerRef.current.unMute();
-          }
+      if (playerRef.current && typeof playerRef.current.mute === "function") {
+        if (onMuted) {
+          playerRef.current.mute();
+        } else {
+          playerRef.current.unMute();
         }
+      }
     }
   }, [onMuted]);
-  
 
   return (
     <div>
