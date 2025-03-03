@@ -91,7 +91,6 @@ export const Banner = () => {
               <div className={`banner-container-data ${timeUp ? 'active' : ''}`}>
                 <h3>
                   {" "}
-                  <img src="./netflix-logo.png" alt="" />
                   PELÍCULA
                 </h3>
                 <h2>{movie?.title}</h2>
