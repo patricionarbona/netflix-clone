@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import "./banner.css";
-import { Movie, VideoMovie } from "../../interfaces";
+import { defaultMovie, Movie, VideoMovie } from "../../interfaces";
 import { fetchMoviePopular, fetchMovieVideos } from "../../services/fetchs";
 import { ButtonPlayRect } from "../Buttons/ButtonPlayRect";
 import { ButtonMoreInfo } from "../Buttons/ButtonMoreInfo";
@@ -13,7 +13,7 @@ import { GlobalContext } from "../../context/global.context";
 export const Banner = () => {
   const { isModalOpen, setContentPicked, setIsModalOpen } =
     useContext(GlobalContext);
-  const [movie, setMovie] = useState<Movie | null>(null);
+  const [movie, setMovie] = useState<Movie>(defaultMovie);
   const [video, setVideo] = useState<VideoMovie | null>(null);
   const [videoPlaying, setVideoPlaying] = useState(true);
   const [muteVideo, setMuteVideo] = useState(true);
@@ -72,7 +72,7 @@ export const Banner = () => {
               {videoPlaying && !isModalOpen ? (
                 <>
                   <YouTubePlayer
-                    videoId={video?.key}
+                    videoId={video?.key ?? ''}
                     onEnd={handleVideoEnd}
                     onMuted={muteVideo}
                   />
