@@ -67,7 +67,7 @@ const YouTubePlayer = ({
         playerRef.current.destroy();
       }
     };
-  }, [videoId]);
+  }, [onEnd, videoId]);
 
   useEffect(() => {
     if (playerReady && playerRef.current) {
@@ -79,7 +79,7 @@ const YouTubePlayer = ({
         }
       }
     }
-  }, [onMuted]);
+  }, [onMuted, playerReady]);
 
   return (
     <div>
