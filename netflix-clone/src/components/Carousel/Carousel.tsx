@@ -69,7 +69,7 @@ export const Carousel = ({
   // states del carousel
   const [position, setPosition] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
-  const [itemsView, setItemsView] = useState(0);
+  const [itemsView, setItemsView] = useState(6);
   const [moved, setMoved] = useState(false); //saber si se movio al inicio
 
   let timer: number;
