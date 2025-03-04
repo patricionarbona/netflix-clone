@@ -10,7 +10,6 @@ import "./Carousel.css";
 import { GlobalContext } from "../../context/global.context";
 import { TVShow } from "../../interfaces";
 import { PopularContent } from "./PopularContent";
-
 interface Movie {
   adult: boolean;
   backdrop_path: string;
@@ -84,8 +83,10 @@ export const Carousel = ({
       const htmlTarget = e.target as HTMLElement;
       const htmlPos = htmlTarget.getBoundingClientRect();
       setContentPickedPos({
-        x: htmlPos.x - htmlPos.width / 4,
-        y: htmlPos.y - htmlPos.height / 2 + window.scrollY,
+        x: htmlPos.x ,
+        y: htmlPos.y  + window.scrollY,
+        width: htmlPos.width,
+        height: htmlPos.height
       });
     }, 750);
   };
