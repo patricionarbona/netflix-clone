@@ -40,7 +40,9 @@ export const GlobalProvider = ({ children }: GlobalProviderProps) => {
   const [contentPickedPos, setContentPickedPos] = useState<{
     x: number;
     y: number;
-  }>({ x: 0, y: 0 });
+    width: number;
+    height: number;
+  }>({ x: 0, y: 0, width: 0, height: 0 });
 
   useEffect(() => {
     const fetchData = async () => {

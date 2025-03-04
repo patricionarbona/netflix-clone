@@ -36,9 +36,9 @@ interface GlobalContextType {
   setIsResizing: React.Dispatch<React.SetStateAction<boolean>>;
   contentPicked: Movie | TVShow;
   setContentPicked: React.Dispatch<React.SetStateAction<Movie | TVShow>>;
-  contentPickedPos: { x: number; y: number };
+  contentPickedPos: { x: number; y: number; width: number; height: number };
   setContentPickedPos: React.Dispatch<
-    React.SetStateAction<{ x: number; y: number }>
+    React.SetStateAction<{ x: number; y: number; width: number; height: number }>
   >;
   loading: boolean;
   clientWidth: number;
@@ -76,7 +76,7 @@ export const GlobalContext = createContext<GlobalContextType>({
   setIsResizing: () => {},
   contentPicked: defaultMovie,
   setContentPicked: () => {},
-  contentPickedPos: { x: 0, y: 0 },
+  contentPickedPos: { x: 0, y: 0, width: 0, height: 0 },
   setContentPickedPos: () => {},
   clientWidth: 0,
 });
