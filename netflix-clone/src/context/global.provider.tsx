@@ -65,16 +65,56 @@ export const GlobalProvider = ({ children }: GlobalProviderProps) => {
   }, []);
 
   useEffect(() => {
+    let resizeTimer: number;
+    let isMouseDown = false;
+  
     const handleResize = () => {
-      setIsResizing(clientWidth !== window.innerWidth);
+      setIsResizing(true);
       setClientWidth(window.innerWidth);
+  
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        setIsResizing(false);
+      }, 300);
     };
+  
+    const handleMouseDown = (e: MouseEvent) => {
+      const margin = 10; 
+      if (
+        e.clientX <= margin ||
+        e.clientX >= window.innerWidth - margin
+      ) {
+        isMouseDown = true;
+        setIsResizing(true);
+      }
+    };
+  
+    const handleMouseMove = () => {
+      if (isMouseDown) {
+        setClientWidth(window.innerWidth);
+      }
+    };
+  
+    const handleMouseUp = () => {
+      isMouseDown = false;
+      setIsResizing(false);
+    };
+  
     window.addEventListener("resize", handleResize);
-
+    window.addEventListener("mousedown", handleMouseDown);
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", handleMouseUp);
+  
     return () => {
+      clearTimeout(resizeTimer);
       window.removeEventListener("resize", handleResize);
+      window.removeEventListener("mousedown", handleMouseDown);
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
     };
-  }, [clientWidth]);
+  }, []);
+  
+  
 
   return (
     <GlobalContext.Provider
