@@ -126,14 +126,17 @@ export const HoverModal = () => {
       className="hoverModal"
       onMouseLeave={handleMouseLeave}
       initial={{
-        left: `${contentPickedPos.x}px`,
-        top: `${contentPickedPos.y}px`,
+        left: `calc(${contentPickedPos.x}px - 2rem)`,
+        top: `calc(${contentPickedPos.y}px - 3rem)`,
+        width: `calc(${contentPickedPos.width}px + 4rem)`,
+        height: `calc(${contentPickedPos.height}px + 6rem)`,
         scale: 0,
       }}
+          
 
       animate={{
-        left: `${contentPickedPos.x}px`,
-        top: `${contentPickedPos.y}px`,
+        left: `calc(${contentPickedPos.x}px - 2rem)`,
+        top: `calc(${contentPickedPos.y}px - 3rem)`,
         scale: 1,
         transition: {duration: .5}
       }}
