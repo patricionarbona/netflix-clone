@@ -411,78 +411,82 @@ export const Carousel = ({
   }
 
   return (
-    <div className="carousel" ref={carouselRef}>
-      <div className="carousel-header">
-        <h4 className="carousel-title">{textHeader}</h4>
-        <div className="carousel-progress-bar">
-          {itemsView > 0 &&
-            movies.length > 0 &&
-            Array.from({
-              length: Math.ceil(
-                (isPopular ? minPopularLengt : movies.length) / itemsView
-              ),
-            }).map((_, index) => (
-              <div
-                key={"bar-" + index}
-                className={`bar ${index === position ? "bar-active" : ""}`}
-              ></div>
-            ))}
+    <>
+      {movies.length > 0 && (
+        <div className="carousel" ref={carouselRef}>
+        <div className="carousel-header">
+          <h4 className="carousel-title">{textHeader}</h4>
+          <div className="carousel-progress-bar">
+            {itemsView > 0 &&
+              movies.length > 0 &&
+              Array.from({
+                length: Math.ceil(
+                  (isPopular ? minPopularLengt : movies.length) / itemsView
+                ),
+              }).map((_, index) => (
+                <div
+                  key={"bar-" + index}
+                  className={`bar ${index === position ? "bar-active" : ""}`}
+                ></div>
+              ))}
+          </div>
+        </div>
+        <div className="carousel-container">
+          <button
+            className="carousel-handle carousel-left-handle"
+            onClick={handlePrev}
+            style={{
+              visibility: `${moved ? "visible" : "hidden"}`,
+            }}
+          >
+            <div className="text">&#8249;</div>
+          </button>
+          <div
+            className="carousel-slider"
+            style={{
+              transform: `translateX(${moved ? "-100" : "0"}%)`,
+            }}
+          >
+            {movies
+              .slice(0, isPopular ? minPopularLengt : movies.length)
+              .map((movie, index) => (
+                <div
+                  key={`${genre_id}-slider-${movie.id}`}
+                  className={`carousel-img-container ${
+                    index === 0
+                      ? "first"
+                      : index ===
+                        (isPopular ? minPopularLengt : movies.length) - 1
+                      ? "last"
+                      : ""
+                  }`}
+                  onMouseEnter={(event) => handleMouseEnter(event, movie)}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  {isPopular ? (
+                    <PopularContent
+                      NumberPop={index}
+                      contentData={movie}
+                      nameClass=""
+                    />
+                  ) : (
+                    <>
+                      <img src={urlPoster + movie.backdrop_path} />
+                      <h5>{"title" in movie ? movie.title : movie.name}</h5>
+                    </>
+                  )}
+                </div>
+              ))}
+          </div>
+          <button
+            className="carousel-handle carousel-right-handle"
+            onClick={handleNext}
+          >
+            <div className="carousel-text">&#8250;</div>
+          </button>
         </div>
       </div>
-      <div className="carousel-container">
-        <button
-          className="carousel-handle carousel-left-handle"
-          onClick={handlePrev}
-          style={{
-            visibility: `${moved ? "visible" : "hidden"}`,
-          }}
-        >
-          <div className="text">&#8249;</div>
-        </button>
-        <div
-          className="carousel-slider"
-          style={{
-            transform: `translateX(${moved ? "-100" : "0"}%)`,
-          }}
-        >
-          {movies
-            .slice(0, isPopular ? minPopularLengt : movies.length)
-            .map((movie, index) => (
-              <div
-                key={`${genre_id}-slider-${movie.id}`}
-                className={`carousel-img-container ${
-                  index === 0
-                    ? "first"
-                    : index ===
-                      (isPopular ? minPopularLengt : movies.length) - 1
-                    ? "last"
-                    : ""
-                }`}
-                onMouseEnter={(event) => handleMouseEnter(event, movie)}
-                onMouseLeave={handleMouseLeave}
-              >
-                {isPopular ? (
-                  <PopularContent
-                    NumberPop={index}
-                    contentData={movie}
-                    nameClass=""
-                  />
-                ) : (
-                  <>
-                    <img src={urlPoster + movie.backdrop_path} />
-                    <h5>{"title" in movie ? movie.title : movie.name}</h5>
-                  </>
-                )}
-              </div>
-            ))}
-        </div>
-        <button
-          className="carousel-handle carousel-right-handle"
-          onClick={handleNext}
-        >
-          <div className="carousel-text">&#8250;</div>
-        </button>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
