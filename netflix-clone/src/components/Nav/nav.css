@@ -105,13 +105,17 @@
     opacity: 1;
 }
 
-.nav-config {
+.nav-config{
+    position: relative;
+}
+
+.nav-config-menu {
     display: flex;
     align-items: center;
     position: relative;
 }
 
-.nav-config > img {
+.nav-config-menu > img {
     border: solid 0px #fff;
     border-radius: 10px;
     background-color: rgba(207, 51, 51, 0.762);
@@ -130,12 +134,12 @@
     z-index: 999;
 }
 
-.nav-config:hover .submenu-profile {
+.submenu-profile.active {
     visibility: visible;
     opacity: 1;
 }
 
-.nav-config:hover .caret {
+.nav-config:has(.submenu-profile.active) .nav-config-menu > .caret {
     transform: rotate(180deg);
 }
 
