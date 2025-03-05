@@ -77,6 +77,8 @@ export const Carousel = ({
     e: React.MouseEvent<HTMLElement>,
     movie: Movie | TVShow
   ) => {
+    if(isResizing) return
+    
     timer = setTimeout(() => {
       setContentPicked(movie);
       setShowHover(true);
