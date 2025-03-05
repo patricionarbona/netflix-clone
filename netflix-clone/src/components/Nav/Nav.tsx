@@ -1,7 +1,23 @@
+import { useRef, useState } from "react";
 import { SearchBar } from "../Search/SearchBar";
 import "./nav.css";
 
 export const Nav = () => {
+  const [isActive, setIsActive] = useState(false);
+  const timerRef = useRef(-1); //negative no timer
+
+  const handleMouseEnter = () => {
+    console.log("encima");
+    setIsActive(true);
+    clearTimeout(timerRef.current);
+  };
+
+  const handleMouseLeave = () => {
+    timerRef.current = setTimeout(() => {
+      setIsActive(false);
+    }, 500);
+  };
+
   return (
     <div className="nav">
       <div className="nav-left">
@@ -78,10 +94,20 @@ export const Nav = () => {
           No hay notificaciones recientes
           <p>hola mi pana</p>
         </div>
-        <div className="nav-config">
-          <img src="./pikachu.png" alt="" />
-          <span className="caret"></span>
-          <div className="submenu-profile">
+        <div
+          className="nav-config"
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          <div className="nav-config-menu">
+            <img src="./pikachu.png" alt="" />
+            <span className="caret"></span>
+          </div>
+          <div
+            className={`submenu-profile ${isActive ? "active" : ""}`}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
             <ul className="list-profile">
               <li>
                 <img src="./goku.png" alt="" /> Usuario 1
