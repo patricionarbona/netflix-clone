@@ -6,7 +6,6 @@ export const SubMenuConfig = () => {
     const timerRef = useRef(-1); //negative no timer
 
     const handleMouseEnter = () => {
-        console.log("encima");
         setIsActive(true);
         clearTimeout(timerRef.current);
       };
@@ -14,7 +13,7 @@ export const SubMenuConfig = () => {
       const handleMouseLeave = () => {
         timerRef.current = setTimeout(() => {
           setIsActive(false);
-        }, 500);
+        }, 100);
       };
 
     return(
