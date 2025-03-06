@@ -17,7 +17,7 @@
 .nav-config > .submenu-profile {
     visibility: hidden;
     position: absolute;
-    top: 3.5rem;
+    top: 4rem;
     right: 1rem;
     
     background-color: black;
@@ -27,13 +27,13 @@
     z-index: 999;
 }
 
+.nav-config:has(.submenu-profile.active) .nav-config-menu > .caret {
+    transform: rotate(180deg);
+}
+
 .submenu-profile.active {
     visibility: visible;
     opacity: 1;
-}
-
-.nav-config:has(.submenu-profile.active) .nav-config-menu > .caret {
-    transform: rotate(180deg);
 }
 
 .submenu-profile ul {
@@ -53,6 +53,15 @@
     display: flex;
     align-items: center;
     gap: 1rem;
+}
+
+.submenu-profile > .caret {
+    position: absolute;
+    top: -.4rem;
+    right: 1.25rem;
+    transform: rotate(180deg);
+    scale: 1.5;
+    z-index: -1;
 }
 
 .caret {

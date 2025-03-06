@@ -31,6 +31,7 @@ export const SubMenuConfig = () => {
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
+            <span className='caret'></span>
             <ul className="list-profile">
               <li>
                 <img src="./goku.png" alt="" /> Usuario 1
