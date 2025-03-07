@@ -322,13 +322,13 @@ export const DisplayContentModal = () => {
                   ?.filter(
                     (actor) => actor.known_for_department === "Directing"
                   )
-                .map((actor, index, array) => (
-                  <span key={actor.id} className="list-content">
-                    <a href={"#"}>
-                      {actor.name}
-                      {index !== array.length - 1 && ","}
-                    </a>
-                  </span>
+                  .map((actor, index, array) => (
+                    <span key={actor.id} className="list-content">
+                      <a href={"#"}>
+                        {actor.name}
+                        {index !== array.length - 1 && ","}
+                      </a>
+                    </span>
                   ))
               ) : (
                 <span>Sin especificar</span>
