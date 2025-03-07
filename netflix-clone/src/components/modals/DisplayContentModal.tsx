@@ -240,7 +240,7 @@ export const DisplayContentModal = () => {
           <div className="displayContentModal-info">
             <div>
               <h3>Sinopsis:</h3>
-              <p>{contentPicked.overview}</p>
+              <p>{contentPicked.overview || 'Sin sinopsis'}</p>
             </div>
             <div>
               <div className="list-container">
