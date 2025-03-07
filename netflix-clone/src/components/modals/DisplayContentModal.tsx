@@ -313,8 +313,15 @@ export const DisplayContentModal = () => {
             </h3>
             <div className="list-container">
               <h4 className="list-head">Dirigida por:</h4>
-              {cast.crew
-                ?.filter((actor) => actor.known_for_department === "Directing")
+              {(
+                cast.crew?.filter(
+                  (actor) => actor.known_for_department === "Directing"
+                ) || []
+              ).length > 0 ? (
+                cast.crew
+                  ?.filter(
+                    (actor) => actor.known_for_department === "Directing"
+                  )
                 .map((actor, index, array) => (
                   <span key={actor.id} className="list-content">
                     <a href={"#"}>
