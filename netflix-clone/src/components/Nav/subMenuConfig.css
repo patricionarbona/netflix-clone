@@ -64,6 +64,13 @@
     z-index: -1;
 }
 
+.list-profile >  li:hover,
+.list-config > li:hover,
+.list-close-session > li:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 .caret {
     border-color: #fff transparent transparent;
     border-style: solid;
