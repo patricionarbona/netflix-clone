@@ -144,7 +144,7 @@ export const HoverModal = () => {
       <div className="hoverModal-display-container">
         {showVideo ? (
           <div className="hoverModal-video-container">
-            {isPlaying ? (
+            {isPlaying && videos.length > 0 ? (
               <>
                 <YouTubePlayer
                   videoId={videos[0]?.key}
