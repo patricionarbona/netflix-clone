@@ -329,7 +329,10 @@ export const DisplayContentModal = () => {
                       {index !== array.length - 1 && ","}
                     </a>
                   </span>
-                ))}
+                  ))
+              ) : (
+                <span>Sin especificar</span>
+              )}
             </div>
             <div className="list-container">
               <h4 className="list-head">Reparto:</h4>
