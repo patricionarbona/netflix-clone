@@ -195,7 +195,7 @@ export const DisplayContentModal = () => {
         <div className="displayContentModal-player-container">
           <ButtonClose onClick={() => setIsModalOpen(false)} />
           <div className="displayContentModal-player">
-            {showVideo ? (
+            {showVideo && videos.length > 0 ? (
               <YouTubePlayer
                 videoId={videos[0]?.key}
                 onEnd={() => setShowVideo(false)}
@@ -284,8 +284,8 @@ export const DisplayContentModal = () => {
                           ? urlPoster + movie.backdrop_path
                           : movie?.poster_path
                           ? urlPoster + movie.poster_path
-                          // : "./netflix-logo.png"
-                          : "#"
+                          : // : "./netflix-logo.png"
+                            "#"
                       }
                       alt=""
                     />
