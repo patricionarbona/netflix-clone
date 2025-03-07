@@ -11,22 +11,22 @@ export const Nav = () => {
           CLONFLIX
         </a>
         <ul className="nav-list">
-          <li>
+          <li className="no-available">
             <a href="#">Inicio</a>
           </li>
-          <li>
+          <li className="no-available">
             <a href="#">Series</a>
           </li>
-          <li>
+          <li className="no-available">
             <a href="#">Películas</a>
           </li>
-          <li>
+          <li className="no-available">
             <a href="#">Novedades más vistas</a>
           </li>
-          <li>
+          <li className="no-available">
             <a href="#">Mi lista</a>
           </li>
-          <li>
+          <li className="no-available">
             <a href="#">Explorar por idiomas</a>
           </li>
         </ul>
@@ -56,7 +56,7 @@ export const Nav = () => {
       </div>
       <div className="nav-right">
         <SearchBar />
-        <a href="#">Infantil</a>
+        <a href="#" className="no-available">Infantil</a>
         <NotificationNav />
         <SubMenuConfig />
       </div>
