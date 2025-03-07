@@ -98,17 +98,8 @@
        display: flex;
        gap: .35rem;
    }
-   
-   .buttonsItemControls button:hover .tooltip {
-       top: -45px;
-     opacity: 1;
-     width: 7rem;
-     visibility: visible;
-     pointer-events: auto;
-     text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);
-   }
-   
-   .moreInfo > button:hover > .tooltip,
-   .moreInfo > button > .tooltip {
-       width: 10rem;
+
+   .moreInfo > .btn-circle.btn-arrowDown  .tooltip,
+   .moreInfo > .btn-circle.btn-arrowDown:hover .tooltip {
+    width: 10rem;
    }
