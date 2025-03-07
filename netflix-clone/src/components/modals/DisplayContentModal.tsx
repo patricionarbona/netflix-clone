@@ -211,10 +211,7 @@ export const DisplayContentModal = () => {
           </div>
           <div className="displayContentModal-player-data">
             <div className="displayContentModal-player-info">
-              <h3>
-                {/* <img src="./netflix-logo.png" alt="" /> */}
-                PELÍCULA
-              </h3>
+              <h3>PELÍCULA</h3>
               <h2>
                 {"title" in contentPicked
                   ? contentPicked.title
