@@ -45,7 +45,7 @@ export const SearchBar = ({ onQueryChange }: SearchBarProps) => {
   const searchRef = useRef<HTMLDivElement>(null);
   const [expandSearch, setExpandSearch] = useState(false);
   const [hasText, setHasText] = useState(false);
-  const debounceRef = useRef<number>()
+  const debounceRef = useRef<number>();
 
   // limpiar al perder focus
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
@@ -58,7 +58,6 @@ export const SearchBar = ({ onQueryChange }: SearchBarProps) => {
     if (!search) return;
     const input = search.querySelector(".search-input") as HTMLInputElement;
     input?.focus();
-
   };
 
   const handleClickShow = () => {
@@ -72,20 +71,21 @@ export const SearchBar = ({ onQueryChange }: SearchBarProps) => {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if(debounceRef.current) {
-      clearTimeout(debounceRef.current)
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
     }
 
     debounceRef.current = setTimeout(() => {
-      const textInput = e.target.value.trim()
-      const isEmpty = !(textInput.length > 0)
-      if(isEmpty) {
+      const textInput = e.target.value.trim();
+      const isEmpty = !(textInput.length > 0);
+      if (isEmpty) {
         setHasText(false);
-        return
+        onQueryChange("");
+        return;
       }
 
-
-    }, 350)
+      onQueryChange(textInput);
+    }, 350);
   };
 
   const handleClickDelete = () => {
@@ -96,6 +96,7 @@ export const SearchBar = ({ onQueryChange }: SearchBarProps) => {
     input?.focus();
     input.value = "";
     setHasText(false);
+    onQueryChange("");
   };
 
   return (
