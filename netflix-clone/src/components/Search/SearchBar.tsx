@@ -37,7 +37,11 @@ const svgClose = (
   </svg>
 );
 
-export const SearchBar = () => {
+interface SearchBarProps {
+  onQueryChange: (query: string) => void;
+}
+
+export const SearchBar = ({ onQueryChange }: SearchBarProps) => {
   const searchRef = useRef<HTMLDivElement>(null);
   const [expandSearch, setExpandSearch] = useState(false);
   const [hasText, setHasText] = useState(false);
