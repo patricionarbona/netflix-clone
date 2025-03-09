@@ -2,8 +2,11 @@ import { SearchBar } from "../Search/SearchBar";
 import "./nav.css";
 import { NotificationNav } from "./NotificationNav";
 import { SubMenuConfig } from "./SubMenuConfig";
+import { useGlobalContext } from "../../context/global.context";
 
 export const Nav = () => {
+  const { setQuery } = useGlobalContext();
+
   return (
     <div className="nav">
       <div className="nav-left">
@@ -55,8 +58,10 @@ export const Nav = () => {
         </div>
       </div>
       <div className="nav-right">
-        <SearchBar />
-        <a href="#" className="no-available">Infantil</a>
+        <SearchBar onQueryChange={setQuery} />
+        <a href="#" className="no-available">
+          Infantil
+        </a>
         <NotificationNav />
         <SubMenuConfig />
       </div>
