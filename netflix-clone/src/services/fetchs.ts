@@ -337,7 +337,7 @@ export const fetchMovieByName = async (nameQuery: string): Promise<Movie[]> => {
     query: nameQuery,
   });
 
-  const url = new URL('https://api.themoviedb.org/3/search/tv')
+  const url = new URL('https://api.themoviedb.org/3/search/movie')
   url.search = paramsFetch.toString()
 
   try {
