@@ -77,6 +77,13 @@ export interface TVShow {
   vote_count: number;
 }
 
+export interface TVResponse {
+  page: number;
+  results: TVShow[];
+  total_pages: number;
+  total_results: number;
+}
+
 export interface Genero {
   id: number;
   name: string;
