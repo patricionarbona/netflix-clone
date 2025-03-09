@@ -1,4 +1,4 @@
-import { TVShow } from "../interfaces";
+import { MovieResponse, TVShow } from "../interfaces";
 
 interface Genero {
   id: number;
@@ -326,5 +326,29 @@ export const fetchMoviePopular = async (): Promise<Movie> => {
   } catch (er) {
     console.error("Error al obtener la pelicula más popular", er);
     throw er;
+  }
+};
+
+
+export const fetchMovieByName = async (nameQuery: string): Promise<Movie[]> => {
+  const paramsFetch = new URLSearchParams({
+    language: "es-ES",
+    sort_by: "popularity.desc",
+    query: nameQuery,
+  });
+
+  const url = new URL('https://api.themoviedb.org/3/search/tv')
+  url.search = paramsFetch.toString()
+
+  try {
+    const response = await fetch(url, options)
+    if(!response.ok) {
+      throw new Error('Error peticion movie by name')
+    }
+    const data: MovieResponse = await response.json()
+    return data.results
+  } catch (er) {
+    console.error("Error al obtener la pelicula por su nombre", er)
+    throw er
   }
 };
