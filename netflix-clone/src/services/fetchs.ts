@@ -352,3 +352,26 @@ export const fetchMovieByName = async (nameQuery: string): Promise<Movie[]> => {
     throw er
   }
 };
+
+export const fetchTVByName = async (nameQuery: string): Promise<Movie[]> => {
+  const paramsFetch = new URLSearchParams({
+    language: "es-ES",
+    sort_by: "popularity.desc",
+    query: nameQuery,
+  });
+
+  const url = new URL('https://api.themoviedb.org/3/search/tv')
+  url.search = paramsFetch.toString()
+
+  try {
+    const response = await fetch(url, options)
+    if(!response.ok) {
+      throw new Error('Error peticion tv by name')
+    }
+    const data: MovieResponse = await response.json()
+    return data.results
+  } catch (er) {
+    console.error("Error al obtener el show por su nombre", er)
+    throw er
+  }
+};
