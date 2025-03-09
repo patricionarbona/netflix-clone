@@ -41,6 +41,7 @@ export const SearchBar = () => {
   const searchRef = useRef<HTMLDivElement>(null);
   const [expandSearch, setExpandSearch] = useState(false);
   const [hasText, setHasText] = useState(false);
+  const debounceRef = useRef<number>()
 
   // limpiar al perder focus
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
@@ -67,7 +68,20 @@ export const SearchBar = () => {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setHasText(e.target.value.trim().length > 0);
+    if(debounceRef.current) {
+      clearTimeout(debounceRef.current)
+    }
+
+    debounceRef.current = setTimeout(() => {
+      const textInput = e.target.value.trim()
+      const isEmpty = !(textInput.length > 0)
+      if(isEmpty) {
+        setHasText(false);
+        return
+      }
+
+
+    }, 350)
   };
 
   const handleClickDelete = () => {
