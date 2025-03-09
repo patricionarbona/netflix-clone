@@ -1,4 +1,4 @@
-import { MovieResponse, TVShow } from "../interfaces";
+import { MovieResponse, TVResponse, TVShow } from "../interfaces";
 
 interface Genero {
   id: number;
@@ -353,7 +353,7 @@ export const fetchMovieByName = async (nameQuery: string): Promise<Movie[]> => {
   }
 };
 
-export const fetchTVByName = async (nameQuery: string): Promise<Movie[]> => {
+export const fetchTVByName = async (nameQuery: string): Promise<TVShow[]> => {
   const paramsFetch = new URLSearchParams({
     language: "es-ES",
     sort_by: "popularity.desc",
@@ -368,7 +368,7 @@ export const fetchTVByName = async (nameQuery: string): Promise<Movie[]> => {
     if(!response.ok) {
       throw new Error('Error peticion tv by name')
     }
-    const data: MovieResponse = await response.json()
+    const data: TVResponse = await response.json()
     return data.results
   } catch (er) {
     console.error("Error al obtener el show por su nombre", er)
