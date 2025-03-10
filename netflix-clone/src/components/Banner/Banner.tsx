@@ -75,7 +75,7 @@ export const Banner = ({ isSerie }: { isSerie?: boolean }) => {
     if (isSerie) {
       fetchTV();
     } else {
-    fetchMovie();
+      fetchMovie();
     }
   }, [isSerie]);
 
