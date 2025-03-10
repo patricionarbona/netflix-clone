@@ -353,7 +353,7 @@ export const fetchTVPopular = async (): Promise<TVShow> => {
       throw new Error("Error peticion tv popular");
     }
     const data: TVResponse = await response.json();
-    return data.results[4];
+    return data.results[0];
   } catch (er) {
     console.error("Error al obtener el tv más popular", er);
     throw er;
