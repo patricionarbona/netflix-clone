@@ -56,6 +56,25 @@ export const Banner = ({ isSerie }: { isSerie?: boolean }) => {
       }
     };
 
+    const fetchTV = async () => {
+      try {
+        const data = await fetchTVPopular();
+        const dataVideos = await fetchTVVideos(data.id);
+        if (dataVideos.length === 0) {
+          const newData = await fetchTVVideos(data.id, "en-US");
+          setVideo(newData.filter((video) => video.type === "Trailer")[0]);
+        } else {
+          setVideo(dataVideos.filter((video) => video.type === "Trailer")[0]);
+        }
+        setMovie(data);
+      } catch (error) {
+        console.error("error al recuperar los datos", error);
+      }
+    };
+
+    if (isSerie) {
+      fetchTV();
+    } else {
     fetchMovie();
   }, []);
 
