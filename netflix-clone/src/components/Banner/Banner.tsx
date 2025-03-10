@@ -1,7 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import "./banner.css";
-import { defaultMovie, Movie, VideoMovie } from "../../interfaces";
-import { fetchMoviePopular, fetchMovieVideos } from "../../services/fetchs";
+import { defaultMovie, Movie, TVShow, VideoMovie } from "../../interfaces";
+import {
+  fetchMoviePopular,
+  fetchMovieVideos,
+  fetchTVPopular,
+  fetchTVVideos,
+} from "../../services/fetchs";
 import { ButtonPlayRect } from "../Buttons/ButtonPlayRect";
 import { ButtonMoreInfo } from "../Buttons/ButtonMoreInfo";
 import YouTubePlayer from "../Video/YoutubePlayer";
