@@ -112,12 +112,11 @@ export const Banner = ({ isSerie }: { isSerie?: boolean }) => {
               )}
             </div>
             <div className="banner-container">
-              <div className={`banner-container-data ${timeUp ? 'active' : ''}`}>
-                <h3>
-                  {" "}
-                  PELÍCULA
-                </h3>
-                <h2>{movie?.title}</h2>
+              <div
+                className={`banner-container-data ${timeUp ? "active" : ""}`}
+              >
+                <h3> {"title" in movie ? "PELICULA" : "TV SHOW"}</h3>
+                <h2>{"title" in movie ? movie.title : movie.name}</h2>
                 <p>{movie?.overview}</p>
                 <div className="banner-container-buttons">
                   <ButtonPlayRect />
