@@ -1,11 +1,9 @@
 import { useGlobalContext } from "../../context/global.context";
 import { Banner } from "../Banner/Banner";
 import { Carousel } from "../Carousel/Carousel";
-import { DisplayContentModal } from "../modals/DisplayContentModal";
-import { HoverModal } from "../modals/HoverModal";
 
 export const HomePage = () => {
-  const { generos, showHover, isModalOpen, isResizing } = useGlobalContext();
+  const { generos } = useGlobalContext();
 
   return (
     <>
@@ -32,9 +30,6 @@ export const HomePage = () => {
           </>
         )}
       </div>
-
-      {showHover && !isResizing && <HoverModal />}
-      {isModalOpen && <DisplayContentModal />}
     </>
   );
 };
