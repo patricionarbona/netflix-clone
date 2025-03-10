@@ -93,10 +93,10 @@ export const Banner = ({ isSerie }: { isSerie?: boolean }) => {
         <>
           <div className="banner">
             <div className="banner-video-container">
-              {videoPlaying && !isModalOpen ? (
+              {video && videoPlaying && !isModalOpen ? (
                 <>
                   <YouTubePlayer
-                    videoId={video?.key ?? ''}
+                    videoId={video?.key ?? ""}
                     onEnd={handleVideoEnd}
                     onMuted={muteVideo}
                   />
