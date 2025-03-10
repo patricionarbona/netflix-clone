@@ -474,7 +474,7 @@ export const Carousel = ({
                     />
                   ) : (
                     <>
-                      <img src={urlPoster + movie.backdrop_path} />
+                      <img src={urlPoster + (movie.backdrop_path ? movie.backdrop_path : movie.poster_path)} />
                       <h5>{"title" in movie ? movie.title : movie.name}</h5>
                     </>
                   )}
