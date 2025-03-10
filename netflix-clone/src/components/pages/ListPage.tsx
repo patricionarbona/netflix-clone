@@ -1,3 +1,4 @@
+import './ListPage.css'
 import { useEffect, useState } from "react";
 import { fetchMovieByName, fetchTVByName } from "../../services/fetchs";
 import { useGlobalContext } from "../../context/global.context";
@@ -36,7 +37,7 @@ export const ListPage = () => {
     <>
       <div className="listPage-container">
         {mediaContent?.map((media,index) => ( 
-            <img key={`media-${index}`} src={urlPoster + media.backdrop_path}/>
+            <img key={`media-${index}`} src={urlPoster + media.poster_path}/>
         ))
         }
         </div>
