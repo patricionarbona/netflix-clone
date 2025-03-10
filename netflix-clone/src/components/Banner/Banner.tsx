@@ -15,14 +15,14 @@ import { ButtonVolume } from "../Buttons/ButtonVolume";
 import { ButtonRestart } from "../Buttons/ButtonRestart";
 import { GlobalContext } from "../../context/global.context";
 
-export const Banner = () => {
+export const Banner = ({ isSerie }: { isSerie?: boolean }) => {
   const { isModalOpen, setContentPicked, setIsModalOpen } =
     useContext(GlobalContext);
-  const [movie, setMovie] = useState<Movie>(defaultMovie);
+  const [movie, setMovie] = useState<Movie | TVShow>(defaultMovie);
   const [video, setVideo] = useState<VideoMovie | null>(null);
   const [videoPlaying, setVideoPlaying] = useState(true);
   const [muteVideo, setMuteVideo] = useState(true);
-  const [timeUp, setTimeUp] = useState(false)
+  const [timeUp, setTimeUp] = useState(false);
 
   const urlPoster = "https://image.tmdb.org/t/p/original/";
 
