@@ -88,3 +88,28 @@ export interface Genero {
   id: number;
   name: string;
 }
+
+export interface Media {
+  adult: boolean;
+  backdrop_path: string;
+  genre_ids: number[];
+  id: number;
+  original_language: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  vote_average: number;
+  vote_count: number;
+  
+  // Propiedades específicas de Movie
+  original_title?: string;
+  title?: string;
+  release_date?: string;
+  video?: boolean;
+
+  // Propiedades específicas de TVShow
+  original_name?: string;
+  name?: string;
+  first_air_date?: string;
+  origin_country?: string[];
+}
