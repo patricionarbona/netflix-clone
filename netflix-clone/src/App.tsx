@@ -1,30 +1,35 @@
-import "./App.css";
 import {
-  Banner,
-  Carousel,
-  DisplayContentModal,
-  HoverModal,
-  Nav,
-} from "./components";
+  Route,
+  BrowserRouter as Router,
+  Routes,
+  useLocation,
+} from "react-router-dom";
+import "./App.css";
+import { DisplayContentModal, HoverModal, Nav } from "./components";
+import { HomePage } from "./components/pages/HomePage";
+import { ListPage } from "./components/pages/ListPage";
 import { useGlobalContext } from "./context/global.context";
+import { SeriesPage } from "./components/pages/SeriesPage";
+import { PeliculasPage } from "./components/pages/PeliculasPage";
 
 function App() {
-  const { generos, showHover, isModalOpen, isResizing } = useGlobalContext();
+  const { showHover, isModalOpen, isResizing, query } = useGlobalContext();
+  const location = useLocation();
+
+  const showListPage = query.length > 0;
 
   return (
     <>
       <Nav></Nav>
-
-      <Banner />
-      <div className="container-carousels">
-        {generos && generos.movies.length > 0 && (
-          <>
-            <Carousel genre_id={35} textHeader={`Películas de ${generos.movies[0].name}`} isSerie={false} />
-            <Carousel genre_id={35} textHeader={`Películas de ${generos.tv[0].name}`} isSerie={true} />
-            <Carousel genre_id={35} textHeader={`Películas de ${generos.tv[1].name}`} isSerie={true} isPopular={true} />
-          </>
-        )}
-      </div>
+      {showListPage ? (
+        <ListPage />
+      ) : (
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/series" element={<SeriesPage />} />
+          <Route path="/peliculas" element={<PeliculasPage />} />
+        </Routes>
+      )}
 
       {showHover && !isResizing && <HoverModal />}
       {isModalOpen && <DisplayContentModal />}
