@@ -76,15 +76,15 @@ export const Banner = ({ isSerie }: { isSerie?: boolean }) => {
       fetchTV();
     } else {
     fetchMovie();
-  }, []);
-
+    }
+  }, [isSerie]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setTimeUp(true)
-    }, 5000)
+      setTimeUp(true);
+    }, 5000);
 
-    return () => clearTimeout(timer)
+    return () => clearTimeout(timer);
   }, []);
 
   return (
