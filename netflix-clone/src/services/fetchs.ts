@@ -329,6 +329,37 @@ export const fetchMoviePopular = async (): Promise<Movie> => {
   }
 };
 
+export const fetchTVPopular = async (): Promise<TVShow> => {
+  const paramsLanguage = new URLSearchParams({
+    language: "es-ES",
+    sort_by: "popularity.desc",
+  });
+
+  const today = new Date();
+  const lastYear = new Date();
+  lastYear.setFullYear(today.getFullYear() - 1);
+
+  const formatDate = (date: Date) => date.toISOString().split("T")[0];
+
+  paramsLanguage.append("primary_release_date.gte", formatDate(lastYear));
+  paramsLanguage.append("primary_release_date.lte", formatDate(today));
+
+  const url = new URL("https://api.themoviedb.org/3/tv/popular");
+  url.search = paramsLanguage.toString();
+
+  try {
+    const response = await fetch(url, options);
+    if (!response.ok) {
+      throw new Error("Error peticion tv popular");
+    }
+    const data: TVResponse = await response.json();
+    return data.results[4];
+  } catch (er) {
+    console.error("Error al obtener el tv más popular", er);
+    throw er;
+  }
+};
+
 
 export const fetchMovieByName = async (nameQuery: string): Promise<Movie[]> => {
   const paramsFetch = new URLSearchParams({
