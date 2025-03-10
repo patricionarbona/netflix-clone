@@ -3,24 +3,26 @@ import "./nav.css";
 import { NotificationNav } from "./NotificationNav";
 import { SubMenuConfig } from "./SubMenuConfig";
 import { useGlobalContext } from "../../context/global.context";
+import { useNavigate } from "react-router-dom";
 
 export const Nav = () => {
   const { setQuery } = useGlobalContext();
+  const navigate = useNavigate();
 
   return (
     <div className="nav">
       <div className="nav-left">
-        <a className="nav-logo" href="#">
+        <a className="nav-logo" href="#" onClick={() => navigate("/")}>
           CLONFLIX
         </a>
         <ul className="nav-list">
-          <li className="no-available">
+          <li className="" onClick={() => navigate("/")}>
             <a href="#">Inicio</a>
           </li>
-          <li className="no-available">
+          <li className="" onClick={() => navigate("/series")}>
             <a href="#">Series</a>
           </li>
-          <li className="no-available">
+          <li className="" onClick={() => navigate("/peliculas")}>
             <a href="#">Películas</a>
           </li>
           <li className="no-available">
