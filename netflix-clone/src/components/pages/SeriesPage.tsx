@@ -7,7 +7,7 @@ export const SeriesPage = () => {
 
   return (
     <>
-      <Banner />
+      <Banner isSerie={true} />
       <div className="container-carousels">
         {generos &&
           generos.tv.map((genero, index) => (
