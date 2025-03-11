@@ -454,7 +454,8 @@ export const Carousel = ({
               .slice(0, isPopular ? minPopularLengt : movies.length)
               .map((movie, index) => (
                 <div
-                  key={`${genre_id}-slider-${movie.id}`}
+                  // key={`${genre_id}-slider-${movie.id}-${index}`}
+                  key={index}
                   className={`carousel-img-container ${
                     index === 0
                       ? "first"

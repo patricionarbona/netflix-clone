@@ -13,13 +13,13 @@ export const GenresList = ({ genres }: { genres: Genero[] }) => {
           <>
             {index !== 0 ? (
               <span
-                key={`genreList-separato${index}`}
+                key={index}
                 className="genreList-separator"
               ></span>
             ) : (
               <></>
             )}
-            <span key={`genreList-item-${index}`}>{genero.name}</span>
+            <span key={`genero-name-${index}`}>{genero.name}</span>
           </>
         ))}
       </div>

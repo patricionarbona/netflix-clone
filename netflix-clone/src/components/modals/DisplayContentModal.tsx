@@ -248,7 +248,7 @@ export const DisplayContentModal = () => {
                 {cast.cast
                   ?.filter((actor) => actor.known_for_department === "Acting")
                   .map((actor, index, array) => (
-                    <span key={actor.id} className="list-content">
+                    <span key={`head-actors-${index}`} className="list-content">
                       <a href={"#"}>
                         {actor.name}
                         {index !== array.length - 1 && ","}
@@ -259,7 +259,7 @@ export const DisplayContentModal = () => {
               <div className="list-container">
                 <h4 className="list-head">Géneros:</h4>
                 {movieGenres.map((genero, index, array) => (
-                  <span key={genero.id} className="list-content">
+                  <span key={`head-genres-${index}`} className="list-content">
                     <a href={"#"}>
                       {genero.name}
                       {index !== array.length - 1 && ","}
@@ -272,8 +272,8 @@ export const DisplayContentModal = () => {
           <h3>Similares</h3>
           <Accordion alturaCerrado={"calc(3 * 18.5rem + 3 * 1.5rem - 2rem)"}>
             <div className="similar-grid-container">
-              {movieSimilar.map((movie) => (
-                <div key={movie.id} className="card">
+              {movieSimilar.map((movie, index) => (
+                <div key={`similar-movie-${index}`} className="card">
                   <div className="card-img">
                     <img
                       src={
@@ -323,7 +323,7 @@ export const DisplayContentModal = () => {
                     (actor) => actor.known_for_department === "Directing"
                   )
                   .map((actor, index, array) => (
-                    <span key={actor.id} className="list-content">
+                    <span key={`film-directors-${index}`} className="list-content">
                       <a href={"#"}>
                         {actor.name}
                         {index !== array.length - 1 && ","}
@@ -339,7 +339,7 @@ export const DisplayContentModal = () => {
               {cast.cast
                 ?.filter((actor) => actor.known_for_department === "Acting")
                 .map((actor, index, array) => (
-                  <span key={actor.id} className="list-content">
+                  <span key={`actors-${index}`} className="list-content">
                     <a href={"#"}>
                       {actor.name}
                       {index !== array.length - 1 && ","}
@@ -352,7 +352,7 @@ export const DisplayContentModal = () => {
               {cast.crew
                 ?.filter((actor) => actor.known_for_department === "Writing")
                 .map((actor, index, array) => (
-                  <span key={actor.id} className="list-content">
+                  <span key={`writers-${index}`} className="list-content">
                     <a href={"#"}>
                       {actor.name}
                       {index !== array.length - 1 && ","}
@@ -363,7 +363,7 @@ export const DisplayContentModal = () => {
             <div className="list-container">
               <h4 className="list-head">Géneros:</h4>
               {movieGenres.map((genero, index, array) => (
-                <span key={genero.id} className="list-content">
+                <span key={`genres-${index}`} className="list-content">
                   <a href={"#"}>
                     {genero.name}
                     {index !== array.length - 1 && ","}
