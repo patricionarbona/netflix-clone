@@ -29,9 +29,9 @@ export const PopularContent: React.FC<PopularContentProps> = ({
     fontFamily="Arial"
     fontWeight="bold"
     stroke="gray"
-    stroke-width="5"
+    strokeWidth="5"
     fill="black"
-    text-anchor="middle"
+    textAnchor="middle"
   >
     {number}
   </text>
