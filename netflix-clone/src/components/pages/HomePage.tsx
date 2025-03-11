@@ -5,30 +5,48 @@ import { Carousel } from "../Carousel/Carousel";
 export const HomePage = () => {
   const { generos } = useGlobalContext();
 
+  const array = Array.from({ length: 13 }, (_, index) => index);
+
   return (
     <>
       <Banner />
       <div className="container-carousels">
-        {generos && generos.movies.length > 0 && (
-          <>
-            <Carousel
-              genre_id={35}
-              textHeader={`Películas de ${generos.movies[0].name}`}
-              isSerie={false}
-            />
-            <Carousel
-              genre_id={35}
-              textHeader={`Películas de ${generos.tv[0].name}`}
-              isSerie={true}
-            />
-            <Carousel
-              genre_id={35}
-              textHeader={`Películas de ${generos.tv[1].name}`}
-              isSerie={true}
-              isPopular={true}
-            />
-          </>
-        )}
+        {generos &&
+          array.length > 0 &&
+          array.map((index) => (
+            <>
+              {index % 3 === 0 ? (
+                index % 2 === 0 ? (
+                  <Carousel
+                    genre_id={generos.movies[index]?.id}
+                    isSerie={false}
+                    textHeader={`Películas populares de ${generos.movies[index]?.name}`}
+                    isPopular={true}
+                  />
+                ) : (
+                  <Carousel
+                    genre_id={generos.tv[index]?.id}
+                    isSerie={true}
+                    textHeader={`Series populares de ${generos.tv[index]?.name}`}
+                    isPopular={true}
+                  />
+                )
+              ) : (
+                <>
+                  <Carousel
+                    genre_id={generos.movies[index]?.id}
+                    isSerie={false}
+                    textHeader={`Películas de ${generos.movies[index]?.name}`}
+                  />
+                  <Carousel
+                    genre_id={generos.tv[index]?.id}
+                    isSerie={true}
+                    textHeader={`Series de ${generos.tv[index]?.name}`}
+                  />
+                </>
+              )}
+            </>
+          ))}
       </div>
     </>
   );
