@@ -68,7 +68,7 @@ const YouTubePlayer = ({
         playerRef.current.destroy();
       }
     };
-  }, [onEnd, videoId]);
+  }, [videoId]); //no add onEnd dependency
 
   useEffect(() => {
     if (playerReady && playerRef.current) {
