@@ -25,7 +25,7 @@ export const PopularContent: React.FC<PopularContentProps> = ({
   <text
     x="50"
     y="80"
-    font-size="100"
+    fontSize="100"
     font-family="Arial"
     font-weight="bold"
     stroke="gray"
