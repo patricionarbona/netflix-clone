@@ -13,26 +13,31 @@ import { SeriesPage } from "./components/pages/SeriesPage";
 import { PeliculasPage } from "./components/pages/PeliculasPage";
 
 function App() {
-  const { showHover, isModalOpen, isResizing, query } = useGlobalContext();
+  const { showHover, isModalOpen, isResizing, query, loading } =
+    useGlobalContext();
   const location = useLocation();
 
   const showListPage = query.length > 0;
 
   return (
     <>
-      <Nav></Nav>
-      {showListPage ? (
-        <ListPage />
-      ) : (
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/series" element={<SeriesPage />} />
-          <Route path="/peliculas" element={<PeliculasPage />} />
-        </Routes>
-      )}
+      {!loading && (
+        <>
+          <Nav></Nav>
+          {showListPage ? (
+            <ListPage />
+          ) : (
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/series" element={<SeriesPage />} />
+              <Route path="/peliculas" element={<PeliculasPage />} />
+            </Routes>
+          )}
 
-      {showHover && !isResizing && <HoverModal />}
-      {isModalOpen && <DisplayContentModal />}
+          {showHover && !isResizing && <HoverModal />}
+          {isModalOpen && <DisplayContentModal />}
+        </>
+      )}
     </>
   );
 }
