@@ -41,11 +41,6 @@ const urlGenreMovie = "https://api.themoviedb.org/3/discover/movie";
 const urlGenreTV = "https://api.themoviedb.org/3/discover/tv";
 const urlPoster = "https://image.tmdb.org/t/p/original/";
 
-const paramsLanguage = new URLSearchParams({
-  language: "es-ES",
-  sort_by: "popularity.desc",
-});
-
 const minPopularLengt = 14;
 
 export const Carousel = ({
@@ -355,6 +350,10 @@ export const Carousel = ({
 
   //useLayout to get --items-per-screen from css
   useLayoutEffect(() => {
+    const paramsLanguage = new URLSearchParams({
+      language: "es-ES",
+      sort_by: "popularity.desc",
+    });
     const today = new Date();
     const lastYear = new Date();
     lastYear.setFullYear(today.getFullYear() - 1);
@@ -366,6 +365,7 @@ export const Carousel = ({
     paramsLanguage.append("primary_release_date.lte", formatDate(today));
 
     const fetchData = async () => {
+      setLoading(true)
       try {
         if (isSerie) {
           const data = await fetchPages<FetchTVs>(
