@@ -19,10 +19,10 @@ export const Nav = () => {
           <li className="" onClick={() => navigate("/")}>
             <a href="#">Inicio</a>
           </li>
-          <li className="" onClick={() => navigate("/series")}>
+          <li className="" onClick={() => navigate("series")}>
             <a href="#">Series</a>
           </li>
-          <li className="" onClick={() => navigate("/peliculas")}>
+          <li className="" onClick={() => navigate("peliculas")}>
             <a href="#">Películas</a>
           </li>
           <li className="no-available">

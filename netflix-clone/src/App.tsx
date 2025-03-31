@@ -12,6 +12,8 @@ import { useGlobalContext } from "./context/global.context";
 import { SeriesPage } from "./components/pages/SeriesPage";
 import { PeliculasPage } from "./components/pages/PeliculasPage";
 
+const base = "/clonflix/";
+
 function App() {
   const { showHover, isModalOpen, isResizing, query, loading } =
     useGlobalContext();
@@ -23,17 +25,16 @@ function App() {
     <>
       {!loading && (
         <>
-          <Nav></Nav>
+          <Nav />
           {showListPage ? (
             <ListPage />
           ) : (
             <Routes>
               <Route path="/" element={<HomePage />} />
-              <Route path="/series" element={<SeriesPage />} />
-              <Route path="/peliculas" element={<PeliculasPage />} />
+              <Route path="series" element={<SeriesPage />} />
+              <Route path="peliculas" element={<PeliculasPage />} />
             </Routes>
           )}
-
           {showHover && !isResizing && <HoverModal />}
           {isModalOpen && <DisplayContentModal />}
         </>
@@ -44,7 +45,7 @@ function App() {
 
 function AppWrapper() {
   return (
-    <Router>
+    <Router basename={base}>
       <App />
     </Router>
   );
