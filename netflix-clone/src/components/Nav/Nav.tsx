@@ -36,7 +36,7 @@ export const Nav = () => {
           </li>
         </ul>
         <div className="nav-menu">
-          <button className="nav-menu-btn">Menú&nbsp;▼</button>
+          <button className="nav-menu-btn">Menú <span className="caret"></span></button>
           <ul className="nav-menu-dropdown">
             <li>
               <a href="#">Inicio</a>
