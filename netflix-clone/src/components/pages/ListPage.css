@@ -6,8 +6,7 @@
     grid-auto-rows: 15rem;
     gap: 4rem;
     row-gap: 3rem;
-    margin-top: 5.25rem;
-    padding-inline: 2.5rem;
+    padding: 5.25rem 2.5rem;
 }
 
 .listPage-container > img {
